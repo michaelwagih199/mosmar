@@ -1,0 +1,181 @@
+.Login_background {
+    -fx-background-image:url('../res/f.jpg');
+}
+.main_back{
+    -fx-background-color: #555555;    
+}
+
+.second_back{
+    -fx-background-color: #ECF1F7;  
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
+    -fx-background-radius: 20;
+    -fx-border-color: #696969;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+}
+.button_Small {
+    -fx-font-size: 14pt;
+    -fx-text-fill: white;
+    -fx-background-color: #F67522;
+    -fx-font-family: "Arial";
+}
+
+
+.grey_back{
+    -fx-background-color: #696969;  
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
+    -fx-background-radius: 20;
+    -fx-border-color: #F67522;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+}
+
+.grey_wite_back{
+    -fx-background-color: #F0EEEF;  
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
+    -fx-background-radius: 20;
+    -fx-border-color: #F67522;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+}
+
+.grey_back_noShadow{
+    -fx-background-color: #696969;  
+}
+
+.green_back_noShadow{
+    -fx-background-color: #1F9D77;  
+    -fx-background-radius: 20;
+    -fx-border-color: #F67522;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+}
+
+.button_big {
+    -fx-background-radius: 20;
+    -fx-font-size: 30pt;
+    -fx-text-fill: white;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+    -fx-background-color: #1F9D77;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);  
+    -fx-font-family: "Arial";
+    
+}
+
+.button_big_2 {
+    -fx-background-radius: 20;
+    -fx-font-size: 30pt;
+    -fx-text-fill: white;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+    -fx-background-color: #F67522;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);  
+    -fx-font-family: "Arial";
+    
+}
+
+.button_Normal {
+    -fx-background-radius: 10;
+    -fx-font-size: 18pt;
+    -fx-text-fill: white;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-background-color: #F67522;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 3, 0, 0, 0);  
+    -fx-font-family: "Arial";
+    
+}
+
+.textHeder {
+    -fx-font-size: 40pt;
+    -fx-text-fill: #F67522;
+    -fx-font-family: "Arial";
+  }
+  
+  .textpragraph {
+    -fx-font-size: 16pt;
+    -fx-text-fill: #F67522;
+    -fx-font-family: "Arial";
+    
+  }
+  
+  
+  .text_normal {
+    -fx-font-size: 18pt;
+    -fx-text-fill: #F67522;
+    -fx-font-family: "Arial";
+  }
+  
+   .text_Black {
+    -fx-font-size: 16pt;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial";
+  }
+    .text_green {
+    -fx-font-size: 20pt;
+    -fx-text-fill: #1F9D77;
+    -fx-font-family: "Arial";
+  }
+  
+  .textFeild {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14pt;
+    -fx-text-fill: black;
+    -fx-prompt-text-fill: white;
+    -fx-background-color: #F0EEEF;
+}
+
+.table{
+    -fx-font-family: "Arial";
+    -fx-font-size: 12pt;
+}
+  .textSearch {
+    -fx-font-family: "Arial";
+    -fx-font-size: 16pt;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+ .button:hover {
+    -fx-text-fill: #333335;
+}
+
+.greubtn {
+    -fx-font-size: 13pt;
+    -fx-text-fill: white;
+    -fx-background-color: #696969;
+    -fx-font-family: "Arial";
+    
+}
+
+.combobox {
+    -fx-font-family: "Arial";
+     -fx-background-color: #F0EEEF;
+    -fx-font-size: 14pt;
+    -fx-prompt-text-fill: #333335;
+}
+.textHeder2 {
+    -fx-font-size: 25pt;
+    -fx-text-fill: #F67522;
+    -fx-font-family: "Arial";
+  }
+  
+  
+  .back2 {
+    -fx-background-color: #33223B;
+   -fx-background-radius: 10;
+   
+}
+
+
+.textFeild2 {
+    -fx-font-family: "Arial";
+    -fx-font-size: 16pt;
+    -fx-text-fill: white;
+}

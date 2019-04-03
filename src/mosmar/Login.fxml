@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="700.0" styleClass="Login_background" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.LoginController">
+   <children>
+      <AnchorPane layoutX="195.0" layoutY="83.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="310.0" styleClass="back2">
+         <children>
+            <JFXButton fx:id="btnLogin" layoutX="33.0" layoutY="271.0" onAction="#loginClick" prefHeight="50.0" prefWidth="249.0" styleClass="button_Normal" text="دخول">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </JFXButton>
+            <JFXTextField fx:id="etUser" alignment="BOTTOM_CENTER" focusColor="#011526" layoutX="26.0" layoutY="74.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="31.0" prefWidth="269.0" promptText="اسم المستخدم" styleClass="textFeild2">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </JFXTextField>
+            <JFXPasswordField fx:id="etpass" alignment="TOP_CENTER" focusColor="#011526" layoutX="26.0" layoutY="166.0" onKeyPressed="#pressed" prefHeight="36.0" prefWidth="263.0" promptText="كلمة السر" styleClass="textFeild2" />
+            <Label fx:id="lbllogin" alignment="TOP_CENTER" layoutX="50.0" layoutY="357.0" prefHeight="31.0" prefWidth="218.0" styleClass="text_normal" textAlignment="CENTER">
+               <font>
+                  <Font name="Arabic Typesetting" size="11.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

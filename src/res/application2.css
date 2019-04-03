@@ -1,0 +1,176 @@
+.Vbox_background {
+    -fx-background-image:url('../res/Login/Desert.jpg');
+}
+.main_back{
+    -fx-background-color: #ABE3F4;   
+}
+
+.Seond_back{
+    -fx-background-color:#FEE2D7;    
+}
+.Third_back{
+    -fx-background-color:#FD8469; 
+}
+.Four_back{
+    -fx-background-color:#BAE0E5; 
+}
+.User_back{
+    -fx-background-color: #54C0EB;   
+}
+.Pane_back{
+    -fx-background-color: #F2F2F2;  
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
+    -fx-background-radius: 20;
+    -fx-border-color: #3A6463;
+    -fx-border-width: 5;
+    -fx-border-radius: 20;
+}
+
+.grey_back_noShadow{
+    -fx-background-color: #696969;  
+}
+
+.textBoxView{
+    -fx-background-color: #FFFFFF;  
+    -fx-background-radius: 20;
+    -fx-border-color: #15242E;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+	
+}
+
+.textBoxUser{
+    -fx-background-color: #FFFFFF;  
+    -fx-background-radius: 20;
+    -fx-border-color: #15242E;
+    -fx-border-width: 3;
+    -fx-border-radius: 20;
+	-fx-font-size: 20pt;
+	
+}
+
+.mainButton {
+    -fx-background-radius: 20;
+    -fx-font-size:15pt;
+    -fx-text-fill: white;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+    -fx-background-color: #004E64;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);  
+    -fx-font-family: "Arial";
+    
+}
+.Button2 {
+    -fx-background-radius: 20;
+    -fx-font-size:25pt;
+    -fx-text-fill: white;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+    -fx-background-color: #FD8469;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);  
+    -fx-font-family: "Arial"; 
+}
+
+.Button3 {
+    -fx-background-radius: 20;
+    -fx-font-size:15pt;
+    -fx-text-fill: white;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2;
+    -fx-border-radius: 15;
+    -fx-background-color: #FFC612;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);  
+    -fx-font-family: "Arial";
+	}
+	.Button4{
+    -fx-background-radius: 20;
+    -fx-font-size:18pt;
+    -fx-text-fill: white;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+    -fx-background-color: #1F2C45;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);  
+    -fx-font-family: "Arial"; 
+}
+	
+.textHeder {
+    -fx-font-size: 20pt;
+    -fx-text-fill: #F67522;
+    -fx-font-family: "Arial";
+  }
+  
+  .textpragraph {
+    -fx-font-size: 16pt;
+    -fx-text-fill: #F67522;
+    -fx-font-family: "Arial";
+    
+  }
+  
+  
+  .text_normal {
+    -fx-font-size: 13pt;
+    -fx-text-fill: #F67522;
+    -fx-font-family: "Arial";
+  }
+  
+
+  .textFeild1 {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14pt;
+    -fx-text-fill: #000000;
+    -fx-prompt-text-fill:#004E64;
+}
+
+  .textSearch {
+    -fx-font-family: "Arial";
+    -fx-font-size: 16pt;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-background-color:#FEE2D7;
+    -fx-text-fill: black;
+}
+
+
+  .text5 {
+   -fx-background-color: #84DBFF;  
+    -fx-background-radius: 20;
+    -fx-border-color: #15242E;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+}
+.labelSetting {
+    -fx-font-family: "Arial";
+    -fx-font-size: 16pt;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-background-color:#FFFFFF;
+    -fx-text-fill: black;
+}
+.labelUser {
+    -fx-font-family: "Arial";
+    -fx-font-size: 25;
+    -fx-text-fill: FFFFFF;
+    -fx-background-radius: 20;
+    -fx-background-color:#1F2C45;
+    -fx-text-fill: FFFFFF;
+}
+
+ .button:hover {
+    -fx-text-fill: #D94936;
+}
+
+.combobox {
+    -fx-font-family: "Arial";
+     -fx-background-color: #FEEEE7;
+    -fx-font-size: 15pt;
+    -fx-prompt-text-fill: #333335;
+}
+.combobox_user{
+    -fx-font-family: "Arial";
+     -fx-background-color: #54C0EB;
+    -fx-font-size: 15pt;
+    -fx-prompt-text-fill: #333335;
+}

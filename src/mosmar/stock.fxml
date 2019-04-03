@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1020.0" styleClass="main_back" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.StockController">
+   <children>
+      <TableView fx:id="table" layoutX="10.0" layoutY="91.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="558.0" prefWidth="1006.0" styleClass="table">
+        <columns>
+          <TableColumn fx:id="col_product" prefWidth="226.0" text="الصنف" />
+          <TableColumn fx:id="col_weight" prefWidth="96.66668701171875" text="وزن الوحده" />
+            <TableColumn fx:id="col_unitInStock" prefWidth="96.33331298828125" text="الكمية الموجوده" />
+            <TableColumn fx:id="col_purchase_price" prefWidth="100.0" text="سعر الشراء" />
+            <TableColumn fx:id="col_gomla_price" prefWidth="89.3333740234375" text="سعر الجملة" />
+            <TableColumn fx:id="col_kata3y_price" prefWidth="99.333251953125" text="سعر القطاعى" />
+            <TableColumn fx:id="col_gomel_gomla" prefWidth="116.3333740234375" text="سعر جملة الجملة" />
+        </columns>
+      </TableView>
+      <Pane layoutX="353.0" layoutY="9.0" prefHeight="72.0" prefWidth="334.0" styleClass="grey_wite_back">
+         <children>
+            <Label alignment="CENTER" layoutX="11.0" layoutY="3.0" prefHeight="62.0" prefWidth="301.0" styleClass="textHeder" text="المخزن" />
+         </children>
+      </Pane>
+      <ImageView fitHeight="68.0" fitWidth="65.0" layoutX="11.0" layoutY="9.0" onMouseClicked="#homeClick" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../res/002-home.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="68.0" fitWidth="65.0" layoutX="932.0" layoutY="8.0" onMouseClicked="#addClick" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../res/add.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Pane fx:id="paneAddProduct" layoutX="244.0" layoutY="6.0" prefHeight="585.0" prefWidth="500.0" styleClass="grey_wite_back" visible="false">
+         <children>
+            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#close_anchor_add" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/close2.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+              
+            </ImageView>
+            <Label layoutX="174.0" layoutY="14.0" prefHeight="38.0" prefWidth="153.0" styleClass="textHeder2" text="إضافة صنف" />
+            <Separator layoutX="5.0" layoutY="57.0" prefHeight="4.0" prefWidth="489.0" />
+            <JFXTextField fx:id="et_product_weight" alignment="CENTER" layoutX="78.0" layoutY="134.0" prefHeight="36.0" prefWidth="247.0" styleClass="textFeild" />
+            <JFXTextField fx:id="et_product_name" layoutX="31.0" layoutY="71.0" onMouseClicked="#et_product_name_click" prefHeight="36.0" prefWidth="334.0" styleClass="textFeild" />
+            <Label layoutX="385.0" layoutY="75.0" prefHeight="26.0" prefWidth="90.0" styleClass="text_Black" text="اسم الصنف" />
+            <Label layoutX="372.0" layoutY="143.0" prefHeight="27.0" prefWidth="117.0" styleClass="text_Black" text="وزن الصنف " />
+            <Label layoutX="23.0" layoutY="143.0" prefHeight="27.0" prefWidth="39.0" styleClass="text_Black" text="جم" />
+            <JFXTextField fx:id="et_unitInStock" alignment="CENTER" layoutX="78.0" layoutY="196.0" prefHeight="36.0" prefWidth="214.0" styleClass="textFeild" />
+            <Label layoutX="13.0" layoutY="214.0" prefHeight="27.0" prefWidth="49.0" styleClass="text_Black" text="وحده" />
+            <Label layoutX="369.0" layoutY="205.0" prefHeight="27.0" prefWidth="117.0" styleClass="text_Black" text="العدد الموجود" />
+            <Label layoutX="369.0" layoutY="278.0" prefHeight="27.0" prefWidth="117.0" styleClass="text_Black" text="سعرشراء كجم" />
+            <JFXTextField fx:id="et_purchase_price" alignment="CENTER" layoutX="78.0" layoutY="259.0" prefHeight="36.0" prefWidth="214.0" styleClass="textFeild" />
+            <Label layoutX="15.0" layoutY="278.0" prefHeight="27.0" prefWidth="49.0" styleClass="text_Black" text="جنية" />
+            <Label layoutX="349.0" layoutY="402.0" prefHeight="27.0" prefWidth="137.0" styleClass="text_Black" text="سعربيع كجم الجملة" />
+            <JFXTextField fx:id="et_kata3y_price" alignment="CENTER" layoutX="78.0" layoutY="326.0" prefHeight="36.0" prefWidth="214.0" styleClass="textFeild" />
+            <Label layoutX="15.0" layoutY="345.0" prefHeight="27.0" prefWidth="49.0" styleClass="text_Black" text="جنية" />
+            <Label layoutX="327.0" layoutY="345.0" prefHeight="27.0" prefWidth="153.0" styleClass="text_Black" text="سعربيع كجم القطاعى" />
+            <JFXTextField fx:id="et_gomla_price" alignment="CENTER" layoutX="76.0" layoutY="383.0" prefHeight="36.0" prefWidth="214.0" styleClass="textFeild" />
+            <Label layoutX="13.0" layoutY="402.0" prefHeight="27.0" prefWidth="49.0" styleClass="text_Black" text="جنية" />
+            <JFXTextField fx:id="et_gomlet_gomla" alignment="CENTER" layoutX="76.0" layoutY="443.0" prefHeight="36.0" prefWidth="214.0" styleClass="textFeild" />
+            <Label layoutX="318.0" layoutY="462.0" prefHeight="27.0" prefWidth="174.0" styleClass="text_Black" text="سعربيع كجم جملة الجملة" />
+            <Label layoutX="12.0" layoutY="466.0" prefHeight="27.0" prefWidth="39.0" styleClass="text_Black" text="جنية" />
+            <JFXButton layoutX="160.0" layoutY="504.0" onAction="#btn_add_product_click" prefHeight="36.0" prefWidth="174.0" styleClass="button_Normal" text="حفظ" />
+            <Label fx:id="etNotify" alignment="CENTER" layoutX="31.0" layoutY="551.0" prefHeight="27.0" prefWidth="443.0" styleClass="text_Black" />
+         </children></Pane>
+      <Pane fx:id="paneCalc" layoutX="371.0" layoutY="199.0" prefHeight="314.0" prefWidth="196.0" styleClass="grey_back" visible="false">
+         <children>
+            <Label fx:id="txt_calc_result" layoutX="10.0" layoutY="14.0" prefHeight="38.0" prefWidth="174.0" styleClass="textFeild" />
+            <JFXButton layoutX="17.0" layoutY="214.0" onAction="#btn_0_click" prefHeight="45.0" prefWidth="106.0" styleClass="button_Normal" text="0" />
+            <JFXButton layoutX="126.0" layoutY="213.0" onAction="#btn_opoint_click" prefHeight="45.0" prefWidth="47.0" styleClass="button_Normal" text="." />
+            <JFXButton layoutX="21.0" layoutY="64.0" onAction="#btn_7_click" prefHeight="27.0" prefWidth="39.0" styleClass="button_Normal" text="7" />
+            <JFXButton layoutX="73.0" layoutY="64.0" onAction="#btn_8_click" prefHeight="36.0" prefWidth="39.0" styleClass="button_Normal" text="8" />
+            <JFXButton layoutX="126.0" layoutY="64.0" onAction="#btn_9_click" prefHeight="36.0" prefWidth="49.0" styleClass="button_Normal" text="9" />
+            <JFXButton layoutX="19.0" layoutY="113.0" onAction="#btn_4_click" prefHeight="26.0" prefWidth="39.0" styleClass="button_Normal" text="4" />
+            <JFXButton layoutX="72.0" layoutY="113.0" onAction="#btn_5_click" prefHeight="32.0" prefWidth="47.0" styleClass="button_Normal" text="5" />
+            <JFXButton layoutX="125.0" layoutY="113.0" onAction="#btn_6_click" prefHeight="36.0" prefWidth="49.0" styleClass="button_Normal" text="6" />
+            <JFXButton layoutX="18.0" layoutY="164.0" onAction="#btn_1_click" prefHeight="26.0" prefWidth="39.0" styleClass="button_Normal" text="1" />
+            <JFXButton layoutX="71.0" layoutY="164.0" onAction="#btn_2_click" prefHeight="32.0" prefWidth="47.0" styleClass="button_Normal" text="2" />
+            <JFXButton layoutX="124.0" layoutY="164.0" onAction="#btn_3_click" prefHeight="36.0" prefWidth="49.0" styleClass="button_Normal" text="3" />
+            <JFXButton layoutX="6.0" layoutY="266.0" onAction="#btn_cancel_calc_click" prefHeight="36.0" prefWidth="90.0" styleClass="combobox" text="cancel" />
+            <JFXButton layoutX="101.0" layoutY="266.0" onAction="#btn_ok_calc_click" prefHeight="36.0" prefWidth="90.0" styleClass="combobox" text="ok" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
