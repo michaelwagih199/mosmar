@@ -9,8 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import jpaController.ProductsJpaController;
-
+import jpaConntroller.ProductsJpaController;
 
 /**
  *
@@ -49,7 +48,7 @@ public class ProductDAO {
  public void selectProduct(){
       EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
-
+      
         try {
 
             String sql = "SELECT p FROM Products p";
@@ -57,17 +56,20 @@ public class ProductDAO {
             Query query = eman.createQuery(sql);
             List<Products> cars = query.getResultList();
 
-            for (Products product : cars) {
-                System.out.print( product.getProductName());
-                System.out.print( product.getGomelGomlaBuyPrice());
-                System.out.println(product.getPerchusePrice());
-            }
+//            for (Products product : cars) {
+//                System.out.print( product.getProductName());
+//                System.out.print( product.getGomelGomlaBuyPrice());
+//                System.out.println(product.getPerchusePrice());
+//            }
             
         } finally {
 
             eman.close();
             emf.close();
         }
+        float cars;
+        
+      
         
  }
  

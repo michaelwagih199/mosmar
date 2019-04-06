@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jpaController;
+package jpaConntroller;
 
 import entities.Products;
 import java.io.Serializable;
@@ -14,7 +14,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import jpaController.exceptions.NonexistentEntityException;
+import jpaConntroller.exceptions.NonexistentEntityException;
 
 /**
  *

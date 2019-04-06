@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="626.0" prefWidth="1305.0" stylesheets="@../res/application2.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.BuyController">
+     <children>
+      <AnchorPane layoutX="1.0" prefHeight="164.0" prefWidth="1303.0" styleClass="Seond_back" stylesheets="@../res/application2.css" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TextField fx:id="etBuyType" alignment="CENTER" disable="true" layoutX="556.0" layoutY="41.0" opacity="0.9" prefHeight="19.0" prefWidth="263.0" promptText="اختر نوع البيع" styleClass="textBoxView">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <JFXComboBox fx:id="compoFunctionType" layoutX="703.0" layoutY="105.0" onAction="#compoFunctionTypeClick" prefHeight="37.0" prefWidth="146.0" styleClass="combobox" />
+            <Label layoutX="377.0" layoutY="111.0" styleClass="textSearch" text="رقم الطلب" />
+            <Label layoutX="861.0" layoutY="109.0" styleClass="textSearch" text="نوع العملية" />
+            <TextField fx:id="txtInvoiceNomber" alignment="CENTER" disable="true" layoutX="294.0" layoutY="100.0" prefHeight="48.0" prefWidth="76.0" styleClass="textBoxView">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Label layoutX="210.0" layoutY="109.0" styleClass="textSearch" text="اسم العميل " />
+            <TextField fx:id="etClientName" alignment="CENTER" disable="true" layoutX="11.0" layoutY="99.0" prefHeight="48.0" prefWidth="199.0" styleClass="textBoxView">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Label layoutX="665.0" layoutY="7.0" prefHeight="31.0" prefWidth="44.0" styleClass="textHeder" text="بيع:" />
+            <ImageView fitHeight="62.0" fitWidth="58.0" layoutX="16.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/002-home.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fitHeight="62.0" fitWidth="58.0" layoutX="1244.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/001-edit.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <TextField fx:id="etProductName" alignment="CENTER" layoutX="948.0" layoutY="98.0" opacity="0.9" prefHeight="48.0" prefWidth="255.0" promptText="اسم الصنف" styleClass="textBoxView">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Label layoutX="1216.0" layoutY="110.0" styleClass="textSearch" text="اسم الصنف" />
+            <Label layoutX="652.0" layoutY="111.0" styleClass="textSearch" text="الكمية" />
+            <TextField fx:id="etQuantity" alignment="CENTER" layoutX="529.0" layoutY="100.0" prefHeight="48.0" prefWidth="114.0" styleClass="textBoxView">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Label fx:id="txtUnite" layoutX="488.0" layoutY="110.0" styleClass="textSearch" text="وحده" />
+            <Label layoutX="982.0" layoutY="19.0" prefHeight="31.0" prefWidth="146.0" styleClass="textHeder" text="التاريخ" />
+         </children></AnchorPane>
+      <AnchorPane layoutX="4.0" layoutY="554.0" prefHeight="72.0" prefWidth="1331.0" styleClass="Seond_back" stylesheets="@../res/application2.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label layoutX="1217.0" layoutY="22.0" styleClass="textSearch" text="الإجمالى" />
+            <TextField fx:id="txtTotal" alignment="CENTER" disable="true" layoutX="1007.0" layoutY="11.0" opacity="0.9" prefHeight="49.0" prefWidth="199.0" styleClass="textBoxView">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Label layoutX="900.0" layoutY="23.0" styleClass="textSearch" text="المدفوع" />
+            <Label layoutX="588.0" layoutY="24.0" styleClass="textSearch" text="المتبقى" />
+            <TextField fx:id="et_paid_up" alignment="CENTER" disable="true" layoutX="687.0" layoutY="11.0" opacity="0.9" prefHeight="49.0" prefWidth="199.0" styleClass="textBoxView">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="et_remaining" alignment="CENTER" disable="true" layoutX="372.0" layoutY="12.0" opacity="0.9" prefHeight="49.0" prefWidth="199.0" styleClass="textBoxView">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Label layoutX="310.0" layoutY="26.0" styleClass="textSearch" text="الخصم" />
+            <TextField fx:id="etDiscount" alignment="CENTER" layoutX="157.0" layoutY="14.0" opacity="0.9" prefHeight="49.0" prefWidth="140.0" styleClass="textBoxView">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <JFXButton layoutX="14.0" layoutY="17.0" onAction="#btn_submit_buy" prefHeight="41.0" prefWidth="133.0" styleClass="mainButton" text="تأكيد" />
+         </children></AnchorPane>
+      <TableView fx:id="table" layoutX="308.0" layoutY="164.0" prefHeight="389.0" prefWidth="1039.0" styleClass="text_normal" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="164.0">
+        <columns>
+          <TableColumn fx:id="col_total" prefWidth="175.0" text="القيمة" />
+          <TableColumn fx:id="col_quantity" prefWidth="202.0" text="الكمية" />
+            <TableColumn fx:id="col_product_price" prefWidth="248.0" text="السعر" />
+            <TableColumn fx:id="col_product_name" prefWidth="293.0" text="اسم الصنف" />
+            <TableColumn fx:id="col_id" prefWidth="122.0" text="كود الصنف" />
+        </columns>
+      </TableView>
+      <JFXButton layoutX="13.0" layoutY="246.0" onAction="#btn_totalBuy_click" prefHeight="100.0" prefWidth="227.0" styleClass="mainButton" text="اجمالى المبيعات" />
+      <JFXComboBox fx:id="compo_priceType" layoutX="9.0" layoutY="399.0" onAction="#compo_priceType_click" prefHeight="58.0" prefWidth="236.0" promptText="نوع البيع" styleClass="mainButton" />
+      <Label layoutX="102.0" layoutY="361.0" styleClass="textSearch" text="نوع البيع" />
+   </children>
+</AnchorPane>

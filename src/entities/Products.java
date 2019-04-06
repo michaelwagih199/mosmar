@@ -37,8 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Products.findBySupplierid", query = "SELECT p FROM Products p WHERE p.supplierid = :supplierid")
     , @NamedQuery(name = "Products.findByAllertWeight", query = "SELECT p FROM Products p WHERE p.allertWeight = :allertWeight")
     , @NamedQuery(name = "Products.findByAlertUnit", query = "SELECT p FROM Products p WHERE p.alertUnit = :alertUnit")
-    , @NamedQuery(name = "Products.findByAlertWeight", query = "SELECT p FROM Products p WHERE p.alertWeight = :alertWeight")})
-
+    , @NamedQuery(name = "Products.findByUnitsWeightInStock", query = "SELECT p FROM Products p WHERE p.unitsWeightInStock = :unitsWeightInStock")})
 public class Products implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -66,11 +65,11 @@ public class Products implements Serializable {
     @Column(name = "Supplier_id")
     private Integer supplierid;
     @Column(name = "allertWeight")
-    private Integer allertWeight;
+    private Float allertWeight;
     @Column(name = "alertUnit")
     private Integer alertUnit;
-    @Column(name = "alert_Weight")
-    private Integer alertWeight;
+    @Column(name = "Units_Weight_In_Stock")
+    private Float unitsWeightInStock;
 
     public Products() {
     }
@@ -151,11 +150,11 @@ public class Products implements Serializable {
         this.supplierid = supplierid;
     }
 
-    public Integer getAllertWeight() {
+    public Float getAllertWeight() {
         return allertWeight;
     }
 
-    public void setAllertWeight(Integer allertWeight) {
+    public void setAllertWeight(Float allertWeight) {
         this.allertWeight = allertWeight;
     }
 
@@ -167,12 +166,12 @@ public class Products implements Serializable {
         this.alertUnit = alertUnit;
     }
 
-    public Integer getAlertWeight() {
-        return alertWeight;
+    public Float getUnitsWeightInStock() {
+        return unitsWeightInStock;
     }
 
-    public void setAlertWeight(Integer alertWeight) {
-        this.alertWeight = alertWeight;
+    public void setUnitsWeightInStock(Float unitsWeightInStock) {
+        this.unitsWeightInStock = unitsWeightInStock;
     }
 
     @Override

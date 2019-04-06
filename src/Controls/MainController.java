@@ -46,10 +46,9 @@ public class MainController implements Initializable {
 
     @FXML
     private void btnBuyClick(ActionEvent event) throws Exception {
-//        Strore Store = new Strore();
-//        Store.setProductName("test");
-//        StoreDAO store = new StoreDAO();
-//        store.addStore(Store);
+        
+        helper.start("/mosmar/tapleScreen.fxml","صفحة البيع");
+        helper.close(btn_buy);
     }
 
     @FXML
@@ -76,7 +75,7 @@ public class MainController implements Initializable {
     @FXML
     private void btnStoreClick(ActionEvent event) throws IOException {
         
-        helper.start("/mosmar/main.fxml","الصفحة الرئيسية");
+        helper.start("/mosmar/stock.fxml","الصفحة الرئيسية");
         helper.close(btn_buy);
         
     }

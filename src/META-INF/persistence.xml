@@ -3,6 +3,7 @@
   <persistence-unit name="MOSMARPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entities.Products</class>
+    <class>entities.Customers</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mosmar?characterEncoding=UTF-8"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

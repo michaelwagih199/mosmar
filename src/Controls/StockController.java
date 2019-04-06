@@ -5,11 +5,12 @@
  */
 package Controls;
 
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-
 import dao.ProductDAO;
 import entities.Products;
 import helper.FxDialogs;
+import helper.UsefulCalculas;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -23,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -77,16 +79,29 @@ public class StockController implements Initializable {
     
     String defult = "0";
     String clickBool = "m";
+    boolean isUnit = false;
     
     private final ObservableList<Products> productList = FXCollections.observableArrayList();
     private final ProductDAO productDAO  = new ProductDAO();
+    @FXML
+    private JFXComboBox<String> compo_alert_unt;
+    @FXML
+    private JFXTextField etAlert;
+    @FXML
+    private Label txt_alert_unit;
+    @FXML
+    private TableColumn<Products, Float> col_uniteCounter;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadTabData();
         addButtonDeleteToTable();
         addButtonUbdateToTable();
-       // productDAO.selectProduct();
+      
+        compo_alert_unt.getItems().addAll("عدد");
+        compo_alert_unt.getItems().addAll("وزن");
+       updateStatusColor();
+    
     }    
 
     @FXML
@@ -106,18 +121,28 @@ public class StockController implements Initializable {
 
     @FXML
     private void btn_add_product_click(ActionEvent event) {
-        // insert data
+                  // insert data to products 
         try {
                 Products products = new Products();
+                UsefulCalculas calc = new UsefulCalculas();
                 products.setProductName(et_product_name.getText().toString());
                 products.setProductWeight(Integer.parseInt(et_product_weight.getText().toString()));
                 products.setPerchusePrice(Float.parseFloat(et_purchase_price.getText().toString()));
                 products.setPartitionBuyPrice(Float.parseFloat(et_kata3y_price.getText().toString()));
                 products.setGomelGomlaBuyPrice(Float.parseFloat(et_gomlet_gomla.getText().toString()));
                 products.setGomlaBuyPrice(Float.parseFloat(et_gomla_price.getText().toString()));
-                products.setUnitInStock(Float.parseFloat(et_unitInStock.getText().toString()));
-                //insert
+                products.setUnitsWeightInStock(Float.parseFloat(et_unitInStock.getText().toString()));
                 
+                products.setUnitInStock(calc.getUnitsFromHoleWeight(
+                        Float.parseFloat(et_unitInStock.getText().toString()),
+                        Integer.parseInt(et_product_weight.getText().toString())));
+                         
+                //insert
+                if (isUnit) {
+                    products.setAlertUnit(Integer.parseInt(etAlert.getText().toString()));
+                 }else if(!isUnit){
+                   products.setAllertWeight(Float.parseFloat(etAlert.getText().toString()));  
+                 }
                 productDAO.addProduct(products);
                 etNotify.setText("تم الحفظ");
                 clearText();                
@@ -213,7 +238,6 @@ private void addButtonUbdateToTable() {
                 return cell;
             }
         };
-
         colBtn.setCellFactory(cellFactory);
         table.getColumns().add(colBtn);
 
@@ -294,13 +318,16 @@ private void addButtonUbdateToTable() {
           
       col_product.setCellValueFactory(new PropertyValueFactory<>("productName"));
       col_weight.setCellValueFactory(new PropertyValueFactory<>("productWeight"));
-      col_unitInStock.setCellValueFactory(new PropertyValueFactory<>("unitInStock"));
+      col_unitInStock.setCellValueFactory(new PropertyValueFactory<>("unitsWeightInStock"));
       col_gomel_gomla.setCellValueFactory(new PropertyValueFactory<>("gomelGomlaBuyPrice"));
       col_purchase_price.setCellValueFactory(new PropertyValueFactory<>("perchusePrice")); 
       col_kata3y_price.setCellValueFactory(new PropertyValueFactory<>("partitionBuyPrice"));
       col_gomla_price.setCellValueFactory(new PropertyValueFactory<>("gomlaBuyPrice"));
-     
+      col_uniteCounter.setCellValueFactory(new PropertyValueFactory<>("unitInStock"));     
+      
       table.setItems(productDAO.getAllProducts()); 
+      
+      
     }
       
 
@@ -320,7 +347,52 @@ private void addButtonUbdateToTable() {
         et_purchase_price.clear();
         et_unitInStock.clear();
     }
+
+    @FXML
+    private void compo_alert_unt_click(ActionEvent event) {
+         String knownUsFrom = compo_alert_unt.getSelectionModel().getSelectedItem().toString();
+         if (knownUsFrom.equals("عدد")) {
+             txt_alert_unit.setText("وحده");
+             isUnit = true;
+            }else if (knownUsFrom.equals("وزن")) {
+             txt_alert_unit.setText("كجم");
+             isUnit = false;
+        }
+    }
       
+    
+    
+     public void updateStatusColor(){
+        col_uniteCounter.setCellFactory(column -> {
+        return new TableCell<Products, Float>() {
+            @Override
+            protected void updateItem(Float item, boolean empty) {
+                super.updateItem(item, empty);
+
+                setText(empty ? "" : getItem().toString());
+                setGraphic(null);
+
+                TableRow<Products> currentRow = getTableRow();
+      
+                if (!isEmpty()) {
+                    for(Products o : productDAO.getAllProducts()){
+                       if(Float.compare(item, o.getAlertUnit()) == 0)
+                        currentRow.setStyle("-fx-background-color:#FC0000");
+                    else{
+                         currentRow.setStyle("-fx-background-color:#57B846");
+                     }
+                       
+                     }
+    
+                }
+            }
+        };
+    }); 
+        
+        
+        
+   
+    }
       
     
 }
