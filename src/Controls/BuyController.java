@@ -1,32 +1,37 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controls;
 
 import com.jfoenix.controls.JFXComboBox;
+import dao.CustomerDAO;
+import dao.ProductDAO;
+import entities.Customers;
+import entities.Products;
+import entities.custom_BuyTable;
 import helper.FxDialogs;
+import helper.Helper;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
+import org.controlsfx.control.textfield.TextFields;
 
-/**
- * FXML Controller class
- *
- * @author OM EL NOUR
- */
 public class BuyController implements Initializable {
 
     @FXML
     private TextField etBuyType;
-
     @FXML
     private TextField txtInvoiceNomber;
     @FXML
@@ -48,34 +53,46 @@ public class BuyController implements Initializable {
     @FXML
     private JFXComboBox<String> compo_priceType;
     @FXML
-    private TableView<?> table;
+    private TableView<custom_BuyTable> table;
     @FXML
-    private TableColumn<?, ?> col_total;
+    private TableColumn<custom_BuyTable, Float> col_total;
     @FXML
-    private TableColumn<?, ?> col_quantity;
+    private TableColumn<custom_BuyTable, Float> col_quantity;
     @FXML
-    private TableColumn<?, ?> col_product_price;
+    private TableColumn<custom_BuyTable, Float> col_product_price;
     @FXML
-    private TableColumn<?, ?> col_product_name;
+    private TableColumn<custom_BuyTable, String> col_product_name;
     @FXML
-    private TableColumn<?, ?> col_id;
+    private TableColumn<custom_BuyTable, Integer> col_id;
     @FXML
     private JFXComboBox<String> compoFunctionType;
 
-    /**
-     * Initializes the controller class.
-     */
+    ProductDAO productDAO = new ProductDAO();
+    CustomerDAO customerDAO = new CustomerDAO();
+    Helper help = new Helper();
+    @FXML
+    private Label txtDate;
+    
+    ObservableList<custom_BuyTable> row = FXCollections.observableArrayList();
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         compo_priceType.getItems().addAll("قطاعى");
         compo_priceType.getItems().addAll("جملة");
         compo_priceType.getItems().addAll("شبة جملة");
-        
+
         compoFunctionType.getItems().addAll("نقدى");
         compoFunctionType.getItems().addAll("آجل");
+
+        TextFields.bindAutoCompletion(etProductName, getAllProductName());
+        TextFields.bindAutoCompletion(etClientName, getAllCustomerName());
+        txtDate.setText(help.getDate());
         
-    }    
+        addButtonDeleteToTable();
+        
+ 
+    }
 
     @FXML
     private void btn_submit_buy(ActionEvent event) {
@@ -87,25 +104,125 @@ public class BuyController implements Initializable {
 
     @FXML
     private void compo_priceType_click(ActionEvent event) {
+
         String knownUsFrom = compo_priceType.getSelectionModel().getSelectedItem().toString();
         etBuyType.setText(knownUsFrom);
+        if (knownUsFrom.equals("قطاعى")) {
+            txtUnite.setText("وحدة");
+        } else {
+            txtUnite.setText("كجم");
+        }
+
     }
 
     @FXML
     private void compoFunctionTypeClick(ActionEvent event) {
-          String knownUsFrom = compoFunctionType.getSelectionModel().getSelectedItem().toString();
-          if (knownUsFrom.equals("آجل")) {
-              etClientName.setDisable(false);
-              et_paid_up.setDisable(false);
-              et_remaining.setDisable(false); 
-              FxDialogs.showInformation("من فضلك", "ادخل اسم العميل والمدفوع والباقى ");
-        }else if (knownUsFrom.equals("نقدى")) {
-              etClientName.setDisable(true);
-              et_paid_up.setDisable(true);
-              et_remaining.setDisable(true);           
+        String knownUsFrom = compoFunctionType.getSelectionModel().getSelectedItem().toString();
+        if (knownUsFrom.equals("آجل")) {
+
+            et_paid_up.setDisable(false);
+
+            FxDialogs.showInformation("من فضلك", "ادخل اسم العميل والمدفوع");
+        } else if (knownUsFrom.equals("نقدى")) {
+
+            et_paid_up.setDisable(true);
+
         }
-          
-          
+
     }
+
+    @FXML
+    private void btn_add_product_click(ActionEvent event) {
+        row.add(new custom_BuyTable(1, "hdhdhfdhd", 0, 0, 0));
+        
+        System.out.println(productDAO.getProductId(etProductName.getText().toString()));
+        
+        loadTabData();
+    }
+
+    /**
+     *
+     * @return all product name
+     */
+    public ArrayList<String> getAllProductName() {
+
+        ArrayList<String> result = new ArrayList<String>();
+        for (Products o : productDAO.getAllProducts()) {
+            result.add(o.getProductName());
+        }
+        return result;
+    }
+
+    /**
+     *
+     * @return list of all customers
+     */
+    public ArrayList<String> getAllCustomerName() {
+
+        ArrayList<String> result = new ArrayList<String>();
+        for (Customers o : customerDAO.getAllCustomer()) {
+            result.add(o.getCustomerName());
+        }
+        return result;
+    }
+
+    public void loadTabData() {
+       
+        col_id.setCellValueFactory(new PropertyValueFactory<>("idProduct"));
+        col_product_name.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        col_product_price.setCellValueFactory(new PropertyValueFactory<>("price"));
+        col_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        col_total.setCellValueFactory(new PropertyValueFactory<>("total"));
+        
+        table.setItems(row);
+    }
+
     
+        //delete row
+    private void addButtonDeleteToTable() {
+        TableColumn<custom_BuyTable, Void> colBtn = new TableColumn();
+
+        Callback<TableColumn<custom_BuyTable, Void>, TableCell<custom_BuyTable, Void>> cellFactory;
+        cellFactory = new Callback<TableColumn<custom_BuyTable, Void>, TableCell<custom_BuyTable, Void>>() {
+            @Override
+            public TableCell<custom_BuyTable, Void> call(final TableColumn<custom_BuyTable, Void> param) {
+                final TableCell<custom_BuyTable, Void> cell = new TableCell<custom_BuyTable, Void>() {
+
+                    private final Button btn = new Button("مسح");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+
+                            if (FxDialogs.showConfirm("مسح المنتج", "هل تريد مسح المنتج?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
+                                custom_BuyTable data = getTableView().getItems().get(getIndex());
+                                try {
+                                    table.getItems().remove(data);
+                                } catch (Exception ex) {
+                                    System.out.println(ex.getLocalizedMessage());
+                                }
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            btn.getStyleClass().add("button_Small");
+                            setGraphic(btn);
+
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+        table.getColumns().add(colBtn);
+    }
+
 }

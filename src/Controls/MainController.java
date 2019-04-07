@@ -21,8 +21,9 @@ import javafx.fxml.Initializable;
  * @author OM EL NOUR
  */
 public class MainController implements Initializable {
+
     Helper helper = new Helper();
-    
+
     @FXML
     private JFXButton btn_buy;
     @FXML
@@ -42,12 +43,12 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @FXML
     private void btnBuyClick(ActionEvent event) throws Exception {
-        
-        helper.start("/mosmar/tapleScreen.fxml","صفحة البيع");
+
+        helper.start("/mosmar/buy.fxml", "صفحة البيع");
         helper.close(btn_buy);
     }
 
@@ -65,7 +66,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void btnBurshesClick(ActionEvent event) {
-        
+
     }
 
     @FXML
@@ -74,10 +75,10 @@ public class MainController implements Initializable {
 
     @FXML
     private void btnStoreClick(ActionEvent event) throws IOException {
-        
-        helper.start("/mosmar/stock.fxml","الصفحة الرئيسية");
+
+        helper.start("/mosmar/stock.fxml", "الصفحة الرئيسية");
         helper.close(btn_buy);
-        
+
     }
-    
+
 }

@@ -1,4 +1,3 @@
-
 package dao;
 
 import entities.Customers;
@@ -14,43 +13,32 @@ import jpaConntroller.CustomersJpaController;
  * @author OM EL NOUR
  */
 public class CustomerDAO {
+
     private final CustomersJpaController customersJpaController;
     private EntityManagerFactory emf;
-    
-    public CustomerDAO() {
-     emf = Persistence.createEntityManagerFactory("MOSMARPU");
-     customersJpaController = new CustomersJpaController(emf);
-    }
-    
- public void addCustomer(Customers customers){
-     customersJpaController.create(customers);
- }
-     
- public void editCustomer(Customers customers) throws Exception{
-     
-     customersJpaController.edit(customers);
- }
- 
- public void removeCustomer(int id) throws Exception{
-      customersJpaController.destroy(id);
- }
- 
- public ObservableList<Customers> getAllCustomer(){   
-      ObservableList<Customers> row = FXCollections.observableArrayList();
-      row.addAll(customersJpaController.findCustomersEntities());
-      return row;
- }
- 
- 
 
-      
-        
- }
- 
- 
- 
-    
-    
-    
-    
-  
+    public CustomerDAO() {
+        emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        customersJpaController = new CustomersJpaController(emf);
+    }
+
+    public void addCustomer(Customers customers) {
+        customersJpaController.create(customers);
+    }
+
+    public void editCustomer(Customers customers) throws Exception {
+
+        customersJpaController.edit(customers);
+    }
+
+    public void removeCustomer(int id) throws Exception {
+        customersJpaController.destroy(id);
+    }
+
+    public ObservableList<Customers> getAllCustomer() {
+        ObservableList<Customers> row = FXCollections.observableArrayList();
+        row.addAll(customersJpaController.findCustomersEntities());
+        return row;
+    }
+
+}

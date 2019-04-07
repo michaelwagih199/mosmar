@@ -1,4 +1,3 @@
-
 package Controls;
 
 import com.jfoenix.controls.JFXButton;
@@ -26,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
+import org.controlsfx.control.textfield.TextFields;
 
 /**
  * FXML Controller class
@@ -33,6 +33,7 @@ import javafx.util.Callback;
  * @author OM EL NOUR
  */
 public class CustomersController implements Initializable {
+
     @FXML
     private TableView<Customers> table;
     @FXML
@@ -43,7 +44,7 @@ public class CustomersController implements Initializable {
     private TableColumn<Customers, String> col_notes;
     @FXML
     private TableColumn<Customers, Integer> col_id;
-    
+
     @FXML
     private AnchorPane anchorAdd;
     @FXML
@@ -58,16 +59,17 @@ public class CustomersController implements Initializable {
     private JFXButton btn_save;
     @FXML
     private ImageView closeAdd;
-    
-     private final CustomerDAO customerDAO  = new CustomerDAO();
-   
-     
+
+    private final CustomerDAO customerDAO = new CustomerDAO();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadTabData();
         addButtonDeleteToTable();
-    }    
-    
+        addButtonModfyToTable();
+        addButtonAccountsToTable();
+
+    }
 
     @FXML
     private void add_click(MouseEvent event) {
@@ -76,7 +78,7 @@ public class CustomersController implements Initializable {
 
     @FXML
     private void home_Click(MouseEvent event) {
-        
+
     }
 
     @FXML
@@ -86,24 +88,24 @@ public class CustomersController implements Initializable {
             customers.setCustomerName(etCustomerName.getText().toString());
             customers.setCustomerPhone(etCustomerPhone.getText().toString());
             customers.setNotes(etNotes.getText().toString());
-            
-             customerDAO.addCustomer(customers);
-             txtNotify.setText("تم الحفظ");
-             clearText();                
+
+            customerDAO.addCustomer(customers);
+            txtNotify.setText("تم الحفظ");
+            clearText();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         loadTabData();
     }
-    
-    public void loadTabData(){    
-      col_ClientName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-      col_id.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-      col_phone.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
-      col_notes.setCellValueFactory(new PropertyValueFactory<>("notes"));       
-      table.setItems(customerDAO.getAllCustomer()); 
+
+    public void loadTabData() {
+        col_ClientName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        col_id.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        col_phone.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
+        col_notes.setCellValueFactory(new PropertyValueFactory<>("notes"));
+        table.setItems(customerDAO.getAllCustomer());
     }
-    
+
     //delete row
     private void addButtonDeleteToTable() {
         TableColumn<Customers, Void> colBtn = new TableColumn();
@@ -115,24 +117,23 @@ public class CustomersController implements Initializable {
                 final TableCell<Customers, Void> cell = new TableCell<Customers, Void>() {
 
                     private final Button btn = new Button("مسح");
-                  
-                            {
-                                
-                                btn.setOnAction((ActionEvent event) -> {
-                             
-                                     if (FxDialogs.showConfirm("مسح المنتج", "هل تريد مسح المنتج?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
-                                         Customers data = getTableView().getItems().get(getIndex());
-                                         try {
-                                             customerDAO.removeCustomer(data.getCustomerId());
-                                             loadTabData();
-                                         } catch (Exception ex) {
-                                             Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
-                                         }
-                                         
-                                     }
-                                });
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+
+                            if (FxDialogs.showConfirm("مسح المنتج", "هل تريد مسح المنتج?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
+                                Customers data = getTableView().getItems().get(getIndex());
+                                try {
+                                    customerDAO.removeCustomer(data.getCustomerId());
+                                    loadTabData();
+                                } catch (Exception ex) {
+                                    Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
                             }
-                    
+                        });
+                    }
+
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -141,7 +142,7 @@ public class CustomersController implements Initializable {
                         } else {
                             btn.getStyleClass().add("button_Small");
                             setGraphic(btn);
-                           
+
                         }
                     }
                 };
@@ -151,7 +152,82 @@ public class CustomersController implements Initializable {
 
         colBtn.setCellFactory(cellFactory);
         table.getColumns().add(colBtn);
+    }
 
+    //delete row
+    private void addButtonModfyToTable() {
+        TableColumn<Customers, Void> colBtn = new TableColumn();
+
+        Callback<TableColumn<Customers, Void>, TableCell<Customers, Void>> cellFactory;
+        cellFactory = new Callback<TableColumn<Customers, Void>, TableCell<Customers, Void>>() {
+            @Override
+            public TableCell<Customers, Void> call(final TableColumn<Customers, Void> param) {
+                final TableCell<Customers, Void> cell = new TableCell<Customers, Void>() {
+
+                    private final Button btn = new Button("تعديل");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            btn.getStyleClass().add("button_Small");
+                            setGraphic(btn);
+
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+        table.getColumns().add(colBtn);
+    }
+
+    //delete row
+    private void addButtonAccountsToTable() {
+        TableColumn<Customers, Void> colBtn = new TableColumn();
+
+        Callback<TableColumn<Customers, Void>, TableCell<Customers, Void>> cellFactory;
+        cellFactory = new Callback<TableColumn<Customers, Void>, TableCell<Customers, Void>>() {
+            @Override
+            public TableCell<Customers, Void> call(final TableColumn<Customers, Void> param) {
+                final TableCell<Customers, Void> cell = new TableCell<Customers, Void>() {
+
+                    private final Button btn = new Button("الحساب");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            btn.getStyleClass().add("button_Small");
+                            setGraphic(btn);
+
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+        table.getColumns().add(colBtn);
     }
 
     @FXML
@@ -160,9 +236,9 @@ public class CustomersController implements Initializable {
     }
 
     private void clearText() {
-       etCustomerName.clear();
-       etCustomerPhone.clear();
-       etNotes.clear();
+        etCustomerName.clear();
+        etCustomerPhone.clear();
+        etNotes.clear();
     }
 
     @FXML

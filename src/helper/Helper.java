@@ -42,82 +42,73 @@ import javafx.stage.Stage;
  * @author NozomProgrammers
  */
 public class Helper {
-    
-     public void start(String xml,String title) throws IOException{
-       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(xml));
-         Parent root1 = (Parent) fxmlLoader.load();
-         Stage stage = new Stage();
-         stage.setTitle(title);
-         stage.setScene(new Scene(root1));  
-         stage.setResizable(false);
-         stage.getIcons().add(new Image("/res/logo.png"));
-         stage.show();
-  }
-     /**
-      * 
-      * @param btnId
-      * @throws IOException 
-      */
-       public void close(Button btnId) throws IOException{
+
+    public void start(String xml, String title) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(xml));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root1));
+        stage.setResizable(false);
+        stage.getIcons().add(new Image("/res/logo.png"));
+        stage.show();
+    }
+
+    /**
+     *
+     * @param btnId
+     * @throws IOException
+     */
+    public void close(Button btnId) throws IOException {
         Stage stage = (Stage) btnId.getScene().getWindow();
         // do what you have to do
-       stage.close();
-  }
-       
-     public void closeC(ComboBox combo) throws IOException{
+        stage.close();
+    }
+
+    public void closeC(ComboBox combo) throws IOException {
         Stage stage = (Stage) combo.getScene().getWindow();
         // do what you have to do
-       stage.close();
-  }
-     
-        public void closeI(ImageView imge) throws IOException{
+        stage.close();
+    }
+
+    public void closeI(ImageView imge) throws IOException {
         Stage stage = (Stage) imge.getScene().getWindow();
         // do what you have to do
-       stage.close();
-  }
-     
-  public void validateInput(JFXTextField txtField){
-      RequiredFieldValidator validator = new RequiredFieldValidator();
-        
+        stage.close();
+    }
+
+    public void validateInput(JFXTextField txtField) {
+        RequiredFieldValidator validator = new RequiredFieldValidator();
+
         txtField.getValidators().add(validator);
         validator.setMessage("مطلوب قيمتة");
-        txtField.focusedProperty().addListener(new ChangeListener<Boolean>()
-         {
+        txtField.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-              
-             if (!newValue) {
+
+                if (!newValue) {
                     txtField.validate();
                 }
             }
         }
         );
-  }
-  
-  
-  public boolean isDouble( String input )
-{
-   try
-   {
-      Double.parseDouble(input );
-      return true;
-   }
-   catch( Exception e )
-   {
-      return false;
-   }
-}
-  
-  public String getDate(){
-      
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-	LocalDateTime now = LocalDateTime.now();
-        return dtf.format(now);
-        
-  }
-  
-  
-  
+    }
 
-       
+    public boolean isDouble(String input) {
+        try {
+            Double.parseDouble(input);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public String getDate() {
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
+
+    }
+
 }

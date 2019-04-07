@@ -6,7 +6,7 @@
 }
 
 .Seond_back{
-    -fx-background-color:#555555;    
+    -fx-background-color:#B2B0AF;    
 }
 .Third_back{
     -fx-background-color:#FD8469; 
@@ -165,11 +165,13 @@
     -fx-font-family: "Arial";
      -fx-background-color: #004E64;
     -fx-font-size: 15pt;
-    -fx-prompt-text-fill: #333335;
+     -fx-text-fill: #FFFFFF;
+    -fx-prompt-text-fill: #FFFFFF;
 }
 .combobox_user{
     -fx-font-family: "Arial";
      -fx-background-color: #54C0EB;
     -fx-font-size: 15pt;
-    -fx-prompt-text-fill: #333335;
+     -fx-text-fill: FFFFFF;
+    -fx-prompt-text-fill: #FFFFFF;
 }

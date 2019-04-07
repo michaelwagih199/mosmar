@@ -24,22 +24,24 @@ import javafx.stage.StageStyle;
 
 /**
  *
- * @author omElnour
- * using
- * 
-    FxDialogs.showInformation("Hi", "Good Morning y'all!");
-    if (FxDialogs.showConfirm("Choose one baby!", "Can i ask you a question?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
-    FxDialogs.showWarning(null, "Pay attention to my next question!");
-    String answer = FxDialogs.showTextInput("Are you a pink elephant disguised as a flying pig?", "Tell me!", "No");
-    FxDialogs.showError(null, "You should not have said " + answer + "!");
-    FxDialogs.showException("Now i'm angry", "I'm going home...", new RuntimeException("Exception caused by angry dinossaurs"));
-}
-* 
-          
- * 
+ * @author omElnour using
+ *
+ * FxDialogs.showInformation("Hi", "Good Morning y'all!"); if
+ * (FxDialogs.showConfirm("Choose one baby!", "Can i ask you a question?",
+ * FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
+ * FxDialogs.showWarning(null, "Pay attention to my next question!"); String
+ * answer = FxDialogs.showTextInput("Are you a pink elephant disguised as a
+ * flying pig?", "Tell me!", "No"); FxDialogs.showError(null, "You should not
+ * have said " + answer + "!"); FxDialogs.showException("Now i'm angry", "I'm
+ * going home...", new RuntimeException("Exception caused by angry
+ * dinossaurs")); }
+ *
+ *
+ *
  */
 public class FxDialogs {
-        public static void showInformation(String title, String message) {
+
+    public static void showInformation(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Information");

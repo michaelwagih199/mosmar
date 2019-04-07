@@ -76,13 +76,13 @@ public class StockController implements Initializable {
     private Pane paneCalc;
     @FXML
     private Label txt_calc_result;
-    
+
     String defult = "0";
     String clickBool = "m";
     boolean isUnit = false;
-    
+
     private final ObservableList<Products> productList = FXCollections.observableArrayList();
-    private final ProductDAO productDAO  = new ProductDAO();
+    private final ProductDAO productDAO = new ProductDAO();
     @FXML
     private JFXComboBox<String> compo_alert_unt;
     @FXML
@@ -91,18 +91,17 @@ public class StockController implements Initializable {
     private Label txt_alert_unit;
     @FXML
     private TableColumn<Products, Float> col_uniteCounter;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadTabData();
         addButtonDeleteToTable();
         addButtonUbdateToTable();
-      
+
         compo_alert_unt.getItems().addAll("عدد");
         compo_alert_unt.getItems().addAll("وزن");
-       updateStatusColor();
-    
-    }    
+
+    }
 
     @FXML
     private void homeClick(MouseEvent event) {
@@ -115,47 +114,46 @@ public class StockController implements Initializable {
 
     @FXML
     private void close_anchor_add(MouseEvent event) {
-          paneAddProduct.setVisible(false);
-          paneCalc.setVisible(false);
+        paneAddProduct.setVisible(false);
+        paneCalc.setVisible(false);
     }
 
     @FXML
     private void btn_add_product_click(ActionEvent event) {
-                  // insert data to products 
+        // insert data to products 
         try {
-                Products products = new Products();
-                UsefulCalculas calc = new UsefulCalculas();
-                products.setProductName(et_product_name.getText().toString());
-                products.setProductWeight(Integer.parseInt(et_product_weight.getText().toString()));
-                products.setPerchusePrice(Float.parseFloat(et_purchase_price.getText().toString()));
-                products.setPartitionBuyPrice(Float.parseFloat(et_kata3y_price.getText().toString()));
-                products.setGomelGomlaBuyPrice(Float.parseFloat(et_gomlet_gomla.getText().toString()));
-                products.setGomlaBuyPrice(Float.parseFloat(et_gomla_price.getText().toString()));
-                products.setUnitsWeightInStock(Float.parseFloat(et_unitInStock.getText().toString()));
-                
-                products.setUnitInStock(calc.getUnitsFromHoleWeight(
-                        Float.parseFloat(et_unitInStock.getText().toString()),
-                        Integer.parseInt(et_product_weight.getText().toString())));
-                         
-                //insert
-                if (isUnit) {
-                    products.setAlertUnit(Integer.parseInt(etAlert.getText().toString()));
-                 }else if(!isUnit){
-                   products.setAllertWeight(Float.parseFloat(etAlert.getText().toString()));  
-                 }
-                productDAO.addProduct(products);
-                etNotify.setText("تم الحفظ");
-                clearText();                
-                      
+            Products products = new Products();
+            UsefulCalculas calc = new UsefulCalculas();
+            products.setProductName(et_product_name.getText().toString());
+            products.setProductWeight(Integer.parseInt(et_product_weight.getText().toString()));
+            products.setPerchusePrice(Float.parseFloat(et_purchase_price.getText().toString()));
+            products.setPartitionBuyPrice(Float.parseFloat(et_kata3y_price.getText().toString()));
+            products.setGomelGomlaBuyPrice(Float.parseFloat(et_gomlet_gomla.getText().toString()));
+            products.setGomlaBuyPrice(Float.parseFloat(et_gomla_price.getText().toString()));
+            products.setUnitsWeightInStock(Float.parseFloat(et_unitInStock.getText().toString()));
+
+            products.setUnitInStock(calc.getUnitsFromHoleWeight(
+                    Float.parseFloat(et_unitInStock.getText().toString()),
+                    Integer.parseInt(et_product_weight.getText().toString())));
+
+            //insert
+            if (isUnit) {
+                products.setAlertUnit(Integer.parseInt(etAlert.getText().toString()));
+            } else if (!isUnit) {
+                products.setAllertWeight(Float.parseFloat(etAlert.getText().toString()));
+            }
+            productDAO.addProduct(products);
+            etNotify.setText("تم الحفظ");
+            clearText();
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }  
-       loadTabData();
-        
+        }
+        loadTabData();
+
     }
-    
-    
-private void addButtonDeleteToTable() {
+
+    private void addButtonDeleteToTable() {
         TableColumn<Products, Void> colBtn = new TableColumn();
 
         Callback<TableColumn<Products, Void>, TableCell<Products, Void>> cellFactory;
@@ -165,24 +163,24 @@ private void addButtonDeleteToTable() {
                 final TableCell<Products, Void> cell = new TableCell<Products, Void>() {
 
                     private final Button btn = new Button("مسح");
-                  
-                            {
-                                
-                                btn.setOnAction((ActionEvent event) -> {
-                             
-                                     if (FxDialogs.showConfirm("مسح المنتج", "هل تريد مسح المنتج?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
-                                         Products data = getTableView().getItems().get(getIndex());
-                                         try {
-                                             productDAO.removeProduct(data.getProductid());
-                                             loadTabData();
-                                         } catch (Exception ex) {
-                                             Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
-                                         }
-                                         
-                                     }
-                                });
+
+                    {
+
+                        btn.setOnAction((ActionEvent event) -> {
+
+                            if (FxDialogs.showConfirm("مسح المنتج", "هل تريد مسح المنتج?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
+                                Products data = getTableView().getItems().get(getIndex());
+                                try {
+                                    productDAO.removeProduct(data.getProductid());
+                                    loadTabData();
+                                } catch (Exception ex) {
+                                    Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
                             }
-                    
+                        });
+                    }
+
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -191,7 +189,7 @@ private void addButtonDeleteToTable() {
                         } else {
                             btn.getStyleClass().add("button_Small");
                             setGraphic(btn);
-                           
+
                         }
                     }
                 };
@@ -204,7 +202,7 @@ private void addButtonDeleteToTable() {
 
     }
 
-private void addButtonUbdateToTable() {
+    private void addButtonUbdateToTable() {
         TableColumn<Products, Void> colBtn = new TableColumn();
 
         Callback<TableColumn<Products, Void>, TableCell<Products, Void>> cellFactory;
@@ -214,15 +212,15 @@ private void addButtonUbdateToTable() {
                 final TableCell<Products, Void> cell = new TableCell<Products, Void>() {
 
                     private final Button btn = new Button("تعديل");
-                  
-                            {
-                                btn.setOnAction((ActionEvent event) -> {
-                                    
-                                    Products data = getTableView().getItems().get(getIndex());
-                                    System.out.println("selectedData: " + data);
-                                });
-                            }
-                    
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+
+                            Products data = getTableView().getItems().get(getIndex());
+                            System.out.println("selectedData: " + data);
+                        });
+                    }
+
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -231,7 +229,7 @@ private void addButtonUbdateToTable() {
                         } else {
                             btn.getStyleClass().add("button_Small");
                             setGraphic(btn);
-                           
+
                         }
                     }
                 };
@@ -243,101 +241,93 @@ private void addButtonUbdateToTable() {
 
     }
 
-   
     //calculator
-    
-    
     @FXML
     private void btn_0_click(ActionEvent event) {
-        
+
     }
 
     @FXML
     private void btn_opoint_click(ActionEvent event) {
-      
+
     }
 
     @FXML
     private void btn_7_click(ActionEvent event) {
-        
+
     }
 
     @FXML
     private void btn_8_click(ActionEvent event) {
-      
+
     }
 
     @FXML
     private void btn_9_click(ActionEvent event) {
-        
+
     }
 
     @FXML
     private void btn_4_click(ActionEvent event) {
-       
+
     }
 
     @FXML
     private void btn_5_click(ActionEvent event) {
-          
+
     }
 
     @FXML
     private void btn_6_click(ActionEvent event) {
-        
+
     }
 
     @FXML
     private void btn_1_click(ActionEvent event) {
-         
+
     }
 
     @FXML
     private void btn_2_click(ActionEvent event) {
-       
+
     }
 
     @FXML
     private void btn_3_click(ActionEvent event) {
-         
+
     }
 
     @FXML
     private void btn_cancel_calc_click(ActionEvent event) {
-      
+
     }
 
     @FXML
     private void btn_ok_calc_click(ActionEvent event) {
-      
-       
-    }
-    
-    
-      public void loadTabData(){
-          
-      col_product.setCellValueFactory(new PropertyValueFactory<>("productName"));
-      col_weight.setCellValueFactory(new PropertyValueFactory<>("productWeight"));
-      col_unitInStock.setCellValueFactory(new PropertyValueFactory<>("unitsWeightInStock"));
-      col_gomel_gomla.setCellValueFactory(new PropertyValueFactory<>("gomelGomlaBuyPrice"));
-      col_purchase_price.setCellValueFactory(new PropertyValueFactory<>("perchusePrice")); 
-      col_kata3y_price.setCellValueFactory(new PropertyValueFactory<>("partitionBuyPrice"));
-      col_gomla_price.setCellValueFactory(new PropertyValueFactory<>("gomlaBuyPrice"));
-      col_uniteCounter.setCellValueFactory(new PropertyValueFactory<>("unitInStock"));     
-      
-      table.setItems(productDAO.getAllProducts()); 
-      
-      
-    }
-      
 
-    
+    }
+
+    public void loadTabData() {
+
+        col_product.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        col_weight.setCellValueFactory(new PropertyValueFactory<>("productWeight"));
+        col_unitInStock.setCellValueFactory(new PropertyValueFactory<>("unitsWeightInStock"));
+        col_gomel_gomla.setCellValueFactory(new PropertyValueFactory<>("gomelGomlaBuyPrice"));
+        col_purchase_price.setCellValueFactory(new PropertyValueFactory<>("perchusePrice"));
+        col_kata3y_price.setCellValueFactory(new PropertyValueFactory<>("partitionBuyPrice"));
+        col_gomla_price.setCellValueFactory(new PropertyValueFactory<>("gomlaBuyPrice"));
+        col_uniteCounter.setCellValueFactory(new PropertyValueFactory<>("unitInStock"));
+
+        table.setItems(productDAO.getAllProducts());
+
+    }
+
     @FXML
     private void et_product_name_click(MouseEvent event) {
         etNotify.setText("");
     }
-    
-    public void clearText(){
+
+    public void clearText() {
         et_product_name.clear();
         et_gomla_price.clear();
         et_gomlet_gomla.clear();
@@ -350,49 +340,43 @@ private void addButtonUbdateToTable() {
 
     @FXML
     private void compo_alert_unt_click(ActionEvent event) {
-         String knownUsFrom = compo_alert_unt.getSelectionModel().getSelectedItem().toString();
-         if (knownUsFrom.equals("عدد")) {
-             txt_alert_unit.setText("وحده");
-             isUnit = true;
-            }else if (knownUsFrom.equals("وزن")) {
-             txt_alert_unit.setText("كجم");
-             isUnit = false;
+        String knownUsFrom = compo_alert_unt.getSelectionModel().getSelectedItem().toString();
+        if (knownUsFrom.equals("عدد")) {
+            txt_alert_unit.setText("وحده");
+            isUnit = true;
+        } else if (knownUsFrom.equals("وزن")) {
+            txt_alert_unit.setText("كجم");
+            isUnit = false;
         }
     }
-      
-    
-    
-     public void updateStatusColor(){
+
+    public void updateStatusColor() {
         col_uniteCounter.setCellFactory(column -> {
-        return new TableCell<Products, Float>() {
-            @Override
-            protected void updateItem(Float item, boolean empty) {
-                super.updateItem(item, empty);
+            return new TableCell<Products, Float>() {
+                @Override
+                protected void updateItem(Float item, boolean empty) {
+                    super.updateItem(item, empty);
 
-                setText(empty ? "" : getItem().toString());
-                setGraphic(null);
+                    setText(empty ? "" : getItem().toString());
+                    setGraphic(null);
 
-                TableRow<Products> currentRow = getTableRow();
-      
-                if (!isEmpty()) {
-                    for(Products o : productDAO.getAllProducts()){
-                       if(Float.compare(item, o.getAlertUnit()) == 0)
-                        currentRow.setStyle("-fx-background-color:#FC0000");
-                    else{
-                         currentRow.setStyle("-fx-background-color:#57B846");
-                     }
-                       
-                     }
-    
+                    TableRow<Products> currentRow = getTableRow();
+
+                    if (!isEmpty()) {
+                        for (Products o : productDAO.getAllProducts()) {
+                            if (Float.compare(item, o.getAlertUnit()) == 0) {
+                                currentRow.setStyle("-fx-background-color:#FC0000");
+                            } else {
+                                currentRow.setStyle("-fx-background-color:#57B846");
+                            }
+
+                        }
+
+                    }
                 }
-            }
-        };
-    }); 
-        
-        
-        
-   
+            };
+        });
+
     }
-      
-    
+
 }

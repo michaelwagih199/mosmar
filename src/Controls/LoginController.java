@@ -34,62 +34,58 @@ public class LoginController implements Initializable {
     private JFXPasswordField etpass;
     @FXML
     private Label lbllogin;
-    
-    String userNmae= "123";
+
+    String userNmae = "123";
     String Password = "123";
     String checkUser, checkPw;
-    Helper helper =  new Helper();
-    
+    Helper helper = new Helper();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @FXML
     private void loginClick(ActionEvent event) throws IOException {
-        
+
         checkUser = etUser.getText().toString();
         checkPw = etpass.getText().toString();
-        
-       if(checkUser.equals(userNmae) && checkPw.equals(Password)){
-        helper.start("/mosmar/main.fxml","الصفحة الرئيسية");
-        helper.close(btnLogin);
-                
-          }
-       
-          else{
-           lbllogin.setText("كلمة السر غير صحيحية");
-           System.out.println("no");
-         
-          }
-       
+
+        if (checkUser.equals(userNmae) && checkPw.equals(Password)) {
+            helper.start("/mosmar/main.fxml", "الصفحة الرئيسية");
+            helper.close(btnLogin);
+
+        } else {
+            lbllogin.setText("كلمة السر غير صحيحية");
+            System.out.println("no");
+
+        }
+
     }
 
     @FXML
     private void pressed(KeyEvent event) throws IOException {
-        
-         if(event.getCode().equals(KeyCode.ENTER)) {
-         login();
-              
+
+        if (event.getCode().equals(KeyCode.ENTER)) {
+            login();
+
         }
-        
+
     }
- 
-      public void login() throws IOException{
-            checkUser = etUser.getText().toString();
+
+    public void login() throws IOException {
+        checkUser = etUser.getText().toString();
         checkPw = etpass.getText().toString();
-        
-       if(checkUser.equals(userNmae) && checkPw.equals(Password)){
-        helper.start("/mosmar/main.fxml","الصفحة الرئيسية");
-        helper.close(btnLogin);
-                
-          }
-       
-          else{
-           lbllogin.setText("كلمة السر غير صحيحية");
-           System.out.println("no");
-         
-          }
+
+        if (checkUser.equals(userNmae) && checkPw.equals(Password)) {
+            helper.start("/mosmar/main.fxml", "الصفحة الرئيسية");
+            helper.close(btnLogin);
+
+        } else {
+            lbllogin.setText("كلمة السر غير صحيحية");
+            System.out.println("no");
+
+        }
     }
-    
+
 }
