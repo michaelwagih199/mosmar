@@ -8,6 +8,7 @@ import entities.Products;
 import entities.custom_BuyTable;
 import helper.FxDialogs;
 import helper.Helper;
+import helper.UsefulCalculas;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +72,7 @@ public class BuyController implements Initializable {
     ProductDAO productDAO = new ProductDAO();
     CustomerDAO customerDAO = new CustomerDAO();
     Helper help = new Helper();
+    UsefulCalculas usefullCalculas = new UsefulCalculas();
     @FXML
     private Label txtDate;
     
@@ -92,6 +94,7 @@ public class BuyController implements Initializable {
         
         addButtonDeleteToTable();
         
+        System.out.println(usefullCalculas.getProductPartitionPriceforunit(27));
  
     }
 
@@ -157,41 +160,13 @@ public class BuyController implements Initializable {
         
         List<Products> items = productDAO.getProductId(etProductName.getText().toString());
         for (Products product : items) {
-            row.add(new custom_BuyTable(product.getProductid(),
-                    product.getProductName(),
-                    Float.parseFloat(etQuantity.getText().toString()),
-                    product.get,
-                    0));
+//            row.add(new custom_BuyTable(product.getProductid(),
+//                    product.getProductName(),
+//                    Float.parseFloat(etQuantity.getText().toString()),
+//                    product.get,
+//                    0));
         }
         loadTabData();
-    }
-    
-    
-    public float getProductPartitionPrice(){
-       float result = 0 ;
-         List<Products> items = productDAO.getProductId(etProductName.getText().toString());
-        for (Products product : items) {
-          result = product.getPartitionBuyPrice();
-        }
-       return result;
-    }
-    
-    public float getProductgomlaPrice() {
-        float result = 0;
-        List<Products> items = productDAO.getProductId(etProductName.getText().toString());
-        for (Products product : items) {
-            result = product.getGomelGomlaBuyPrice();
-        }
-        return result;
-    }
-    
-    public float getProductgomletGomlaPrice() {
-        float result = 0;
-        List<Products> items = productDAO.getProductId(etProductName.getText().toString());
-        for (Products product : items) {
-            result = product.getGomelGomlaBuyPrice();
-        }
-        return result;
     }
 
 

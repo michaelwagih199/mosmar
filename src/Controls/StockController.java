@@ -10,7 +10,9 @@ import com.jfoenix.controls.JFXTextField;
 import dao.ProductDAO;
 import entities.Products;
 import helper.FxDialogs;
+import helper.Helper;
 import helper.UsefulCalculas;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -72,25 +74,23 @@ public class StockController implements Initializable {
     private JFXTextField et_gomlet_gomla;
     @FXML
     private Label etNotify;
-    @FXML
     private Pane paneCalc;
-    @FXML
-    private Label txt_calc_result;
 
     String defult = "0";
     String clickBool = "m";
     boolean isUnit = false;
+    Helper helper = new Helper();
 
     private final ObservableList<Products> productList = FXCollections.observableArrayList();
     private final ProductDAO productDAO = new ProductDAO();
-    @FXML
-    private JFXComboBox<String> compo_alert_unt;
+
     @FXML
     private JFXTextField etAlert;
     @FXML
     private Label txt_alert_unit;
+   
     @FXML
-    private TableColumn<Products, Float> col_uniteCounter;
+    private TableColumn<Products, Integer> col_id;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -98,13 +98,12 @@ public class StockController implements Initializable {
         addButtonDeleteToTable();
         addButtonUbdateToTable();
 
-        compo_alert_unt.getItems().addAll("عدد");
-        compo_alert_unt.getItems().addAll("وزن");
-
     }
 
     @FXML
-    private void homeClick(MouseEvent event) {
+    private void homeClick(MouseEvent event) throws IOException {
+        helper.start("/mosmar/main.fxml", "الصفحة الرئيسية");
+        helper.closePane(paneAddProduct);
     }
 
     @FXML
@@ -131,17 +130,9 @@ public class StockController implements Initializable {
             products.setGomelGomlaBuyPrice(Float.parseFloat(et_gomlet_gomla.getText().toString()));
             products.setGomlaBuyPrice(Float.parseFloat(et_gomla_price.getText().toString()));
             products.setUnitsWeightInStock(Float.parseFloat(et_unitInStock.getText().toString()));
+            products.setAllertWeight(Float.parseFloat(etAlert.getText().toString()));
 
-            products.setUnitInStock(calc.getUnitsFromHoleWeight(
-                    Float.parseFloat(et_unitInStock.getText().toString()),
-                    Integer.parseInt(et_product_weight.getText().toString())));
-
-            //insert
-            if (isUnit) {
-                products.setAlertUnit(Integer.parseInt(etAlert.getText().toString()));
-            } else if (!isUnit) {
-                products.setAllertWeight(Float.parseFloat(etAlert.getText().toString()));
-            }
+     
             productDAO.addProduct(products);
             etNotify.setText("تم الحفظ");
             clearText();
@@ -241,71 +232,6 @@ public class StockController implements Initializable {
 
     }
 
-    //calculator
-    @FXML
-    private void btn_0_click(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void btn_opoint_click(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void btn_7_click(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void btn_8_click(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void btn_9_click(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void btn_4_click(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void btn_5_click(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void btn_6_click(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void btn_1_click(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void btn_2_click(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void btn_3_click(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void btn_cancel_calc_click(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void btn_ok_calc_click(ActionEvent event) {
-
-    }
 
     public void loadTabData() {
 
@@ -316,8 +242,10 @@ public class StockController implements Initializable {
         col_purchase_price.setCellValueFactory(new PropertyValueFactory<>("perchusePrice"));
         col_kata3y_price.setCellValueFactory(new PropertyValueFactory<>("partitionBuyPrice"));
         col_gomla_price.setCellValueFactory(new PropertyValueFactory<>("gomlaBuyPrice"));
-        col_uniteCounter.setCellValueFactory(new PropertyValueFactory<>("unitInStock"));
-
+        col_id.setCellValueFactory(new PropertyValueFactory<>("productid"));
+        
+        //updateStatusColor();
+        
         table.setItems(productDAO.getAllProducts());
 
     }
@@ -338,20 +266,8 @@ public class StockController implements Initializable {
         et_unitInStock.clear();
     }
 
-    @FXML
-    private void compo_alert_unt_click(ActionEvent event) {
-        String knownUsFrom = compo_alert_unt.getSelectionModel().getSelectedItem().toString();
-        if (knownUsFrom.equals("عدد")) {
-            txt_alert_unit.setText("وحده");
-            isUnit = true;
-        } else if (knownUsFrom.equals("وزن")) {
-            txt_alert_unit.setText("كجم");
-            isUnit = false;
-        }
-    }
-
     public void updateStatusColor() {
-        col_uniteCounter.setCellFactory(column -> {
+        col_unitInStock.setCellFactory(column -> {
             return new TableCell<Products, Float>() {
                 @Override
                 protected void updateItem(Float item, boolean empty) {
@@ -364,7 +280,7 @@ public class StockController implements Initializable {
 
                     if (!isEmpty()) {
                         for (Products o : productDAO.getAllProducts()) {
-                            if (Float.compare(item, o.getAlertUnit()) == 0) {
+                            if (Float.compare(o.getUnitsWeightInStock(), o.getAllertWeight())==0) {
                                 currentRow.setStyle("-fx-background-color:#FC0000");
                             } else {
                                 currentRow.setStyle("-fx-background-color:#57B846");

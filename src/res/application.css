@@ -5,6 +5,13 @@
     -fx-background-color: #FDFFFC;    
 }
 
+.pattern_background {
+    -fx-background-image:url('../res/back.jpg');
+}
+
+.wood_background {
+    -fx-background-image:url('../res/wood.jpg');
+}
 .second_back{
     -fx-background-color: #ECF1F7;  
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
@@ -58,7 +65,7 @@
     -fx-border-color: #ffffff;
     -fx-border-width: 2;
     -fx-border-radius: 20;
-    -fx-background-color: #1F9D77;
+    -fx-background-color: #7A0027;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);  
     -fx-font-family: "Arial";
     

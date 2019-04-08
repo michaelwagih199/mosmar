@@ -33,6 +33,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -61,6 +63,18 @@ public class Helper {
      */
     public void close(Button btnId) throws IOException {
         Stage stage = (Stage) btnId.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+    }
+
+    public void closeAnchor(AnchorPane anchor) throws IOException {
+        Stage stage = (Stage) anchor.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+    }
+    
+      public void closePane(Pane anchor) throws IOException {
+        Stage stage = (Stage) anchor.getScene().getWindow();
         // do what you have to do
         stage.close();
     }

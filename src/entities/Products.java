@@ -29,14 +29,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Products.findAll", query = "SELECT p FROM Products p")
     , @NamedQuery(name = "Products.findByProductid", query = "SELECT p FROM Products p WHERE p.productid = :productid")
     , @NamedQuery(name = "Products.findByProductWeight", query = "SELECT p FROM Products p WHERE p.productWeight = :productWeight")
-    , @NamedQuery(name = "Products.findByUnitInStock", query = "SELECT p FROM Products p WHERE p.unitInStock = :unitInStock")
     , @NamedQuery(name = "Products.findByPerchusePrice", query = "SELECT p FROM Products p WHERE p.perchusePrice = :perchusePrice")
     , @NamedQuery(name = "Products.findByGomlaBuyPrice", query = "SELECT p FROM Products p WHERE p.gomlaBuyPrice = :gomlaBuyPrice")
     , @NamedQuery(name = "Products.findByPartitionBuyPrice", query = "SELECT p FROM Products p WHERE p.partitionBuyPrice = :partitionBuyPrice")
     , @NamedQuery(name = "Products.findByGomelGomlaBuyPrice", query = "SELECT p FROM Products p WHERE p.gomelGomlaBuyPrice = :gomelGomlaBuyPrice")
     , @NamedQuery(name = "Products.findBySupplierid", query = "SELECT p FROM Products p WHERE p.supplierid = :supplierid")
     , @NamedQuery(name = "Products.findByAllertWeight", query = "SELECT p FROM Products p WHERE p.allertWeight = :allertWeight")
-    , @NamedQuery(name = "Products.findByAlertUnit", query = "SELECT p FROM Products p WHERE p.alertUnit = :alertUnit")
     , @NamedQuery(name = "Products.findByUnitsWeightInStock", query = "SELECT p FROM Products p WHERE p.unitsWeightInStock = :unitsWeightInStock")})
 public class Products implements Serializable {
 
@@ -52,8 +50,6 @@ public class Products implements Serializable {
     @Column(name = "productWeight")
     private Integer productWeight;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "UnitInStock")
-    private Float unitInStock;
     @Column(name = "PerchusePrice")
     private Float perchusePrice;
     @Column(name = "GomlaBuyPrice")
@@ -66,8 +62,6 @@ public class Products implements Serializable {
     private Integer supplierid;
     @Column(name = "allertWeight")
     private Float allertWeight;
-    @Column(name = "alertUnit")
-    private Integer alertUnit;
     @Column(name = "Units_Weight_In_Stock")
     private Float unitsWeightInStock;
 
@@ -100,14 +94,6 @@ public class Products implements Serializable {
 
     public void setProductWeight(Integer productWeight) {
         this.productWeight = productWeight;
-    }
-
-    public Float getUnitInStock() {
-        return unitInStock;
-    }
-
-    public void setUnitInStock(Float unitInStock) {
-        this.unitInStock = unitInStock;
     }
 
     public Float getPerchusePrice() {
@@ -156,14 +142,6 @@ public class Products implements Serializable {
 
     public void setAllertWeight(Float allertWeight) {
         this.allertWeight = allertWeight;
-    }
-
-    public Integer getAlertUnit() {
-        return alertUnit;
-    }
-
-    public void setAlertUnit(Integer alertUnit) {
-        this.alertUnit = alertUnit;
     }
 
     public Float getUnitsWeightInStock() {

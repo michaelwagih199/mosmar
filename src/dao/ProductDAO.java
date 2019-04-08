@@ -69,9 +69,9 @@ public class ProductDAO {
         float cars;
 
     }
-    
-       public List<Products> getProductId(String ProductName) {
-        List<Products> cars  = new ArrayList<Products>();
+
+    public List<Products> getProductId(String ProductName) {
+        List<Products> cars = new ArrayList<Products>();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
 
@@ -81,7 +81,6 @@ public class ProductDAO {
             Query query = eman.createQuery(sql);
             query.setParameter("productName", ProductName);
             cars = query.getResultList();
-          
 
         } finally {
 
@@ -90,6 +89,11 @@ public class ProductDAO {
         }
 
         return cars;
+    }
+ 
+    
+    public Products getProductById(int Id) {
+        return productsController.findProducts(Id);
     }
 
 }
