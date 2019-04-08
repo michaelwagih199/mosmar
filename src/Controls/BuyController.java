@@ -73,10 +73,14 @@ public class BuyController implements Initializable {
     CustomerDAO customerDAO = new CustomerDAO();
     Helper help = new Helper();
     UsefulCalculas usefullCalculas = new UsefulCalculas();
+    
+    float totalCounter = 0;
     @FXML
     private Label txtDate;
     
     ObservableList<custom_BuyTable> row = FXCollections.observableArrayList();
+    @FXML
+    private TextField etDiscount1;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -94,8 +98,12 @@ public class BuyController implements Initializable {
         
         addButtonDeleteToTable();
         
+        /*
         System.out.println(usefullCalculas.getProductPartitionPriceforunit(27));
- 
+        System.out.println(usefullCalculas.allowOfunit(28));
+        usefullCalculas.is_allow(100, 28);
+        */
+    
     }
 
     @FXML
@@ -138,6 +146,7 @@ public class BuyController implements Initializable {
     @FXML
     private void btn_add_product_click(ActionEvent event) {
         boolean isMyComboBoxEmpty = compoFunctionType.getSelectionModel().isEmpty();
+        
         try {
             //validate of input
             if (etBuyType.getText().toString().isEmpty()) {
@@ -149,26 +158,41 @@ public class BuyController implements Initializable {
             } else if (isMyComboBoxEmpty) {
                 FxDialogs.showInformation("من فضلك", "اختر نوع العملية");
             } else {
-                // add to table
-                addProduct();
+                if (etBuyType.getText().toString().equals("قطاعى")) {
+                    addProductforPartion();
+                }
+                
+               
             }
         } catch (Exception e) {
         }
     }
     
-    public void addProduct() {
-        
+    public void addProductforPartion() {
+      
         List<Products> items = productDAO.getProductId(etProductName.getText().toString());
+        
         for (Products product : items) {
-//            row.add(new custom_BuyTable(product.getProductid(),
-//                    product.getProductName(),
-//                    Float.parseFloat(etQuantity.getText().toString()),
-//                    product.get,
-//                    0));
+            if (usefullCalculas.is_allow(Integer.parseInt(etQuantity.getText().toString()), product.getProductid())) {
+                float total =  usefullCalculas.getProductPartitionPriceforunit(product.getProductid())
+                    * Float.parseFloat(etQuantity.getText().toString());
+                row.add(new custom_BuyTable(product.getProductid(),
+                    product.getProductName(),
+                    Float.parseFloat(etQuantity.getText().toString()),
+                    usefullCalculas.getProductPartitionPriceforunit(product.getProductid()),
+                    total));
+                totalCounter += total ;
+                txtTotal.setText(String.valueOf(totalCounter));
+            }else{
+                int alloLimit = usefullCalculas.allowOfunit(product.getProductid());
+                FxDialogs.showWarning("احزر", "الحد المسموح للبيع فى المخزن"+"\n"+alloLimit+"\t"+"قطعة\n");
+            }
+            
         }
         loadTabData();
     }
-
+    
+ 
 
     /**
      *
@@ -227,6 +251,8 @@ public class BuyController implements Initializable {
                                 custom_BuyTable data = getTableView().getItems().get(getIndex());
                                 try {
                                     table.getItems().remove(data);
+                                    totalCounter -= data.getTotal();
+                                    txtTotal.setText(String.valueOf(totalCounter));
                                 } catch (Exception ex) {
                                     System.out.println(ex.getLocalizedMessage());
                                 }
