@@ -10,6 +10,7 @@ import helper.FxDialogs;
 import helper.Helper;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -133,12 +134,66 @@ public class BuyController implements Initializable {
 
     @FXML
     private void btn_add_product_click(ActionEvent event) {
-        row.add(new custom_BuyTable(1, "hdhdhfdhd", 0, 0, 0));
+        boolean isMyComboBoxEmpty = compoFunctionType.getSelectionModel().isEmpty();
+        try {
+            //validate of input
+            if (etBuyType.getText().toString().isEmpty()) {
+                FxDialogs.showInformation("من فضلك", "اختر نوع عملية البيع");
+            } else if (etProductName.getText().toString().isEmpty()) {
+                FxDialogs.showInformation("من فضلك", "ادخل اسم المنتج");
+            } else if (etQuantity.getText().toString().isEmpty()) {
+                FxDialogs.showInformation("من فضلك", "ادخل الكمية المباعة");
+            } else if (isMyComboBoxEmpty) {
+                FxDialogs.showInformation("من فضلك", "اختر نوع العملية");
+            } else {
+                // add to table
+                addProduct();
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    public void addProduct() {
         
-        System.out.println(productDAO.getProductId(etProductName.getText().toString()));
-        
+        List<Products> items = productDAO.getProductId(etProductName.getText().toString());
+        for (Products product : items) {
+            row.add(new custom_BuyTable(product.getProductid(),
+                    product.getProductName(),
+                    Float.parseFloat(etQuantity.getText().toString()),
+                    product.get,
+                    0));
+        }
         loadTabData();
     }
+    
+    
+    public float getProductPartitionPrice(){
+       float result = 0 ;
+         List<Products> items = productDAO.getProductId(etProductName.getText().toString());
+        for (Products product : items) {
+          result = product.getPartitionBuyPrice();
+        }
+       return result;
+    }
+    
+    public float getProductgomlaPrice() {
+        float result = 0;
+        List<Products> items = productDAO.getProductId(etProductName.getText().toString());
+        for (Products product : items) {
+            result = product.getGomelGomlaBuyPrice();
+        }
+        return result;
+    }
+    
+    public float getProductgomletGomlaPrice() {
+        float result = 0;
+        List<Products> items = productDAO.getProductId(etProductName.getText().toString());
+        for (Products product : items) {
+            result = product.getGomelGomlaBuyPrice();
+        }
+        return result;
+    }
+
 
     /**
      *

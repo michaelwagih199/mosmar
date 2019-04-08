@@ -77,7 +77,7 @@ public class ProductDAO {
 
         try {
 
-            String sql = "SELECT p.productid FROM Products p WHERE p.productName = :productName";
+            String sql = "SELECT p FROM Products p WHERE p.productName = :productName";
             Query query = eman.createQuery(sql);
             query.setParameter("productName", ProductName);
             cars = query.getResultList();
