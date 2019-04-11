@@ -34,9 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Orders.findByCustomerId", query = "SELECT o FROM Orders o WHERE o.customerId = :customerId")
     , @NamedQuery(name = "Orders.findByPaymentId", query = "SELECT o FROM Orders o WHERE o.paymentId = :paymentId")
     , @NamedQuery(name = "Orders.findBySuppliersId", query = "SELECT o FROM Orders o WHERE o.suppliersId = :suppliersId")
-    , @NamedQuery(name = "Orders.findByOrderDate", query = "SELECT o FROM Orders o WHERE o.orderDate = :orderDate")
-    , @NamedQuery(name = "Orders.findByPaymentDate", query = "SELECT o FROM Orders o WHERE o.paymentDate = :paymentDate")
-    , @NamedQuery(name = "Orders.findByPaid", query = "SELECT o FROM Orders o WHERE o.paid = :paid")})
+    , @NamedQuery(name = "Orders.findByOrderDate", query = "SELECT o FROM Orders o WHERE o.orderDate = :orderDate")})
 public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,12 +52,6 @@ public class Orders implements Serializable {
     @Column(name = "order_date")
     @Temporal(TemporalType.DATE)
     private Date orderDate;
-    @Column(name = "payment_date")
-    @Temporal(TemporalType.DATE)
-    private Date paymentDate;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "paid")
-    private Float paid;
     @Lob
     @Column(name = "order_type")
     private String orderType;
@@ -109,22 +101,6 @@ public class Orders implements Serializable {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
-    }
-
-    public Date getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(Date paymentDate) {
-        this.paymentDate = paymentDate;
-    }
-
-    public Float getPaid() {
-        return paid;
-    }
-
-    public void setPaid(Float paid) {
-        this.paid = paid;
     }
 
     public String getOrderType() {

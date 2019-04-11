@@ -29,5 +29,6 @@
             </Label>
          </children>
       </AnchorPane>
+      <Label layoutX="134.0" layoutY="14.0" prefHeight="62.0" prefWidth="433.0" styleClass="textHeder" text="محلات أشرف مسمار " />
    </children>
 </AnchorPane>

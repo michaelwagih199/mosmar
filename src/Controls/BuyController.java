@@ -27,6 +27,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 import org.controlsfx.control.textfield.TextFields;
 
@@ -73,15 +75,15 @@ public class BuyController implements Initializable {
     CustomerDAO customerDAO = new CustomerDAO();
     Helper help = new Helper();
     UsefulCalculas usefullCalculas = new UsefulCalculas();
-    
+
     float totalCounter = 0;
     @FXML
     private Label txtDate;
-    
+
     ObservableList<custom_BuyTable> row = FXCollections.observableArrayList();
     @FXML
     private TextField etDiscount1;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -95,19 +97,19 @@ public class BuyController implements Initializable {
         TextFields.bindAutoCompletion(etProductName, getAllProductName());
         TextFields.bindAutoCompletion(etClientName, getAllCustomerName());
         txtDate.setText(help.getDate());
-        
+
         addButtonDeleteToTable();
-        
+
         /*
         System.out.println(usefullCalculas.getProductPartitionPriceforunit(27));
         System.out.println(usefullCalculas.allowOfunit(28));
         usefullCalculas.is_allow(100, 28);
         */
-    
     }
 
     @FXML
     private void btn_submit_buy(ActionEvent event) {
+        
     }
 
     @FXML
@@ -146,7 +148,7 @@ public class BuyController implements Initializable {
     @FXML
     private void btn_add_product_click(ActionEvent event) {
         boolean isMyComboBoxEmpty = compoFunctionType.getSelectionModel().isEmpty();
-        
+
         try {
             //validate of input
             if (etBuyType.getText().toString().isEmpty()) {
@@ -161,38 +163,44 @@ public class BuyController implements Initializable {
                 if (etBuyType.getText().toString().equals("قطاعى")) {
                     addProductforPartion();
                 }
-                
-               
+
             }
         } catch (Exception e) {
         }
     }
-    
+
     public void addProductforPartion() {
-      
+
         List<Products> items = productDAO.getProductId(etProductName.getText().toString());
-        
+
         for (Products product : items) {
             if (usefullCalculas.is_allow(Integer.parseInt(etQuantity.getText().toString()), product.getProductid())) {
-                float total =  usefullCalculas.getProductPartitionPriceforunit(product.getProductid())
-                    * Float.parseFloat(etQuantity.getText().toString());
+                float total = usefullCalculas.getProductPartitionPriceforunit(product.getProductid())
+                        * Float.parseFloat(etQuantity.getText().toString());
                 row.add(new custom_BuyTable(product.getProductid(),
-                    product.getProductName(),
-                    Float.parseFloat(etQuantity.getText().toString()),
-                    usefullCalculas.getProductPartitionPriceforunit(product.getProductid()),
-                    total));
-                totalCounter += total ;
+                        product.getProductName(),
+                        Float.parseFloat(etQuantity.getText().toString()),
+                        usefullCalculas.getProductPartitionPriceforunit(product.getProductid()),
+                        total));
+                totalCounter += total;
                 txtTotal.setText(String.valueOf(totalCounter));
-            }else{
+                et_remaining.setText(String.valueOf(totalCounter));
+                etDiscount1.setText(String.valueOf(totalCounter));
+            } else {
                 int alloLimit = usefullCalculas.allowOfunit(product.getProductid());
-                FxDialogs.showWarning("احزر", "الحد المسموح للبيع فى المخزن"+"\n"+alloLimit+"\t"+"قطعة\n");
+                FxDialogs.showWarning("احزر", "الحد المسموح للبيع فى المخزن" + "\n" + alloLimit + "\t" + "قطعة\n");
             }
-            
+
         }
         loadTabData();
+        clearText();
     }
-    
- 
+
+    public void clearText() {
+        etClientName.clear();
+        etProductName.clear();
+        etQuantity.clear();
+    }
 
     /**
      *
@@ -221,18 +229,17 @@ public class BuyController implements Initializable {
     }
 
     public void loadTabData() {
-       
+
         col_id.setCellValueFactory(new PropertyValueFactory<>("idProduct"));
         col_product_name.setCellValueFactory(new PropertyValueFactory<>("productName"));
         col_product_price.setCellValueFactory(new PropertyValueFactory<>("price"));
         col_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         col_total.setCellValueFactory(new PropertyValueFactory<>("total"));
-        
+
         table.setItems(row);
     }
 
-    
-        //delete row
+    //delete row
     private void addButtonDeleteToTable() {
         TableColumn<custom_BuyTable, Void> colBtn = new TableColumn();
 
@@ -252,7 +259,11 @@ public class BuyController implements Initializable {
                                 try {
                                     table.getItems().remove(data);
                                     totalCounter -= data.getTotal();
+
                                     txtTotal.setText(String.valueOf(totalCounter));
+                                    et_remaining.setText(String.valueOf(totalCounter));
+                                    etDiscount1.setText(String.valueOf(totalCounter));
+
                                 } catch (Exception ex) {
                                     System.out.println(ex.getLocalizedMessage());
                                 }
@@ -279,6 +290,23 @@ public class BuyController implements Initializable {
 
         colBtn.setCellFactory(cellFactory);
         table.getColumns().add(colBtn);
+    }
+
+    @FXML
+    private void et_paid_up_pressed(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER)) {
+            float remainin = Float.parseFloat(txtTotal.getText().toString()) - Float.parseFloat(et_paid_up.getText().toString());
+            et_remaining.setText(String.valueOf(remainin));
+        }
+    }
+
+    @FXML
+    private void etDiscount_pressed(KeyEvent event) {
+
+        if (event.getCode().equals(KeyCode.ENTER)) {
+            float totalAfterDiscount = Float.parseFloat(et_remaining.getText().toString()) - Float.parseFloat(etDiscount.getText().toString());
+            etDiscount1.setText(String.valueOf(totalAfterDiscount));
+        }
     }
 
 }

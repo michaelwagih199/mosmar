@@ -4,7 +4,6 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -23,13 +22,7 @@
                </font>
             </TextField>
             <JFXComboBox fx:id="compoFunctionType" layoutX="448.0" layoutY="104.0" onAction="#compoFunctionTypeClick" prefHeight="37.0" prefWidth="124.0" promptText="نوع العملية" styleClass="combobox_user" unFocusColor="#727272" />
-            <Label layoutX="329.0" layoutY="31.0" styleClass="textSearch" text="رقم الطلب" />
             <Label layoutX="584.0" layoutY="108.0" styleClass="textSearch" text="نوع العملية" />
-            <TextField fx:id="txtInvoiceNomber" alignment="CENTER" disable="true" layoutX="229.0" layoutY="20.0" prefHeight="48.0" prefWidth="76.0" styleClass="textFeild1">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </TextField>
             <Label layoutX="336.0" layoutY="109.0" styleClass="textSearch" text="اسم العميل " />
             <TextField fx:id="etClientName" alignment="CENTER" layoutX="169.0" layoutY="99.0" prefHeight="48.0" prefWidth="167.0" styleClass="textFeild1">
                <font>
@@ -76,7 +69,7 @@
                   <Font size="20.0" />
                </font>
             </TextField>
-            <TextField fx:id="et_remaining" alignment="CENTER" disable="true" layoutX="689.0" layoutY="14.0" opacity="0.9" prefHeight="49.0" prefWidth="102.0" styleClass="textFeild1">
+            <TextField fx:id="et_remaining" alignment="CENTER" disable="true" layoutX="689.0" layoutY="12.0" opacity="0.9" prefHeight="49.0" prefWidth="102.0" styleClass="textFeild1">
                <font>
                   <Font size="20.0" />
                </font>
@@ -86,8 +79,8 @@
                   <Font size="20.0" />
                </font>
             </TextField>
-            <Label layoutX="624.0" layoutY="24.0" styleClass="textSearch" text="الخصم" />
-            <Label layoutX="490.0" layoutY="24.0" styleClass="textSearch" text="جنية" />
+            <Label layoutX="624.0" layoutY="22.0" styleClass="textSearch" text="الخصم" />
+            <Label layoutX="498.0" layoutY="23.0" styleClass="textSearch" text="جنية" />
             <JFXButton layoutX="14.0" layoutY="5.0" onAction="#btn_submit_buy" prefHeight="57.0" prefWidth="173.0" styleClass="mainButton" text="تأكيد" />
             <TextField fx:id="etDiscount1" alignment="CENTER" disable="true" editable="false" layoutX="248.0" layoutY="9.0" opacity="0.9" prefHeight="49.0" prefWidth="74.0" styleClass="textFeild1">
                <font>
@@ -109,6 +102,5 @@
       <JFXButton layoutX="20.0" layoutY="246.0" onAction="#btn_totalBuy_click" prefHeight="100.0" prefWidth="215.0" styleClass="mainButton" text="اجمالى المبيعات" />
       <JFXComboBox fx:id="compo_priceType" layoutX="28.0" layoutY="389.0" onAction="#compo_priceType_click" prefHeight="58.0" prefWidth="202.0" promptText="نوع البيع" styleClass="combobox_user" />
       <Label layoutX="93.0" layoutY="353.0" styleClass="textSearch" text="نوع البيع" />
-      <Separator layoutX="5.0" layoutY="173.0" prefHeight="0.0" prefWidth="1242.0" />
    </children>
 </AnchorPane>
