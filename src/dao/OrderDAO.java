@@ -2,10 +2,14 @@ package dao;
 
 import entities.Customers;
 import entities.Orders;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import jpaConntroller.OrdersJpaController;
 
 public class OrderDAO {
@@ -39,6 +43,33 @@ public class OrderDAO {
 
     public Orders getOrderById(int orderId) {
         return ordersJpaController.findOrders(orderId);
+    }
+
+    public int getCountOrder() {
+        return ordersJpaController.getOrdersCount();
+    }
+    
+    public int getLastOrderId() {
+        
+        List<Integer> cars = new ArrayList<Integer>();
+        int result = 0;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+
+        try {
+
+            String sql = "SELECT o.orderId FROM Orders o order by o.orderId";
+            Query query = eman.createQuery(sql);
+         
+            cars = query.getResultList();
+            result = cars.get(0);
+        } finally {
+
+            eman.close();
+            emf.close();
+        }
+
+        return result;
     }
 
 }

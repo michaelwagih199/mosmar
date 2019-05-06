@@ -28,7 +28,9 @@ public class UsefulCalculas {
         }
         return unite_price;
     }
-
+    
+ 
+    
     public boolean is_allow(int quantity, int id) {
         boolean result = false;
         int alloLimit = allowOfunit(id);
@@ -45,7 +47,7 @@ public class UsefulCalculas {
     public int allowOfunit(int id) {
         int result = 0;
         try {
-            Float alertWeght = productDAO.getProductById(id).getAllertWeight();
+            float alertWeght = productDAO.getProductById(id).getAllertWeight();
             int numberUnit = getUnitsFromHoleWeight(productDAO.getProductById(id).getUnitsWeightInStock(),
                     productDAO.getProductById(id).getProductWeight());
             result = (int) (numberUnit - alertWeght);
@@ -54,5 +56,40 @@ public class UsefulCalculas {
         }
 
         return result;
+    }
+     
+    
+    public float allowOfKG(int id) {
+        float result = 0;
+        try {
+            float alertWeght = productDAO.getProductById(id).getAllertWeight();
+            float numberUnit = productDAO.getProductById(id).getUnitsWeightInStock();
+                    
+            result =  numberUnit - alertWeght ;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return result;
+    }
+    
+       public boolean isKG_allow(float quantity, int id) {
+        boolean result = false;
+        float alloLimit = allowOfKG(id);
+        if (alloLimit <= quantity) {
+            result = false;
+           // FxDialogs.showWarning("احزر", "الحد المسموح للبيع فى المخزن"+"\n"+alloLimit+"\t"+"قطعة\n");
+        }
+        else {
+            result = true;
+        }
+         return result;
+    }
+  
+       
+    public float getwightofUnitsToUpdate(float number,float weight_of_unit){       
+        float result=0;
+        result = (number * weight_of_unit)/1000;
+        return result;            
     }
 }

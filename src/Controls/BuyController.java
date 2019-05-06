@@ -2,19 +2,22 @@ package Controls;
 
 import com.jfoenix.controls.JFXComboBox;
 import dao.CustomerDAO;
+import dao.OrderDAO;
 import dao.ProductDAO;
 import entities.Customers;
 import entities.Products;
 import entities.custom_BuyTable;
 import helper.FxDialogs;
 import helper.Helper;
+import helper.SubmitBuy_helper;
 import helper.UsefulCalculas;
+import java.io.IOException;
+import static java.lang.reflect.Array.get;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,15 +32,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import javax.persistence.criteria.Order;
 import org.controlsfx.control.textfield.TextFields;
 
 public class BuyController implements Initializable {
 
     @FXML
     private TextField etBuyType;
-    @FXML
-    private TextField txtInvoiceNomber;
     @FXML
     private TextField etClientName;
     @FXML
@@ -73,23 +76,32 @@ public class BuyController implements Initializable {
 
     ProductDAO productDAO = new ProductDAO();
     CustomerDAO customerDAO = new CustomerDAO();
+    OrderDAO orderDAO = new OrderDAO();
+
     Helper help = new Helper();
     UsefulCalculas usefullCalculas = new UsefulCalculas();
+    SubmitBuy_helper submitBuy_helper = new SubmitBuy_helper();
 
     float totalCounter = 0;
+    int paymentId = 0;
+    public int customerId = 0;
+    int orderIdCounter;
     @FXML
     private Label txtDate;
 
     ObservableList<custom_BuyTable> row = FXCollections.observableArrayList();
     @FXML
     private TextField etDiscount1;
+    @FXML
+    private TextField orderId;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        //System.out.println(orderDAO.getLastOrderId());
+        
         compo_priceType.getItems().addAll("قطاعى");
         compo_priceType.getItems().addAll("جملة");
-        compo_priceType.getItems().addAll("شبة جملة");
+        compo_priceType.getItems().addAll("جملة الجملة");
 
         compoFunctionType.getItems().addAll("نقدى");
         compoFunctionType.getItems().addAll("آجل");
@@ -99,21 +111,79 @@ public class BuyController implements Initializable {
         txtDate.setText(help.getDate());
 
         addButtonDeleteToTable();
-
+        orderId.setText(String.valueOf(orderDAO.getCountOrder()));
         /*
         System.out.println(usefullCalculas.getProductPartitionPriceforunit(27));
         System.out.println(usefullCalculas.allowOfunit(28));
         usefullCalculas.is_allow(100, 28);
-        */
+         */
     }
 
     @FXML
     private void btn_submit_buy(ActionEvent event) {
-        
+        try {
+            String knownUsFrom = compoFunctionType.getSelectionModel().getSelectedItem().toString();
+            if (knownUsFrom.equals("آجل") && etClientName.getText().toString().isEmpty()) {
+                FxDialogs.showInformation("من فضلك", "ادخل اسم العميل والمدفوع");
+            } else {
+
+                if (etClientName.getText().toString().isEmpty()) {
+                    customerId = 0;
+                } else if (!etClientName.getText().toString().isEmpty()) {
+                    customerId = customerDAO.getcCustomerId(etClientName.getText().toString());
+                }
+
+                // insert order 
+                submitBuy_helper.insert_order(customerId, paymentId, etBuyType.getText().toString());
+                // insert order detail 
+                getAllDetail();
+                //insert order payment 
+                submitBuy_helper.insertOrderPayment(orderDAO.getLastOrderId(),
+                        Float.parseFloat(etDiscount1.getText().toString()),
+                        Float.parseFloat(et_paid_up.getText().toString()),
+                        Float.parseFloat(et_remaining.getText().toString()),
+                        "notes",
+                        Float.parseFloat(etDiscount.getText().toString()));
+
+                //ubdate stock
+                UpdateStock();
+
+                FxDialogs.showInformation("نجاح العملية", "تم توريد الطلب بنجاح");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+
+        orderId.setText(String.valueOf(orderDAO.getLastOrderId()));
+        clear_afterSubmit();
+
+    }
+
+    public void getAllDetail() {
+        for (custom_BuyTable o : row) {
+            submitBuy_helper.insertOrderDetails(orderDAO.getLastOrderId(),
+                    o.getIdProduct(),
+                    o.getPrice(),
+                    o.getQuantity(),
+                    o.getTotal());
+        }
+    }
+
+    public void UpdateStock() {
+        // System.out.println(productDAO.getWeightInStock(28));
+
+        for (custom_BuyTable o : row) {
+            float unitWeight = productDAO.getProductById(o.getIdProduct()).getProductWeight();
+            float allWeightInStock = productDAO.getProductById(o.getIdProduct()).getUnitsWeightInStock();
+            float weighofOrder = usefullCalculas.getwightofUnitsToUpdate(o.getQuantity(), unitWeight);
+            productDAO.updateWeight(allWeightInStock - weighofOrder, o.getIdProduct());
+            //  System.out.println(allWeightInStock + "\n" +weighofOrder+"\n"+o.getQuantity() );
+        }
     }
 
     @FXML
     private void btn_totalBuy_click(ActionEvent event) {
+
     }
 
     @FXML
@@ -133,14 +203,12 @@ public class BuyController implements Initializable {
     private void compoFunctionTypeClick(ActionEvent event) {
         String knownUsFrom = compoFunctionType.getSelectionModel().getSelectedItem().toString();
         if (knownUsFrom.equals("آجل")) {
-
+            paymentId = 1;
             et_paid_up.setDisable(false);
-
             FxDialogs.showInformation("من فضلك", "ادخل اسم العميل والمدفوع");
         } else if (knownUsFrom.equals("نقدى")) {
-
             et_paid_up.setDisable(true);
-
+            paymentId = 2;
         }
 
     }
@@ -162,6 +230,10 @@ public class BuyController implements Initializable {
             } else {
                 if (etBuyType.getText().toString().equals("قطاعى")) {
                     addProductforPartion();
+                } else if (etBuyType.getText().toString().equals("جملة")) {
+                    addProductforGomla();
+                }else if (etBuyType.getText().toString().equals("جملة الجملة")) {
+                    addProductforGomla_Gomla();
                 }
 
             }
@@ -174,6 +246,7 @@ public class BuyController implements Initializable {
         List<Products> items = productDAO.getProductId(etProductName.getText().toString());
 
         for (Products product : items) {
+            // check allow of items 
             if (usefullCalculas.is_allow(Integer.parseInt(etQuantity.getText().toString()), product.getProductid())) {
                 float total = usefullCalculas.getProductPartitionPriceforunit(product.getProductid())
                         * Float.parseFloat(etQuantity.getText().toString());
@@ -196,10 +269,79 @@ public class BuyController implements Initializable {
         clearText();
     }
 
+    public void addProductforGomla() {
+
+        List<Products> items = productDAO.getProductId(etProductName.getText().toString());
+
+        for (Products product : items) {
+            float product_gomlaPrice = productDAO.getProductById(product.getProductid()).getGomlaBuyPrice();
+            // check allow of items 
+            if (usefullCalculas.isKG_allow(Integer.parseInt(etQuantity.getText().toString()), product.getProductid())) {
+
+                float total = product_gomlaPrice * Float.parseFloat(etQuantity.getText().toString());
+
+                row.add(new custom_BuyTable(product.getProductid(),
+                        product.getProductName(),
+                        Float.parseFloat(etQuantity.getText().toString()),
+                        product_gomlaPrice,
+                        total));
+                totalCounter += total;
+                txtTotal.setText(String.valueOf(totalCounter));
+                et_remaining.setText(String.valueOf(totalCounter));
+                etDiscount1.setText(String.valueOf(totalCounter));
+            } else {
+                int alloLimit = usefullCalculas.allowOfunit(product.getProductid());
+                FxDialogs.showWarning("احزر", "الحد المسموح للبيع فى المخزن" + "\n" + alloLimit + "\t" + "قطعة\n");
+            }
+
+        }
+        loadTabData();
+        clearText();
+    }
+
+    public void addProductforGomla_Gomla() {
+        List<Products> items = productDAO.getProductId(etProductName.getText().toString());
+
+        for (Products product : items) {
+            float product_Gomla_GomlaPrice = productDAO.getProductById(product.getProductid()).getGomelGomlaBuyPrice();
+            // check allow of items 
+            if (usefullCalculas.isKG_allow(Integer.parseInt(etQuantity.getText().toString()), product.getProductid())) {
+
+                float total = product_Gomla_GomlaPrice * Float.parseFloat(etQuantity.getText().toString());
+
+                row.add(new custom_BuyTable(product.getProductid(),
+                        product.getProductName(),
+                        Float.parseFloat(etQuantity.getText().toString()),
+                        product_Gomla_GomlaPrice,
+                        total));
+                totalCounter += total;
+                txtTotal.setText(String.valueOf(totalCounter));
+                et_remaining.setText(String.valueOf(totalCounter));
+                etDiscount1.setText(String.valueOf(totalCounter));
+            } else {
+                int alloLimit = usefullCalculas.allowOfunit(product.getProductid());
+                FxDialogs.showWarning("احزر", "الحد المسموح للبيع فى المخزن" + "\n" + alloLimit + "\t" + "قطعة\n");
+            }
+
+        }
+        loadTabData();
+        clearText();
+    }
+
     public void clearText() {
-        etClientName.clear();
+        //etClientName.clear();
         etProductName.clear();
         etQuantity.clear();
+    }
+
+    public void clear_afterSubmit() {
+        table.getItems().clear();
+        txtTotal.setText("0");
+        et_paid_up.setText("0");
+        et_remaining.setText("0");
+        etDiscount.setText("0");
+        etDiscount1.setText("0");
+        etClientName.setText("");
     }
 
     /**
@@ -297,6 +439,7 @@ public class BuyController implements Initializable {
         if (event.getCode().equals(KeyCode.ENTER)) {
             float remainin = Float.parseFloat(txtTotal.getText().toString()) - Float.parseFloat(et_paid_up.getText().toString());
             et_remaining.setText(String.valueOf(remainin));
+            etDiscount1.setText(String.valueOf(remainin));
         }
     }
 
@@ -307,6 +450,14 @@ public class BuyController implements Initializable {
             float totalAfterDiscount = Float.parseFloat(et_remaining.getText().toString()) - Float.parseFloat(etDiscount.getText().toString());
             etDiscount1.setText(String.valueOf(totalAfterDiscount));
         }
+    }
+
+    @FXML
+    private void homeClick(MouseEvent event) throws IOException {
+
+        help.start("/mosmar/main.fxml", "الصفحة الرئيسية");
+        help.closeC(compo_priceType);
+
     }
 
 }

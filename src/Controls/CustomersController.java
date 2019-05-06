@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -61,6 +62,36 @@ public class CustomersController implements Initializable {
     private ImageView closeAdd;
 
     private final CustomerDAO customerDAO = new CustomerDAO();
+    @FXML
+    private AnchorPane anchorPaid;
+    @FXML
+    private Label labelClientName;
+    @FXML
+    private Label lablRemainingCost;
+    @FXML
+    private JFXTextField etTotalCost;
+    @FXML
+    private JFXTextField etPaidValue;
+    @FXML
+    private DatePicker dateBicerPaidDate;
+    @FXML
+    private JFXTextArea etComment;
+    @FXML
+    private JFXButton btnAddCost;
+    @FXML
+    private TableView<?> tablePayment;
+    @FXML
+    private TableColumn<?, ?> colDate;
+    @FXML
+    private TableColumn<?, ?> colpaidValue;
+    @FXML
+    private TableColumn<?, ?> colNotes;
+    @FXML
+    private TableColumn<?, ?> colCreator;
+    @FXML
+    private Label labelNotifi;
+    @FXML
+    private JFXButton btnAddCost1;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -244,5 +275,13 @@ public class CustomersController implements Initializable {
     @FXML
     private void etclient_click(ActionEvent event) {
         txtNotify.setText("");
+    }
+
+    @FXML
+    private void ClosePaidAnchor(MouseEvent event) {
+    }
+
+    @FXML
+    private void addCostClick(ActionEvent event) {
     }
 }

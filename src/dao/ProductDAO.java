@@ -10,6 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import jpaConntroller.ProductsJpaController;
+import jpaConntroller.exceptions.NonexistentEntityException;
 
 /**
  *
@@ -31,8 +32,8 @@ public class ProductDAO {
     }
 
     public void editProduct(Products products) throws Exception {
-
         productsController.edit(products);
+
     }
 
     public void removeProduct(int id) throws Exception {
@@ -70,6 +71,12 @@ public class ProductDAO {
 
     }
 
+    /**
+     * select list of product name
+     *
+     * @param ProductName
+     * @return
+     */
     public List<Products> getProductId(String ProductName) {
         List<Products> cars = new ArrayList<Products>();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
@@ -90,10 +97,35 @@ public class ProductDAO {
 
         return cars;
     }
- 
+
     
+
     public Products getProductById(int Id) {
         return productsController.findProducts(Id);
     }
+
+    public void updateWeight(float unitsWeightInStock, int productId) {
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+
+        try {
+            eman.getTransaction().begin();
+            String sql = "update Products set unitsWeightInStock = :unitsWeightInStock WHERE productid = :productid";
+            Query query = eman.createQuery(sql);
+            query.setParameter("unitsWeightInStock", unitsWeightInStock);
+            query.setParameter("productid", productId);
+            query.executeUpdate();
+            eman.getTransaction().commit();
+
+        } finally {
+
+            eman.close();
+            emf.close();
+        }
+
+    }
+
+ 
 
 }

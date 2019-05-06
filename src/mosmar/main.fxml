@@ -7,15 +7,15 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="pattern_background" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.MainController">
    <children>
-      <Pane layoutX="115.0" layoutY="10.0" prefHeight="72.0" prefWidth="770.0" styleClass="grey_wite_back">
+      <Pane layoutX="115.0" layoutY="10.0" prefHeight="72.0" prefWidth="770.0" styleClass="grey_back">
          <children>
             <Label alignment="CENTER" layoutX="40.0" layoutY="5.0" prefHeight="38.0" prefWidth="644.0" styleClass="textHeder" text="محلات أشرف مسمار" />
          </children>
       </Pane>
       <JFXButton fx:id="btn_buy" layoutX="545.0" layoutY="136.0" onAction="#btnBuyClick" prefHeight="97.0" prefWidth="357.0" styleClass="button_big" text="بيع " />
-      <JFXButton fx:id="btnBuy_not_payment" layoutX="82.0" layoutY="407.0" onAction="#btnBuy_not_paymentClick" prefHeight="97.0" prefWidth="359.0" styleClass="button_big" text="آجل" />
-      <JFXButton fx:id="btn_accounts" layoutX="85.0" layoutY="272.0" onAction="#btnAccountsClick" prefHeight="97.0" prefWidth="354.0" styleClass="button_big_2" text="حسابات" />
-      <JFXButton fx:id="btn_burshes" layoutX="82.0" layoutY="129.0" onAction="#btnBurshesClick" prefHeight="97.0" prefWidth="357.0" styleClass="button_big" text="شراء" />
+      <JFXButton fx:id="btnBuy_not_payment" layoutX="82.0" layoutY="407.0" onAction="#btn_customersClick" prefHeight="97.0" prefWidth="359.0" styleClass="button_big" text="حساب العملاء " />
+      <JFXButton fx:id="btn_accounts" layoutX="85.0" layoutY="272.0" onAction="#btnAccountsClick" prefHeight="97.0" prefWidth="354.0" styleClass="button_big_2" text="ايرادات ومصروفات" />
+      <JFXButton fx:id="btn_burshes" layoutX="82.0" layoutY="129.0" onAction="#btnBurshesClick" prefHeight="97.0" prefWidth="357.0" styleClass="button_big" text="حساب الموردين" />
       <JFXButton fx:id="btn_Recall" layoutX="549.0" layoutY="407.0" onAction="#btnRecallClick" prefHeight="97.0" prefWidth="353.0" styleClass="button_big" text="مرتجع" />
       <JFXButton fx:id="btn_store" layoutX="547.0" layoutY="272.0" onAction="#btnStoreClick" prefHeight="97.0" prefWidth="359.0" styleClass="button_big_2" text="المخزن" />
    </children>

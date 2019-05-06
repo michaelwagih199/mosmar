@@ -1,4 +1,8 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package entities;
 
 import java.io.Serializable;
@@ -29,7 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "OrderPayment.findByTotslCost", query = "SELECT o FROM OrderPayment o WHERE o.totslCost = :totslCost")
     , @NamedQuery(name = "OrderPayment.findByPaid", query = "SELECT o FROM OrderPayment o WHERE o.paid = :paid")
     , @NamedQuery(name = "OrderPayment.findByRemaining", query = "SELECT o FROM OrderPayment o WHERE o.remaining = :remaining")
-    , @NamedQuery(name = "OrderPayment.findByDate", query = "SELECT o FROM OrderPayment o WHERE o.date = :date")})
+    , @NamedQuery(name = "OrderPayment.findByDate", query = "SELECT o FROM OrderPayment o WHERE o.date = :date")
+    , @NamedQuery(name = "OrderPayment.findByOrderDiscount", query = "SELECT o FROM OrderPayment o WHERE o.orderDiscount = :orderDiscount")})
 public class OrderPayment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,7 +56,9 @@ public class OrderPayment implements Serializable {
     private String notes;
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Date date =new Date();
+    @Column(name = "order_discount")
+    private Float orderDiscount;
 
     public OrderPayment() {
     }
@@ -114,6 +121,14 @@ public class OrderPayment implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Float getOrderDiscount() {
+        return orderDiscount;
+    }
+
+    public void setOrderDiscount(Float orderDiscount) {
+        this.orderDiscount = orderDiscount;
     }
 
     @Override

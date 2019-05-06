@@ -51,7 +51,8 @@ public class Orders implements Serializable {
     private Integer suppliersId;
     @Column(name = "order_date")
     @Temporal(TemporalType.DATE)
-    private Date orderDate;
+    private Date orderDate = new Date();;
+    
     @Lob
     @Column(name = "order_type")
     private String orderType;

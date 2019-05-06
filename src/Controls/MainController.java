@@ -15,11 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
-/**
- * FXML Controller class
- *
- * @author OM EL NOUR
- */
+
 public class MainController implements Initializable {
 
     Helper helper = new Helper();
@@ -37,9 +33,7 @@ public class MainController implements Initializable {
     @FXML
     private JFXButton btn_store;
 
-    /**
-     * Initializes the controller class.
-     */
+  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -52,13 +46,6 @@ public class MainController implements Initializable {
         helper.close(btn_buy);
     }
 
-    @FXML
-    private void btnBuy_not_paymentClick(ActionEvent event) throws Exception {
-//        Strore Store = new Strore(1);
-//        Store.setProductName("michael");
-//        StoreDAO store = new StoreDAO();
-//        store.editStore(Store);
-    }
 
     @FXML
     private void btnAccountsClick(ActionEvent event) {
@@ -76,9 +63,15 @@ public class MainController implements Initializable {
     @FXML
     private void btnStoreClick(ActionEvent event) throws IOException {
 
-        helper.start("/mosmar/stock.fxml", "الصفحة الرئيسية");
+        helper.start("/mosmar/stock.fxml", "المخزن");
         helper.close(btn_buy);
 
+    }
+
+    @FXML
+    private void btn_customersClick(ActionEvent event) throws IOException {
+        helper.start("/mosmar/customers.fxml", "حساب العملاء");
+        helper.close(btn_buy);
     }
 
 }

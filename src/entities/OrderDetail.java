@@ -31,8 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "OrderDetail.findByPrice", query = "SELECT o FROM OrderDetail o WHERE o.price = :price")
     , @NamedQuery(name = "OrderDetail.findByQuantity", query = "SELECT o FROM OrderDetail o WHERE o.quantity = :quantity")
     , @NamedQuery(name = "OrderDetail.findByTotal", query = "SELECT o FROM OrderDetail o WHERE o.total = :total")
-    , @NamedQuery(name = "OrderDetail.findByOrderDetailId", query = "SELECT o FROM OrderDetail o WHERE o.orderDetailId = :orderDetailId")
-    , @NamedQuery(name = "OrderDetail.findByDiscount", query = "SELECT o FROM OrderDetail o WHERE o.discount = :discount")})
+    , @NamedQuery(name = "OrderDetail.findByOrderDetailId", query = "SELECT o FROM OrderDetail o WHERE o.orderDetailId = :orderDetailId")})
 public class OrderDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,8 +51,6 @@ public class OrderDetail implements Serializable {
     @Basic(optional = false)
     @Column(name = "order_detail_id")
     private Integer orderDetailId;
-    @Column(name = "discount")
-    private Float discount;
 
     public OrderDetail() {
     }
@@ -108,14 +105,6 @@ public class OrderDetail implements Serializable {
 
     public void setOrderDetailId(Integer orderDetailId) {
         this.orderDetailId = orderDetailId;
-    }
-
-    public Float getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Float discount) {
-        this.discount = discount;
     }
 
     @Override

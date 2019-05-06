@@ -4,22 +4,26 @@
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="627.0" prefWidth="886.0" styleClass="main_back" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.CustomersController">
+<AnchorPane id="AnchorPane" prefHeight="627.0" prefWidth="886.0" styleClass="grey_back_noShadow" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.CustomersController">
      <children>
-      <Pane layoutX="76.0" layoutY="6.0" prefHeight="54.0" prefWidth="662.0" styleClass="grey_wite_back">
+      <Pane layoutX="113.0" layoutY="6.0" prefHeight="54.0" prefWidth="662.0" styleClass="grey_wite_back">
          <children>
             <Label alignment="CENTER" layoutX="83.0" layoutY="12.0" prefHeight="27.0" prefWidth="510.0" styleClass="textHeder2" text="العملاء" />
          </children>
       </Pane>
-      <ImageView fitHeight="46.0" fitWidth="59.0" layoutX="745.0" layoutY="10.0" onMouseClicked="#add_click" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="46.0" fitWidth="59.0" layoutX="822.0" layoutY="10.0" onMouseClicked="#add_click" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../res/add.png" />
          </image>
@@ -58,6 +62,48 @@
                   <Image url="@../res/close2.png" />
                </image>
             </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="anchorPaid" layoutX="15.0" layoutY="13.0" prefHeight="604.0" prefWidth="987.0" styleClass="grey_wite_back">
+         <children>
+            <AnchorPane layoutX="14.0" layoutY="6.0" prefHeight="34.0" prefWidth="976.0" styleClass="grey_back_noShadow">
+               <children>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="8.0" layoutY="4.0" onMouseClicked="#ClosePaidAnchor" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../final%20project/CRM/src/res/close2.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="labelClientName" alignment="CENTER" layoutX="230.0" layoutY="4.0" prefHeight="26.0" prefWidth="415.0" styleClass="textFeild" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f67522" height="26.0" layoutX="682.0" layoutY="3.0" stroke="BLACK" strokeType="INSIDE" width="163.0" />
+                  <Label alignment="CENTER" layoutX="851.0" layoutY="4.0" prefHeight="26.0" prefWidth="111.0" styleClass="textFeild" text="المتبقى" />
+                  <Label fx:id="lablRemainingCost" alignment="CENTER" layoutX="681.0" layoutY="4.0" prefHeight="24.0" prefWidth="163.0" styleClass="textFeild" text="0" />
+               </children>
+            </AnchorPane>
+            <Separator layoutX="13.0" layoutY="241.0" prefHeight="3.0" prefWidth="970.0" />
+            <Separator layoutX="9.0" layoutY="56.0" prefHeight="3.0" prefWidth="976.0" />
+            <Label alignment="TOP_LEFT" layoutX="14.0" layoutY="70.0" prefHeight="26.0" prefWidth="111.0" styleClass="text_Black" text=" : القيمة الكلية " />
+            <JFXTextField fx:id="etTotalCost" layoutX="125.0" layoutY="65.0" prefHeight="25.0" prefWidth="152.0" />
+            <Label alignment="TOP_LEFT" layoutX="695.0" layoutY="66.0" prefHeight="26.0" prefWidth="111.0" styleClass="text_Black" text=" : قيمة الدفعة" />
+            <JFXTextField fx:id="etPaidValue" layoutX="816.0" layoutY="65.0" prefHeight="25.0" prefWidth="152.0" />
+            <DatePicker fx:id="dateBicerPaidDate" layoutX="438.0" layoutY="66.0" prefHeight="25.0" prefWidth="223.0" />
+            <Label alignment="TOP_LEFT" layoutX="320.0" layoutY="65.0" prefHeight="26.0" prefWidth="111.0" styleClass="text_Black" text=" : تاريخ الدفع " />
+            <JFXTextArea fx:id="etComment" layoutX="196.0" layoutY="118.0" prefHeight="42.0" prefWidth="790.0">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </JFXTextArea>
+            <Label alignment="TOP_LEFT" layoutX="14.0" layoutY="147.0" prefHeight="26.0" prefWidth="163.0" styleClass="text_Black" text=" :ملاحظات " />
+            <JFXButton fx:id="btnAddCost" layoutX="390.0" layoutY="172.0" onAction="#addCostClick" prefHeight="45.0" prefWidth="214.0" styleClass="button_Normal" text="إضافة دفعة" />
+            <TableView fx:id="tablePayment" layoutX="20.0" layoutY="244.0" prefHeight="291.0" prefWidth="963.0">
+               <columns>
+                  <TableColumn fx:id="colDate" prefWidth="200.0" text="Date" />
+                  <TableColumn fx:id="colpaidValue" prefWidth="239.0" text="PaidValue" />
+                  <TableColumn fx:id="colNotes" minWidth="3.0" prefWidth="297.0" text="Notes" />
+                  <TableColumn fx:id="colCreator" minWidth="3.0" prefWidth="251.0" text="Creator" />
+               </columns>
+            </TableView>
+            <Label fx:id="labelNotifi" alignment="CENTER" layoutX="172.0" layoutY="221.0" prefHeight="17.0" prefWidth="659.0" />
+            <JFXButton fx:id="btnAddCost1" layoutX="391.0" layoutY="549.0" onAction="#addCostClick" prefHeight="45.0" prefWidth="227.0" styleClass="button_Normal" text="عرض تفاصيل الحساب" />
          </children>
       </AnchorPane>
    </children>

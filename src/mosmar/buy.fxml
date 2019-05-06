@@ -30,7 +30,7 @@
                </font>
             </TextField>
             <Label layoutX="665.0" layoutY="1.0" prefHeight="31.0" prefWidth="44.0" styleClass="textHeder" text="بيع:" />
-            <ImageView fitHeight="62.0" fitWidth="58.0" layoutX="23.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="62.0" fitWidth="58.0" layoutX="23.0" layoutY="13.0" onMouseClicked="#homeClick" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../res/002-home.png" />
                </image>
@@ -53,6 +53,12 @@
             <Label fx:id="txtUnite" layoutX="688.0" layoutY="109.0" styleClass="textSearch" text="وحده" />
             <Label fx:id="txtDate" alignment="CENTER" layoutX="887.0" layoutY="19.0" prefHeight="31.0" prefWidth="345.0" styleClass="textHeder" text="التاريخ" />
             <JFXButton layoutX="19.0" layoutY="93.0" onAction="#btn_add_product_click" prefHeight="57.0" prefWidth="118.0" styleClass="mainButton" text="اضافة" />
+            <Label layoutX="378.0" layoutY="22.0" styleClass="textSearch" text="رقم الطلب" />
+            <TextField fx:id="orderId" alignment="CENTER" disable="true" editable="false" layoutX="290.0" layoutY="14.0" opacity="0.9" prefHeight="49.0" prefWidth="74.0" styleClass="textFeild1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
          </children></AnchorPane>
       <AnchorPane layoutY="554.0" prefHeight="72.0" prefWidth="1247.0" styleClass="Four_back" stylesheets="@../res/application2.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
@@ -64,7 +70,7 @@
             </TextField>
             <Label layoutX="1008.0" layoutY="21.0" styleClass="textSearch" text="المدفوع" />
             <Label layoutX="811.0" layoutY="25.0" styleClass="textSearch" text="المتبقى" />
-            <TextField fx:id="et_paid_up" alignment="CENTER" disable="true" layoutX="871.0" layoutY="12.0" onKeyPressed="#et_paid_up_pressed" opacity="0.9" prefHeight="49.0" prefWidth="114.0" styleClass="textFeild1">
+            <TextField fx:id="et_paid_up" alignment="CENTER" disable="true" layoutX="871.0" layoutY="12.0" onKeyPressed="#et_paid_up_pressed" opacity="0.9" prefHeight="49.0" prefWidth="114.0" styleClass="textFeild1" text="0">
                <font>
                   <Font size="20.0" />
                </font>
@@ -74,7 +80,7 @@
                   <Font size="20.0" />
                </font>
             </TextField>
-            <TextField fx:id="etDiscount" alignment="CENTER" layoutX="537.0" layoutY="10.0" onKeyPressed="#etDiscount_pressed" opacity="0.9" prefHeight="49.0" prefWidth="74.0" styleClass="textFeild1">
+            <TextField fx:id="etDiscount" alignment="CENTER" layoutX="537.0" layoutY="10.0" onKeyPressed="#etDiscount_pressed" opacity="0.9" prefHeight="49.0" prefWidth="74.0" styleClass="textFeild1" text="0">
                <font>
                   <Font size="20.0" />
                </font>
@@ -82,12 +88,12 @@
             <Label layoutX="624.0" layoutY="22.0" styleClass="textSearch" text="الخصم" />
             <Label layoutX="498.0" layoutY="23.0" styleClass="textSearch" text="جنية" />
             <JFXButton layoutX="14.0" layoutY="5.0" onAction="#btn_submit_buy" prefHeight="57.0" prefWidth="173.0" styleClass="mainButton" text="تأكيد" />
+            <Label layoutX="332.0" layoutY="22.0" styleClass="textSearch" text="الاجمالى بعد الخصم" />
             <TextField fx:id="etDiscount1" alignment="CENTER" disable="true" editable="false" layoutX="248.0" layoutY="9.0" opacity="0.9" prefHeight="49.0" prefWidth="74.0" styleClass="textFeild1">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
-            <Label layoutX="332.0" layoutY="22.0" styleClass="textSearch" text="الاجمالى بعد الخصم" />
             <Label layoutX="213.0" layoutY="21.0" styleClass="textSearch" text="جنية" />
          </children></AnchorPane>
       <TableView fx:id="table" layoutX="253.0" layoutY="181.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="365.0" prefWidth="988.0" stylesheets="@../res/Java.css" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="181.0">
