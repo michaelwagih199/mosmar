@@ -17,7 +17,7 @@ public class SubmitBuy_helper {
     OrderPaymentDAO orderPaymentDAO = new OrderPaymentDAO();
     ProductDAO productDAO = new ProductDAO();
     
-    public void insert_order(int customerId, int paymentId, String orderType) {
+    public void insert_order(int customerId, int paymentId, String orderType,String uuid) {
         // insert data to order
         try {
             Orders order = new Orders();
@@ -25,8 +25,10 @@ public class SubmitBuy_helper {
             //order.setOrderDate(orderDate);
             order.setOrderType(orderType);
             order.setPaymentId(paymentId);
+            order.setUuid(uuid);
             //order.setSuppliersId(supliersId);
             orderDAO.addOrders(order);
+            
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -1,11 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.AcountsCenterController">
-    
+
+<AnchorPane id="AnchorPane" prefHeight="645.0" prefWidth="1000.0" stylesheets="@../res/application.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="Controls.AcountsCenterController">
+   <children>
+      <Pane layoutX="117.0" layoutY="8.0" prefHeight="50.0" prefWidth="770.0" styleClass="grey_back">
+         <children>
+            <Label alignment="CENTER" layoutX="40.0" layoutY="7.0" prefHeight="38.0" prefWidth="644.0" styleClass="textHeder2" text="مركز الحسابات" />
+         </children>
+      </Pane>
+      <Pane layoutY="-4.0" prefHeight="128.0" prefWidth="999.0">
+         <children>
+            <DatePicker layoutX="597.0" layoutY="81.0" prefHeight="25.0" prefWidth="194.0" />
+            <Label layoutX="323.0" layoutY="84.0" prefHeight="26.0" prefWidth="107.0" styleClass="text_Black" text="تاريخ الحساب" />
+            <Label layoutX="807.0" layoutY="82.0" prefHeight="26.0" prefWidth="80.0" styleClass="text_Black" text="نوع الطلب" />
+            <ComboBox layoutX="80.0" layoutY="86.0" prefHeight="25.0" prefWidth="205.0" />
+            <Separator layoutX="6.0" layoutY="115.0" prefHeight="8.0" prefWidth="986.0" />
+            <ImageView fitHeight="51.0" fitWidth="46.0" layoutX="14.0" layoutY="10.0" onMouseClicked="#homeClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/002-home.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </Pane>
+      <TabPane layoutX="6.0" layoutY="118.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="520.0" prefWidth="991.0" styleClass="table" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="تفاصيل طلبات اليوم">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="orderTable" layoutX="4.0" layoutY="2.0" prefHeight="473.0" prefWidth="983.0">
+                          <columns>
+                            <TableColumn fx:id="col_orderId" prefWidth="80.66667175292969" text="رقم الطلب" />
+                            <TableColumn fx:id="col_orderDate" prefWidth="120.33332824707031" text="تاريخ الطلب" />
+                              <TableColumn fx:id="col_customerName" prefWidth="132.66665649414062" text="اسم العميل" />
+                              <TableColumn fx:id="col_totalCost" prefWidth="113.33331298828125" text="اجمالى التكلفة" />
+                              <TableColumn fx:id="col_paid" prefWidth="127.3333740234375" text="المدفوع" />
+                              <TableColumn fx:id="col_remainning" prefWidth="134.66668701171875" text="المتبقى" />
+                              <TableColumn fx:id="col_discount" prefWidth="125.6666259765625" text="الخصمم" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="ارباح ومصاريف اليوم">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
 </AnchorPane>

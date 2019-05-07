@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -85,7 +86,10 @@ public class BuyController implements Initializable {
     float totalCounter = 0;
     int paymentId = 0;
     public int customerId = 0;
-    int orderIdCounter;
+    
+    public int OrderId = 0;
+    String uuidUniq;
+   
     @FXML
     private Label txtDate;
 
@@ -97,7 +101,8 @@ public class BuyController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //System.out.println(orderDAO.getLastOrderId());
+      
+        System.out.println(orderDAO.getLastOrderId("5f8303a6-fa5a-4061-ab1c-8ab95ebae9d9"));
         
         compo_priceType.getItems().addAll("قطاعى");
         compo_priceType.getItems().addAll("جملة");
@@ -111,7 +116,7 @@ public class BuyController implements Initializable {
         txtDate.setText(help.getDate());
 
         addButtonDeleteToTable();
-        orderId.setText(String.valueOf(orderDAO.getCountOrder()));
+       // orderId.setText(String.valueOf(orderDAO.getCountOrder()));
         /*
         System.out.println(usefullCalculas.getProductPartitionPriceforunit(27));
         System.out.println(usefullCalculas.allowOfunit(28));
@@ -132,13 +137,15 @@ public class BuyController implements Initializable {
                 } else if (!etClientName.getText().toString().isEmpty()) {
                     customerId = customerDAO.getcCustomerId(etClientName.getText().toString());
                 }
-
+                
+                generateCode();
                 // insert order 
-                submitBuy_helper.insert_order(customerId, paymentId, etBuyType.getText().toString());
+                submitBuy_helper.insert_order(customerId, paymentId, etBuyType.getText().toString(),uuidUniq);
+                
                 // insert order detail 
                 getAllDetail();
                 //insert order payment 
-                submitBuy_helper.insertOrderPayment(orderDAO.getLastOrderId(),
+                submitBuy_helper.insertOrderPayment((orderDAO.getLastOrderId(uuidUniq)),
                         Float.parseFloat(etDiscount1.getText().toString()),
                         Float.parseFloat(et_paid_up.getText().toString()),
                         Float.parseFloat(et_remaining.getText().toString()),
@@ -154,14 +161,15 @@ public class BuyController implements Initializable {
             System.out.println(e.getLocalizedMessage());
         }
 
-        orderId.setText(String.valueOf(orderDAO.getLastOrderId()));
+        
         clear_afterSubmit();
 
     }
+    
 
     public void getAllDetail() {
         for (custom_BuyTable o : row) {
-            submitBuy_helper.insertOrderDetails(orderDAO.getLastOrderId(),
+            submitBuy_helper.insertOrderDetails((orderDAO.getLastOrderId(uuidUniq)),
                     o.getIdProduct(),
                     o.getPrice(),
                     o.getQuantity(),
@@ -216,7 +224,7 @@ public class BuyController implements Initializable {
     @FXML
     private void btn_add_product_click(ActionEvent event) {
         boolean isMyComboBoxEmpty = compoFunctionType.getSelectionModel().isEmpty();
-
+        generateCode();
         try {
             //validate of input
             if (etBuyType.getText().toString().isEmpty()) {
@@ -235,11 +243,24 @@ public class BuyController implements Initializable {
                 }else if (etBuyType.getText().toString().equals("جملة الجملة")) {
                     addProductforGomla_Gomla();
                 }
+                
 
             }
         } catch (Exception e) {
         }
+        
+        
+        
     }
+    
+    public void generateCode(){
+       // Creating a random UUID (Universally unique identifier).
+        UUID uuid = UUID.randomUUID();
+        uuidUniq = uuid.toString();
+       
+    }
+    
+    
 
     public void addProductforPartion() {
 

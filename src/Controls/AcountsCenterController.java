@@ -7,7 +7,11 @@ package Controls;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -16,6 +20,23 @@ import javafx.fxml.Initializable;
  */
 public class AcountsCenterController implements Initializable {
 
+    @FXML
+    private TableView<?> orderTable;
+    @FXML
+    private TableColumn<?, ?> col_orderId;
+    @FXML
+    private TableColumn<?, ?> col_orderDate;
+    @FXML
+    private TableColumn<?, ?> col_customerName;
+    @FXML
+    private TableColumn<?, ?> col_totalCost;
+    @FXML
+    private TableColumn<?, ?> col_paid;
+    @FXML
+    private TableColumn<?, ?> col_remainning;
+    @FXML
+    private TableColumn<?, ?> col_discount;
+
     /**
      * Initializes the controller class.
      */
@@ -23,5 +44,9 @@ public class AcountsCenterController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void homeClick(MouseEvent event) {
+    }
     
 }

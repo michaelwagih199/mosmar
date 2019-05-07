@@ -51,11 +51,13 @@ public class Orders implements Serializable {
     private Integer suppliersId;
     @Column(name = "order_date")
     @Temporal(TemporalType.DATE)
-    private Date orderDate = new Date();;
-    
+    private Date orderDate = new Date();
     @Lob
     @Column(name = "order_type")
     private String orderType;
+    @Lob
+    @Column(name = "UUID")
+    private String uuid;
 
     public Orders() {
     }
@@ -110,6 +112,14 @@ public class Orders implements Serializable {
 
     public void setOrderType(String orderType) {
         this.orderType = orderType;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     @Override

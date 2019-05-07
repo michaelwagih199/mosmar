@@ -49,18 +49,18 @@ public class OrderDAO {
         return ordersJpaController.getOrdersCount();
     }
     
-    public int getLastOrderId() {
+    public int getLastOrderId(String UUID) {
         
-        List<Integer> cars = new ArrayList<Integer>();
+       List<Integer> cars = new ArrayList<Integer>();
         int result = 0;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
-
+        
         try {
-
-            String sql = "SELECT o.orderId FROM Orders o order by o.orderId";
+            //SELECT o FROM Orders o WHERE o.customerId = :customerId
+            String sql = "SELECT o.orderId FROM Orders o WHERE o.uuid = :uuid";
             Query query = eman.createQuery(sql);
-         
+            query.setParameter("uuid", UUID);
             cars = query.getResultList();
             result = cars.get(0);
         } finally {
@@ -68,7 +68,6 @@ public class OrderDAO {
             eman.close();
             emf.close();
         }
-
         return result;
     }
 

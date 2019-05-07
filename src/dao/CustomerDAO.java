@@ -64,7 +64,6 @@ public class CustomerDAO {
             eman.close();
             emf.close();
         }
-
         return result;
     }
 
