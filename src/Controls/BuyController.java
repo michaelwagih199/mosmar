@@ -209,7 +209,7 @@ public class BuyController implements Initializable {
             FxDialogs.showInformation("من فضلك", "ادخل اسم العميل والمدفوع");
         } else if (knownUsFrom.equals("نقدى")) {
             et_paid_up.setDisable(true);
-            paymentId = 2;
+            paymentId = 2;           
         }
 
     }
@@ -253,7 +253,7 @@ public class BuyController implements Initializable {
     public void addProductforPartion() {
 
         List<Products> items = productDAO.getProductId(etProductName.getText().toString());
-
+        String knownUsFrom = compoFunctionType.getSelectionModel().getSelectedItem().toString();
         for (Products product : items) {
             // check allow of items 
             if (usefullCalculas.is_allow(Integer.parseInt(etQuantity.getText().toString()), product.getProductid())) {
@@ -266,7 +266,13 @@ public class BuyController implements Initializable {
                         total));
                 totalCounter += total;
                 txtTotal.setText(String.valueOf(totalCounter));
-                et_remaining.setText(String.valueOf(totalCounter));
+                //new 
+                if (knownUsFrom.equals("آجل")) {
+                    et_remaining.setText(String.valueOf(totalCounter));
+                }else if (knownUsFrom.equals("نقدى")) {
+                    et_paid_up.setText(String.valueOf(totalCounter));
+                }
+               
                 etDiscount1.setText(String.valueOf(totalCounter));
             } else {
                 int alloLimit = usefullCalculas.allowOfunit(product.getProductid());
@@ -310,7 +316,7 @@ public class BuyController implements Initializable {
 
     public void addProductforGomla_Gomla() {
         List<Products> items = productDAO.getProductId(etProductName.getText().toString());
-
+        
         for (Products product : items) {
             float product_Gomla_GomlaPrice = productDAO.getProductById(product.getProductid()).getGomelGomlaBuyPrice();
             // check allow of items 
@@ -331,7 +337,7 @@ public class BuyController implements Initializable {
                 int alloLimit = usefullCalculas.allowOfunit(product.getProductid());
                 FxDialogs.showWarning("احزر", "الحد المسموح للبيع فى المخزن" + "\n" + alloLimit + "\t" + "قطعة\n");
             }
-
+            
         }
         loadTabData();
         clearText();
@@ -454,10 +460,20 @@ public class BuyController implements Initializable {
 
     @FXML
     private void etDiscount_pressed(KeyEvent event) {
-
+        String knownUsFrom = compoFunctionType.getSelectionModel().getSelectedItem().toString();
         if (event.getCode().equals(KeyCode.ENTER)) {
-            float totalAfterDiscount = Float.parseFloat(et_remaining.getText().toString()) - Float.parseFloat(etDiscount.getText().toString());
-            etDiscount1.setText(String.valueOf(totalAfterDiscount));
+            //new 
+            if (knownUsFrom.equals("آجل")) {
+                float totalAfterDiscount = Float.parseFloat(et_remaining.getText().toString()) - Float.parseFloat(etDiscount.getText().toString());
+                etDiscount1.setText(String.valueOf(totalAfterDiscount));
+                et_remaining.setText(String.valueOf(totalAfterDiscount));
+            } else if (knownUsFrom.equals("نقدى")) {
+                float totalAfterDiscount = Float.parseFloat(et_paid_up.getText().toString()) - Float.parseFloat(etDiscount.getText().toString());
+                etDiscount1.setText(String.valueOf(totalAfterDiscount));
+                et_paid_up.setText(String.valueOf(totalAfterDiscount));
+                //et_remaining.setText(String.valueOf(totalAfterDiscount));
+            }
+
         }
     }
 

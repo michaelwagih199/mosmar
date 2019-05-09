@@ -63,7 +63,7 @@
       <AnchorPane layoutY="554.0" prefHeight="72.0" prefWidth="1247.0" styleClass="Four_back" stylesheets="@../res/application2.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Label layoutX="1175.0" layoutY="25.0" styleClass="textSearch" text="الإجمالى" />
-            <TextField fx:id="txtTotal" alignment="CENTER" disable="true" layoutX="1069.0" layoutY="13.0" opacity="0.9" prefHeight="49.0" prefWidth="99.0" styleClass="textFeild1">
+            <TextField fx:id="txtTotal" alignment="CENTER" disable="true" layoutX="1069.0" layoutY="13.0" opacity="0.9" prefHeight="49.0" prefWidth="99.0" styleClass="textFeild1" text="0">
                <font>
                   <Font size="20.0" />
                </font>
@@ -75,7 +75,7 @@
                   <Font size="20.0" />
                </font>
             </TextField>
-            <TextField fx:id="et_remaining" alignment="CENTER" disable="true" layoutX="689.0" layoutY="12.0" opacity="0.9" prefHeight="49.0" prefWidth="102.0" styleClass="textFeild1">
+            <TextField fx:id="et_remaining" alignment="CENTER" disable="true" layoutX="689.0" layoutY="12.0" opacity="0.9" prefHeight="49.0" prefWidth="102.0" styleClass="textFeild1" text="0">
                <font>
                   <Font size="20.0" />
                </font>
@@ -89,7 +89,7 @@
             <Label layoutX="498.0" layoutY="23.0" styleClass="textSearch" text="جنية" />
             <JFXButton layoutX="14.0" layoutY="5.0" onAction="#btn_submit_buy" prefHeight="57.0" prefWidth="173.0" styleClass="mainButton" text="تأكيد" />
             <Label layoutX="332.0" layoutY="22.0" styleClass="textSearch" text="الاجمالى بعد الخصم" />
-            <TextField fx:id="etDiscount1" alignment="CENTER" disable="true" editable="false" layoutX="248.0" layoutY="9.0" opacity="0.9" prefHeight="49.0" prefWidth="74.0" styleClass="textFeild1">
+            <TextField fx:id="etDiscount1" alignment="CENTER" disable="true" editable="false" layoutX="248.0" layoutY="9.0" opacity="0.9" prefHeight="49.0" prefWidth="74.0" styleClass="textFeild1" text="0">
                <font>
                   <Font size="20.0" />
                </font>

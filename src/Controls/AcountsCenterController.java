@@ -57,7 +57,9 @@ public class AcountsCenterController implements Initializable {
     private TableColumn<custom_orders, Float> col_remainning;
     @FXML
     private TableColumn<custom_orders, Float> col_discount;
-
+    @FXML
+    private TableColumn<custom_orders, String> col_orderType;
+    
     ObservableList<custom_orders> row = FXCollections.observableArrayList();
     ObservableList<Custom_OrderDetails> orderDetailrow = FXCollections.observableArrayList();
     
@@ -84,6 +86,7 @@ public class AcountsCenterController implements Initializable {
     private TableColumn<Custom_OrderDetails, Float> colAllCostOrderDetail;
     @FXML
     private Label lableOrderDetailId;
+   
    
 
     @Override
@@ -136,10 +139,10 @@ public class AcountsCenterController implements Initializable {
         col_paid.setCellValueFactory(new PropertyValueFactory<>("paid"));
         col_remainning.setCellValueFactory(new PropertyValueFactory<>("remaining"));
         col_discount.setCellValueFactory(new PropertyValueFactory<>("orderDiscount"));
+        col_orderType.setCellValueFactory(new PropertyValueFactory<>("orderType"));
         formateDate();
        // row.addAll(orderDAO.getOrderByDate());
         orderTable.setItems(row);
-
     }
     public void loadorderDetailTabData() throws ParseException {
         col_productName_orderDetails.setCellValueFactory(new PropertyValueFactory<>("ProductName"));
@@ -164,13 +167,12 @@ public class AcountsCenterController implements Initializable {
                     }
                 }
             };
-
             return cell;
         });
     }
 
     public void yarab(Date orderDate , String orderType) throws ParseException {
-        
+        String paymentType = null;
           //formatting date in Java using SimpleDateFormat
         SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
      for (int i = 0; i < orderDAO.getOrderByDate(orderDate,orderType).size(); i++) {
@@ -183,10 +185,19 @@ public class AcountsCenterController implements Initializable {
             float paid = (float) orderDAO.getOrderByDate(orderDate,orderType).get(i)[4];
             float remaining = (float) orderDAO.getOrderByDate(orderDate,orderType).get(i)[5];
             float orderDiscount = (float) orderDAO.getOrderByDate(orderDate,orderType).get(i)[6];
+            int paymentId = (int) orderDAO.getOrderByDate(orderDate,orderType).get(i)[7];
+            if (paymentId == 1) {
+                paymentType = "اجل";
+            }else if (paymentId == 2) {
+                paymentType = "نقدى";
+
+         }
+            
             //paid,remaining,orderDiscount;;
             row.add(new custom_orders(orderId,
                     date1,
                     customerName,
+                    paymentType,
                     totslCost,
                     paid,
                     remaining,

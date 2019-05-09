@@ -48,7 +48,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="orderTable" layoutX="4.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#orderTable_click" prefHeight="481.0" prefWidth="983.0" stylesheets="@../res/Java.css">
+                        <TableView fx:id="orderTable" layoutX="4.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#orderTable_click" prefHeight="486.0" prefWidth="983.0" stylesheets="@../res/Java.css">
                           <columns>
                             <TableColumn fx:id="col_orderId" prefWidth="109.0" text="رقم الطلب" />
                             <TableColumn fx:id="col_orderDate" prefWidth="118.0" text="تاريخ الطلب" />
