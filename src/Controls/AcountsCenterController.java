@@ -1,11 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controls;
 
 import dao.OrderDAO;
+import dao.OrderDetailDAO;
+import entities.Custom_OrderDetails;
+import entities.OrderDetail;
 import entities.custom_orders;
 import helper.Helper;
 import java.io.IOException;
@@ -25,11 +24,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
 
 /**
@@ -57,13 +59,32 @@ public class AcountsCenterController implements Initializable {
     private TableColumn<custom_orders, Float> col_discount;
 
     ObservableList<custom_orders> row = FXCollections.observableArrayList();
+    ObservableList<Custom_OrderDetails> orderDetailrow = FXCollections.observableArrayList();
+    
     OrderDAO orderDAO = new OrderDAO();
+    OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+    
     @FXML
     private DatePicker orderDate;
     @FXML
     private ComboBox<String> compoOrdeType;
     
       Helper help = new Helper();
+    @FXML
+    private Pane paneOrderDetail;
+    @FXML
+    private TableView<Custom_OrderDetails> tableOrderDetails;
+    @FXML
+    private TableColumn<Custom_OrderDetails, String> col_productName_orderDetails;
+    @FXML
+    private TableColumn<Custom_OrderDetails, Float> col_price_orderDetail;
+    @FXML
+    private TableColumn<Custom_OrderDetails, Float> col_quantity_orderDetail;
+    @FXML
+    private TableColumn<Custom_OrderDetails, Float> colAllCostOrderDetail;
+    @FXML
+    private Label lableOrderDetailId;
+   
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -120,7 +141,13 @@ public class AcountsCenterController implements Initializable {
         orderTable.setItems(row);
 
     }
-
+    public void loadorderDetailTabData() throws ParseException {
+        col_productName_orderDetails.setCellValueFactory(new PropertyValueFactory<>("ProductName"));
+        col_price_orderDetail.setCellValueFactory(new PropertyValueFactory<>("price"));
+        col_quantity_orderDetail.setCellValueFactory(new PropertyValueFactory<>("quantity"));    
+        colAllCostOrderDetail.setCellValueFactory(new PropertyValueFactory<>("total"));    
+        tableOrderDetails.setItems(orderDetailrow);
+    }
     
     public void formateDate() {
         col_orderDate.setCellFactory(column -> {
@@ -171,7 +198,6 @@ public class AcountsCenterController implements Initializable {
     @FXML
     private void btnShowClick(ActionEvent event) throws ParseException { 
         try {  
-            
             orderTable.getItems().clear();
             String knownUsFrom = compoOrdeType.getSelectionModel().getSelectedItem().toString();
             java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
@@ -182,9 +208,51 @@ public class AcountsCenterController implements Initializable {
         } catch (Exception e) {
             
         }
-
-
-         
+        
     }
+
+    @FXML
+    private void orderTable_click(MouseEvent event) {
+         if(event.getButton().equals(MouseButton.PRIMARY)){
+            if(event.getClickCount() == 2){
+                
+                try{
+                    custom_orders list = orderTable.getSelectionModel().getSelectedItem();
+                    paneOrderDetail.setVisible(true);
+                    lableOrderDetailId.setText(String.valueOf(list.getOrderId()));
+                    
+                    yaraborderTe(list.getOrderId());
+                    loadorderDetailTabData();
+                                     
+                } catch (Exception e) {
+                    System.out.println(e.getLocalizedMessage());
+                }
+            }
+        }
+
+    }
+    
+    public void yaraborderTe(int orderId) throws ParseException {
+
+        for (int i = 0; i < orderDetailDAO.getOrderDetailByOrderId(orderId).size(); i++) {
+          
+            String ProductName = (String) orderDetailDAO.getOrderDetailByOrderId(orderId).get(i)[0];
+            float price = (float) orderDetailDAO.getOrderDetailByOrderId(orderId).get(i)[1];
+            float quantity = (float) orderDetailDAO.getOrderDetailByOrderId(orderId).get(i)[2];
+            float total = (float) orderDetailDAO.getOrderDetailByOrderId(orderId).get(i)[3];
+         
+            //paid,remaining,orderDiscount;;
+            orderDetailrow.add(new Custom_OrderDetails(ProductName, price, quantity, total));
+        }
+           
+    }
+
+    @FXML
+    private void paneOrderDetail_close(MouseEvent event) {
+        tableOrderDetails.getItems().clear();
+        paneOrderDetail.setVisible(false);
+    }
+
+ 
 
 }

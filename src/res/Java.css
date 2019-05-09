@@ -1,6 +1,6 @@
 .table-view .column-header,
 .table-view .column-header-background .filler {
-    -fx-background-color:  #F67522; 
+    -fx-background-color:  #7d7d7d; 
 }
 .table-view .column-header .label{
     -fx-font-size: 14pt;

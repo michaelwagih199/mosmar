@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -14,8 +15,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane id="AnchorPane" prefHeight="673.0" prefWidth="1000.0" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.AcountsCenterController">
+<AnchorPane id="AnchorPane" prefHeight="673.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.AcountsCenterController">
    <children>
       <Pane layoutX="117.0" layoutY="8.0" prefHeight="50.0" prefWidth="770.0" styleClass="grey_back">
          <children>
@@ -24,10 +26,10 @@
       </Pane>
       <Pane layoutY="-4.0" prefHeight="150.0" prefWidth="999.0">
          <children>
-            <DatePicker fx:id="orderDate" layoutX="597.0" layoutY="81.0" prefHeight="25.0" prefWidth="194.0" />
+            <DatePicker fx:id="orderDate" layoutX="586.0" layoutY="81.0" prefHeight="37.0" prefWidth="205.0" styleClass="combobox_user" />
             <Label layoutX="800.0" layoutY="81.0" prefHeight="26.0" prefWidth="107.0" styleClass="text_Black" text="تاريخ الحساب" />
             <Label layoutX="294.0" layoutY="81.0" prefHeight="26.0" prefWidth="80.0" styleClass="text_Black" text="نوع الطلب" />
-            <ComboBox fx:id="compoOrdeType" layoutX="79.0" layoutY="81.0" prefHeight="25.0" prefWidth="205.0" />
+            <ComboBox fx:id="compoOrdeType" layoutX="55.0" layoutY="81.0" prefHeight="36.0" prefWidth="229.0" styleClass="combobox_user" />
             <Separator layoutX="6.0" layoutY="143.0" prefHeight="8.0" prefWidth="986.0" />
             <ImageView fitHeight="51.0" fitWidth="46.0" layoutX="14.0" layoutY="10.0" onMouseClicked="#homeClick" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -37,26 +39,51 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <Button layoutX="408.0" layoutY="116.0" mnemonicParsing="false" onAction="#btnShowClick" prefHeight="25.0" prefWidth="160.0" text="عرض الحساب" />
+            <Button layoutX="401.0" layoutY="100.0" mnemonicParsing="false" onAction="#btnShowClick" prefHeight="25.0" prefWidth="160.0" styleClass="button_Small" text="عرض الحساب" />
          </children>
       </Pane>
-      <TabPane layoutX="6.0" layoutY="151.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="520.0" prefWidth="991.0" styleClass="table" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="6.0" layoutY="151.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="520.0" prefWidth="991.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="تفاصيل طلبات اليوم">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="orderTable" layoutX="4.0" layoutY="2.0" prefHeight="473.0" prefWidth="983.0">
+                        <TableView fx:id="orderTable" layoutX="4.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#orderTable_click" prefHeight="481.0" prefWidth="983.0" stylesheets="@../res/Java.css">
                           <columns>
-                            <TableColumn fx:id="col_orderId" prefWidth="80.66667175292969" text="رقم الطلب" />
-                            <TableColumn fx:id="col_orderDate" prefWidth="120.33332824707031" text="تاريخ الطلب" />
-                              <TableColumn fx:id="col_customerName" prefWidth="132.66665649414062" text="اسم العميل" />
-                              <TableColumn fx:id="col_totalCost" prefWidth="113.33331298828125" text="اجمالى التكلفة" />
-                              <TableColumn fx:id="col_paid" prefWidth="127.3333740234375" text="المدفوع" />
-                              <TableColumn fx:id="col_remainning" prefWidth="134.66668701171875" text="المتبقى" />
-                              <TableColumn fx:id="col_discount" prefWidth="125.6666259765625" text="الخصمم" />
+                            <TableColumn fx:id="col_orderId" prefWidth="109.0" text="رقم الطلب" />
+                            <TableColumn fx:id="col_orderDate" prefWidth="118.0" text="تاريخ الطلب" />
+                              <TableColumn fx:id="col_customerName" prefWidth="129.0" text="اسم العميل" />
+                              <TableColumn fx:id="col_totalCost" prefWidth="131.0" text="اجمالى التكلفة" />
+                              <TableColumn fx:id="col_paid" prefWidth="128.0" text="المدفوع" />
+                              <TableColumn fx:id="col_remainning" prefWidth="97.0" text="المتبقى" />
+                              <TableColumn fx:id="col_discount" prefWidth="113.0" text="الخصمم" />
+                              <TableColumn fx:id="col_orderType" prefWidth="96.0" text="نوع الطلب" />
                           </columns>
                         </TableView>
+                        <Pane fx:id="paneOrderDetail" layoutX="18.0" layoutY="47.0" prefHeight="353.0" prefWidth="951.0" styleClass="grey_wite_back" visible="false">
+                           <children>
+                              <ImageView fitHeight="27.0" fitWidth="28.0" layoutX="12.0" layoutY="4.0" onMouseClicked="#paneOrderDetail_close" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../res/close2.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <TableView fx:id="tableOrderDetails" layoutX="8.0" layoutY="48.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="293.0" prefWidth="937.0" styleClass="table">
+                                <columns>
+                                  <TableColumn fx:id="col_productName_orderDetails" prefWidth="117.0" text="اسم المنتج" />
+                                  <TableColumn fx:id="col_price_orderDetail" prefWidth="96.0" text="السعر " />
+                                    <TableColumn fx:id="col_quantity_orderDetail" prefWidth="98.0" text="الكمية" />
+                                    <TableColumn fx:id="colAllCostOrderDetail" prefWidth="129.0" text="الأجمالى" />
+                                </columns>
+                              </TableView>
+                              <Label layoutX="416.0" layoutY="4.0" prefHeight="31.0" prefWidth="137.0" styleClass="textHeder" text="تفاصيل الطلب" />
+                              <Separator layoutX="2.0" layoutY="34.0" prefHeight="8.0" prefWidth="947.0" />
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9a9a9a" height="26.0" layoutX="842.0" layoutY="7.0" stroke="#59575700" strokeType="INSIDE" strokeWidth="0.0" width="93.0" />
+                              <Label fx:id="lableOrderDetailId" alignment="CENTER" layoutX="846.0" layoutY="9.0" prefHeight="20.0" prefWidth="87.0" text="0" />
+                           </children>
+                        </Pane>
                      </children>
                   </AnchorPane>
             </content>
@@ -69,4 +96,8 @@
         </tabs>
       </TabPane>
    </children>
+   <stylesheets>
+      <URL value="@../res/application.css" />
+      <URL value="@../res/application2.css" />
+   </stylesheets>
 </AnchorPane>
