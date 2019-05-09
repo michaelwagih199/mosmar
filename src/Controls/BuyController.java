@@ -12,9 +12,7 @@ import helper.Helper;
 import helper.SubmitBuy_helper;
 import helper.UsefulCalculas;
 import java.io.IOException;
-import static java.lang.reflect.Array.get;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -35,7 +33,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-import javax.persistence.criteria.Order;
 import org.controlsfx.control.textfield.TextFields;
 
 public class BuyController implements Initializable {
@@ -86,10 +83,10 @@ public class BuyController implements Initializable {
     float totalCounter = 0;
     int paymentId = 0;
     public int customerId = 0;
-    
+
     public int OrderId = 0;
     String uuidUniq;
-   
+
     @FXML
     private Label txtDate;
 
@@ -101,9 +98,7 @@ public class BuyController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      
-        System.out.println(orderDAO.getLastOrderId("5f8303a6-fa5a-4061-ab1c-8ab95ebae9d9"));
-        
+        //System.out.println(orderDAO.getOrderByDate().get(1).getTotslCost());
         compo_priceType.getItems().addAll("قطاعى");
         compo_priceType.getItems().addAll("جملة");
         compo_priceType.getItems().addAll("جملة الجملة");
@@ -116,7 +111,7 @@ public class BuyController implements Initializable {
         txtDate.setText(help.getDate());
 
         addButtonDeleteToTable();
-       // orderId.setText(String.valueOf(orderDAO.getCountOrder()));
+        // orderId.setText(String.valueOf(orderDAO.getCountOrder()));
         /*
         System.out.println(usefullCalculas.getProductPartitionPriceforunit(27));
         System.out.println(usefullCalculas.allowOfunit(28));
@@ -137,11 +132,11 @@ public class BuyController implements Initializable {
                 } else if (!etClientName.getText().toString().isEmpty()) {
                     customerId = customerDAO.getcCustomerId(etClientName.getText().toString());
                 }
-                
+
                 generateCode();
                 // insert order 
-                submitBuy_helper.insert_order(customerId, paymentId, etBuyType.getText().toString(),uuidUniq);
-                
+                submitBuy_helper.insert_order(customerId, paymentId, etBuyType.getText().toString(), uuidUniq);
+
                 // insert order detail 
                 getAllDetail();
                 //insert order payment 
@@ -161,11 +156,9 @@ public class BuyController implements Initializable {
             System.out.println(e.getLocalizedMessage());
         }
 
-        
         clear_afterSubmit();
 
     }
-    
 
     public void getAllDetail() {
         for (custom_BuyTable o : row) {
@@ -240,27 +233,22 @@ public class BuyController implements Initializable {
                     addProductforPartion();
                 } else if (etBuyType.getText().toString().equals("جملة")) {
                     addProductforGomla();
-                }else if (etBuyType.getText().toString().equals("جملة الجملة")) {
+                } else if (etBuyType.getText().toString().equals("جملة الجملة")) {
                     addProductforGomla_Gomla();
                 }
-                
 
             }
         } catch (Exception e) {
         }
-        
-        
-        
+
     }
-    
-    public void generateCode(){
-       // Creating a random UUID (Universally unique identifier).
+
+    public void generateCode() {
+        // Creating a random UUID (Universally unique identifier).
         UUID uuid = UUID.randomUUID();
         uuidUniq = uuid.toString();
-       
+
     }
-    
-    
 
     public void addProductforPartion() {
 
