@@ -8,6 +8,8 @@ import dao.CustomerDAO;
 import entities.Customers;
 import entities.Products;
 import helper.FxDialogs;
+import helper.Helper;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -92,6 +94,7 @@ public class CustomersController implements Initializable {
     private Label labelNotifi;
     @FXML
     private JFXButton btnAddCost1;
+    Helper help = new Helper();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -108,8 +111,9 @@ public class CustomersController implements Initializable {
     }
 
     @FXML
-    private void home_Click(MouseEvent event) {
-
+    private void home_Click(MouseEvent event) throws IOException {
+        help.start("/mosmar/main.fxml", "الصفحة الرئيسية");
+        help.close(btn_save);
     }
 
     @FXML

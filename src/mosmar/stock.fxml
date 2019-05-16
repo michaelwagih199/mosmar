@@ -13,17 +13,17 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1000.0" styleClass="pattern_background" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.StockController">
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1055.0" styleClass="pattern_background" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.StockController">
    <children>
-      <TableView fx:id="table" layoutX="10.0" layoutY="91.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="547.0" prefWidth="982.0" styleClass="table" stylesheets="@../res/Java.css">
+      <TableView fx:id="table" layoutX="8.0" layoutY="91.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="547.0" prefWidth="1018.0" styleClass="table" stylesheets="@../res/Java.css">
         <columns>
             <TableColumn fx:id="col_id" prefWidth="49.0" text="كود" />
-          <TableColumn fx:id="col_product" prefWidth="104.0" text="الصنف" />
-          <TableColumn fx:id="col_weight" prefWidth="124.0" text="وزن الوحده" />
-            <TableColumn fx:id="col_unitInStock" prefWidth="137.0" text="الكمية الموجوده" />
-            <TableColumn fx:id="col_purchase_price" prefWidth="113.0" text="سعر الشراء" />
-            <TableColumn fx:id="col_gomla_price" prefWidth="101.0" text="سعر الجملة" />
-            <TableColumn fx:id="col_kata3y_price" prefWidth="107.0" text="سعر القطاعى" />
+          <TableColumn fx:id="col_product" prefWidth="93.0" text="الصنف" />
+          <TableColumn fx:id="col_weight" prefWidth="113.0" text="وزن الوحده (جم)" />
+            <TableColumn fx:id="col_unitInStock" prefWidth="149.0" text="الكمية الموجوده(كجم)" />
+            <TableColumn fx:id="col_purchase_price" prefWidth="125.0" text="سعر الشراء" />
+            <TableColumn fx:id="col_gomla_price" prefWidth="115.0" text="سعر الجملة" />
+            <TableColumn fx:id="col_kata3y_price" prefWidth="91.0" text="سعر القطاعى" />
             <TableColumn fx:id="col_gomel_gomla" prefWidth="124.0" text="سعر جملة الجملة" />
         </columns>
       </TableView>
@@ -37,7 +37,7 @@
             <Image url="@../res/002-home.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="68.0" fitWidth="65.0" layoutX="932.0" layoutY="8.0" onMouseClicked="#addClick" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="68.0" fitWidth="65.0" layoutX="976.0" layoutY="11.0" onMouseClicked="#addClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../res/add.png" />
          </image>

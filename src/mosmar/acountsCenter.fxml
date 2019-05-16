@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import java.net.URL?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -15,6 +18,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane id="AnchorPane" prefHeight="673.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.AcountsCenterController">
@@ -26,9 +30,10 @@
       </Pane>
       <Pane layoutY="-4.0" prefHeight="150.0" prefWidth="999.0">
          <children>
+            <JFXButton layoutX="61.0" layoutY="82.0" onAction="#btnProfitClick" prefHeight="36.0" prefWidth="217.0" styleClass="button_Small" text="عرض الارباح والمصاريف" />
             <DatePicker fx:id="orderDate" layoutX="586.0" layoutY="81.0" prefHeight="37.0" prefWidth="205.0" styleClass="combobox_user" />
             <Label layoutX="800.0" layoutY="81.0" prefHeight="26.0" prefWidth="107.0" styleClass="text_Black" text="تاريخ الحساب" />
-            <Label layoutX="294.0" layoutY="81.0" prefHeight="26.0" prefWidth="80.0" styleClass="text_Black" text="نوع الطلب" />
+            <Label fx:id="labelOrderType" layoutX="294.0" layoutY="81.0" prefHeight="26.0" prefWidth="80.0" styleClass="text_Black" text="نوع الطلب" />
             <ComboBox fx:id="compoOrdeType" layoutX="55.0" layoutY="81.0" prefHeight="36.0" prefWidth="229.0" styleClass="combobox_user" />
             <Separator layoutX="6.0" layoutY="143.0" prefHeight="8.0" prefWidth="986.0" />
             <ImageView fitHeight="51.0" fitWidth="46.0" layoutX="14.0" layoutY="10.0" onMouseClicked="#homeClick" pickOnBounds="true" preserveRatio="true">
@@ -39,12 +44,12 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <Button layoutX="401.0" layoutY="100.0" mnemonicParsing="false" onAction="#btnShowClick" prefHeight="25.0" prefWidth="160.0" styleClass="button_Small" text="عرض الحساب" />
+            <Button fx:id="btnShow" layoutX="401.0" layoutY="100.0" mnemonicParsing="false" onAction="#btnShowClick" prefHeight="25.0" prefWidth="160.0" styleClass="button_Small" text="عرض الحساب" />
          </children>
       </Pane>
       <TabPane layoutX="6.0" layoutY="151.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="520.0" prefWidth="991.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="تفاصيل طلبات اليوم">
+          <Tab onSelectionChanged="#TapordersClick" text="تفاصيل طلبات اليوم">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -52,11 +57,11 @@
                           <columns>
                             <TableColumn fx:id="col_orderId" prefWidth="109.0" text="رقم الطلب" />
                             <TableColumn fx:id="col_orderDate" prefWidth="118.0" text="تاريخ الطلب" />
-                              <TableColumn fx:id="col_customerName" prefWidth="129.0" text="اسم العميل" />
-                              <TableColumn fx:id="col_totalCost" prefWidth="131.0" text="اجمالى التكلفة" />
-                              <TableColumn fx:id="col_paid" prefWidth="128.0" text="المدفوع" />
-                              <TableColumn fx:id="col_remainning" prefWidth="97.0" text="المتبقى" />
-                              <TableColumn fx:id="col_discount" prefWidth="113.0" text="الخصمم" />
+                              <TableColumn fx:id="col_customerName" prefWidth="99.0" text="اسم العميل" />
+                              <TableColumn fx:id="col_totalCost" prefWidth="149.0" text="التكلفة بعد الخصم" />
+                              <TableColumn fx:id="col_paid" prefWidth="116.0" text="المدفوع" />
+                              <TableColumn fx:id="col_remainning" prefWidth="113.0" text="المتبقى" />
+                              <TableColumn fx:id="col_discount" prefWidth="121.0" text="الخصمم" />
                               <TableColumn fx:id="col_orderType" prefWidth="96.0" text="نوع الطلب" />
                           </columns>
                         </TableView>
@@ -88,9 +93,66 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="ارباح ومصاريف اليوم">
+          <Tab onSelectionChanged="#netProfiteClick" text="ارباح ومصاريف اليوم">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Circle fill="DODGERBLUE" layoutX="440.0" layoutY="22.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Label alignment="CENTER" layoutX="599.0" layoutY="8.0" prefHeight="17.0" prefWidth="271.0" styleClass="textHeder" text="المبيعات" />
+                        <Separator layoutX="476.0" layoutY="139.0" prefHeight="6.0" prefWidth="506.0" />
+                        <Label alignment="CENTER" layoutX="598.0" layoutY="151.0" prefHeight="17.0" prefWidth="271.0" styleClass="textHeder" text="الخزنة (الدرج )" />
+                        <Label alignment="CENTER" layoutX="589.0" layoutY="291.0" prefHeight="17.0" prefWidth="271.0" styleClass="textHeder" text="صافى الربح " />
+                        <Separator layoutX="480.0" layoutY="286.0" prefHeight="6.0" prefWidth="502.0" />
+                        <Separator layoutX="458.0" layoutY="6.0" orientation="VERTICAL" prefHeight="479.0" prefWidth="14.0" />
+                        <Label alignment="CENTER" layoutX="63.0" layoutY="2.0" prefHeight="17.0" prefWidth="271.0" styleClass="textHeder" text="المصروفات" />
+                        <ImageView fitHeight="38.0" fitWidth="53.0" layoutX="421.0" layoutY="3.0" onMouseClicked="#addExpesessClick" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/add.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                        <TableView fx:id="tableExpense" layoutX="10.0" layoutY="49.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="406.0" prefWidth="446.0">
+                          <columns>
+                            <TableColumn fx:id="col_expenseDate" prefWidth="95.33334350585938" text="التاريخ" />
+                            <TableColumn fx:id="col_expenseContext" prefWidth="96.33331298828125" text="البيان" />
+                              <TableColumn fx:id="col_expenseValue" prefWidth="106.3333740234375" text="القيمة" />
+                              <TableColumn fx:id="col_expenseNotes" prefWidth="99.6666259765625" text="ملاحظات" />
+                          </columns>
+                        </TableView>
+                        <Pane fx:id="pane_addPaid" layoutX="40.0" layoutY="85.0" prefHeight="351.0" prefWidth="341.0" styleClass="grey_wite_back" visible="false">
+                           <children>
+                              <ImageView fitHeight="27.0" fitWidth="35.0" layoutX="9.0" layoutY="7.0" onMouseClicked="#closeExpencesClick" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../res/close2.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <JFXButton layoutX="111.0" layoutY="300.0" onAction="#btn_save_expenceClick" styleClass="button_Small" text="حفظ المصروف" />
+                              <Label layoutX="268.0" layoutY="68.0" prefHeight="26.0" prefWidth="49.0" styleClass="text_Black" text="التاريخ" />
+                              <Label alignment="CENTER" layoutX="81.0" layoutY="6.0" prefHeight="31.0" prefWidth="180.0" styleClass="textHeder" text="اضافة مصروف" />
+                              <Separator layoutX="6.0" layoutY="40.0" prefHeight="6.0" prefWidth="330.0" />
+                              <DatePicker fx:id="dateExpenes" layoutX="23.0" layoutY="72.0" prefHeight="25.0" prefWidth="229.0" />
+                              <Label layoutX="269.0" layoutY="116.0" prefHeight="26.0" prefWidth="49.0" styleClass="text_Black" text="البيان" />
+                              <JFXTextField fx:id="et_expenseContrext" layoutX="22.0" layoutY="117.0" prefHeight="25.0" prefWidth="213.0" />
+                              <Label layoutX="266.0" layoutY="163.0" prefHeight="26.0" prefWidth="49.0" styleClass="text_Black" text="القيمة" />
+                              <JFXTextField fx:id="et_expenceValue" layoutX="22.0" layoutY="163.0" prefHeight="25.0" prefWidth="213.0" />
+                              <JFXTextArea fx:id="et_expenceNotes" layoutX="14.0" layoutY="221.0" prefHeight="46.0" prefWidth="229.0" />
+                              <Label layoutX="259.0" layoutY="244.0" prefHeight="26.0" prefWidth="68.0" styleClass="text_Black" text="ملاحظات" />
+                           </children>
+                        </Pane>
+                        <Separator layoutX="730.0" layoutY="338.0" orientation="VERTICAL" prefHeight="144.0" prefWidth="6.0" />
+                        <Separator layoutX="474.0" layoutY="327.0" prefHeight="6.0" prefWidth="502.0" />
+                        <Label alignment="CENTER" layoutX="762.0" layoutY="339.0" prefHeight="31.0" prefWidth="196.0" styleClass="textHeder" text="قبل المصاريف" />
+                        <Label alignment="CENTER" layoutX="512.0" layoutY="338.0" prefHeight="31.0" prefWidth="196.0" styleClass="textHeder" text="بعد المصاريف" />
+                        <Label fx:id="txt_sales" alignment="CENTER" layoutX="599.0" layoutY="57.0" prefHeight="50.0" prefWidth="285.0" styleClass="text5" />
+                        <Label fx:id="txt_treasury" alignment="CENTER" layoutX="592.0" layoutY="202.0" prefHeight="50.0" prefWidth="285.0" styleClass="text5" />
+                        <Label fx:id="txt_net_profit_before_paid" alignment="CENTER" layoutX="753.0" layoutY="397.0" prefHeight="50.0" prefWidth="215.0" styleClass="text5" />
+                        <Label fx:id="txt_net_profit_after_paid" alignment="CENTER" layoutX="496.0" layoutY="397.0" prefHeight="50.0" prefWidth="215.0" styleClass="text5" />
+                     </children></AnchorPane>
             </content>
           </Tab>
         </tabs>

@@ -136,9 +136,11 @@
   .text5 {
    -fx-background-color: #84DBFF;  
     -fx-background-radius: 20;
-    -fx-border-color: #15242E;
+    -fx-border-color: rgb(0, 32, 136);
     -fx-border-width: 2;
     -fx-border-radius: 20;
+    -fx-font-family: "Arial";
+    -fx-font-size: 18pt;
 }
 .labelSetting {
     -fx-font-family: "Arial";

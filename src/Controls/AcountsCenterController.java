@@ -1,11 +1,17 @@
 
 package Controls;
 
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
+import dao.ExpensessDAO;
 import dao.OrderDAO;
 import dao.OrderDetailDAO;
+import dao.OrderPaymentDAO;
 import entities.Custom_OrderDetails;
+import entities.Expenses;
 import entities.OrderDetail;
 import entities.custom_orders;
+import helper.CalculasHelper;
 import helper.Helper;
 import java.io.IOException;
 import java.net.URL;
@@ -20,8 +26,10 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -65,13 +73,16 @@ public class AcountsCenterController implements Initializable {
     
     OrderDAO orderDAO = new OrderDAO();
     OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+    CalculasHelper calculasHelper = new CalculasHelper();
+    OrderPaymentDAO orderPaymentDAO = new OrderPaymentDAO();
+    ExpensessDAO expensessDAO = new ExpensessDAO();
     
     @FXML
     private DatePicker orderDate;
     @FXML
     private ComboBox<String> compoOrdeType;
     
-      Helper help = new Helper();
+    Helper help = new Helper();
     @FXML
     private Pane paneOrderDetail;
     @FXML
@@ -86,9 +97,40 @@ public class AcountsCenterController implements Initializable {
     private TableColumn<Custom_OrderDetails, Float> colAllCostOrderDetail;
     @FXML
     private Label lableOrderDetailId;
-   
-   
+    @FXML
+    private Pane pane_addPaid;
+    @FXML
+    private Label txt_sales;
+    @FXML
+    private Label txt_treasury;
+    @FXML
+    private Label txt_net_profit_before_paid;
+    @FXML
+    private Label txt_net_profit_after_paid;
+    @FXML
+    private DatePicker dateExpenes;
+    @FXML
+    private JFXTextField et_expenseContrext;
+    @FXML
+    private JFXTextField et_expenceValue;
+    @FXML
+    private JFXTextArea et_expenceNotes;
+    @FXML
+    private TableView<Expenses> tableExpense;
+    @FXML
+    private TableColumn<Expenses, Date> col_expenseDate;
+    @FXML
+    private TableColumn<Expenses, String> col_expenseContext;
+    @FXML
+    private TableColumn<Expenses, Float> col_expenseValue;
+    @FXML
+    private TableColumn<Expenses, String> col_expenseNotes;
+    @FXML
+    private Label labelOrderType;
+    @FXML
+    private Button btnShow;
 
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -122,13 +164,16 @@ public class AcountsCenterController implements Initializable {
         };
         orderDate.setConverter(converter);
         orderDate.setPromptText(pattern.toLowerCase());
+        
+        dateExpenes.setConverter(converter);
+        dateExpenes.setPromptText(pattern.toLowerCase());
+          
     }
 
     @FXML
     private void homeClick(MouseEvent event) throws IOException {
         help.start("/mosmar/main.fxml", "الصفحة الرئيسية");
         help.closeC(compoOrdeType);
-
     }
 
     public void loadTabData() throws ParseException {
@@ -144,6 +189,7 @@ public class AcountsCenterController implements Initializable {
        // row.addAll(orderDAO.getOrderByDate());
         orderTable.setItems(row);
     }
+    
     public void loadorderDetailTabData() throws ParseException {
         col_productName_orderDetails.setCellValueFactory(new PropertyValueFactory<>("ProductName"));
         col_price_orderDetail.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -169,6 +215,24 @@ public class AcountsCenterController implements Initializable {
             };
             return cell;
         });
+        
+        col_expenseDate.setCellFactory(column -> {
+            TableCell<Expenses, Date> cell = new TableCell<Expenses, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+            return cell;
+        });
+        
     }
 
     public void yarab(Date orderDate , String orderType) throws ParseException {
@@ -208,18 +272,25 @@ public class AcountsCenterController implements Initializable {
 
     @FXML
     private void btnShowClick(ActionEvent event) throws ParseException { 
-        try {  
+
+        try {
             orderTable.getItems().clear();
             String knownUsFrom = compoOrdeType.getSelectionModel().getSelectedItem().toString();
             java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
-            System.out.println(gettedDatePickerDate);
             yarab(gettedDatePickerDate, knownUsFrom);
             loadTabData();
-
-        } catch (Exception e) {
+            txt_sales.setText("");
             
+           
+          
+           
+            
+           
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+
         }
-        
+
     }
 
     @FXML
@@ -264,6 +335,102 @@ public class AcountsCenterController implements Initializable {
         paneOrderDetail.setVisible(false);
     }
 
- 
+    @FXML
+    private void addExpesessClick(MouseEvent event) {
+        pane_addPaid.setVisible(true);
+    }
+
+    @FXML
+    private void btn_save_expenceClick(ActionEvent event) throws ParseException {
+        try {
+            java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(dateExpenes.getValue());
+            calculasHelper.insertExpensess(gettedDatePickerDate,
+                    et_expenseContrext.getText().toString(),
+                    Float.parseFloat(et_expenceValue.getText().toString()),
+                    et_expenceNotes.getText().toString());
+            //
+
+            clearExpenses();
+            loadExpensesData(gettedDatePickerDate);
+            ProfitCalulas();
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        pane_addPaid.setVisible(false);
+
+    }
+    
+    public void clearExpenses(){
+        et_expenseContrext.clear();
+        et_expenceValue.clear();
+        et_expenceNotes.setText("");
+    }
+    public void trasury(){
+        
+       
+    }
+
+    @FXML
+    private void closeExpencesClick(MouseEvent event) {
+        pane_addPaid.setVisible(false);
+        clearExpenses();
+    }
+
+    public void loadExpensesData(Date date) throws ParseException {
+        
+        col_expenseDate.setCellValueFactory(new PropertyValueFactory<>("expensesDate"));
+        col_expenseContext.setCellValueFactory(new PropertyValueFactory<>("expensesContext"));
+        col_expenseValue.setCellValueFactory(new PropertyValueFactory<>("expensesValue"));
+        col_expenseNotes.setCellValueFactory(new PropertyValueFactory<>("notes"));
+        formateDate();
+        tableExpense.setItems(calculasHelper.getExpencseByDate(date));
+        
+    }
+
+    @FXML
+    private void netProfiteClick(Event event) throws ParseException {
+        compoOrdeType.setVisible(false);
+        labelOrderType.setVisible(false);
+        btnShow.setVisible(false);
+        clearProfit();
+
+    }
+    
+    public void clearProfit(){
+        tableExpense.getItems().clear();
+        txt_sales.setText("");
+        txt_treasury.setText("");
+        txt_net_profit_before_paid.setText("");
+        txt_net_profit_after_paid.setText("");
+    }
+
+    @FXML
+    private void TapordersClick(Event event) {
+        compoOrdeType.setVisible(true);
+         labelOrderType.setVisible(true);
+        btnShow.setVisible(true);
+    }
+
+    @FXML
+    private void btnProfitClick(ActionEvent event) throws ParseException {
+        ProfitCalulas();
+
+    }
+    
+    public void ProfitCalulas(){
+        try {
+             tableExpense.getItems().clear();
+             java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
+             //culculas methods
+            txt_sales.setText(calculasHelper.getDaySales(gettedDatePickerDate) + "");
+            loadExpensesData(gettedDatePickerDate);  
+            
+            txt_treasury.setText(String.valueOf(
+            calculasHelper.getDaySales(gettedDatePickerDate) - calculasHelper.getDayExpenses(gettedDatePickerDate)
+            ));
+        } catch (Exception e) {
+        }
+    }
+
 
 }

@@ -13,6 +13,7 @@ import helper.SubmitBuy_helper;
 import helper.UsefulCalculas;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -86,6 +87,7 @@ public class BuyController implements Initializable {
 
     public int OrderId = 0;
     String uuidUniq;
+    DecimalFormat df = new DecimalFormat("#.###");
 
     @FXML
     private Label txtDate;
@@ -209,7 +211,7 @@ public class BuyController implements Initializable {
             FxDialogs.showInformation("من فضلك", "ادخل اسم العميل والمدفوع");
         } else if (knownUsFrom.equals("نقدى")) {
             et_paid_up.setDisable(true);
-            paymentId = 2;           
+            paymentId = 2;
         }
 
     }
@@ -218,31 +220,32 @@ public class BuyController implements Initializable {
     private void btn_add_product_click(ActionEvent event) {
         boolean isMyComboBoxEmpty = compoFunctionType.getSelectionModel().isEmpty();
         generateCode();
-        try {
-            //validate of input
-            if (etBuyType.getText().toString().isEmpty()) {
-                FxDialogs.showInformation("من فضلك", "اختر نوع عملية البيع");
-            } else if (etProductName.getText().toString().isEmpty()) {
-                FxDialogs.showInformation("من فضلك", "ادخل اسم المنتج");
-            } else if (etQuantity.getText().toString().isEmpty()) {
-                FxDialogs.showInformation("من فضلك", "ادخل الكمية المباعة");
-            } else if (isMyComboBoxEmpty) {
-                FxDialogs.showInformation("من فضلك", "اختر نوع العملية");
-            } else {
-                if (etBuyType.getText().toString().equals("قطاعى")) {
-                    addProductforPartion();
-                } else if (etBuyType.getText().toString().equals("جملة")) {
-                    addProductforGomla();
-                } else if (etBuyType.getText().toString().equals("جملة الجملة")) {
-                    addProductforGomla_Gomla();
-                }
 
+        //validate of input
+        if (etBuyType.getText().toString().isEmpty()) {
+            FxDialogs.showInformation("من فضلك", "اختر نوع عملية البيع");
+        } else if (etProductName.getText().toString().isEmpty()) {
+            FxDialogs.showInformation("من فضلك", "ادخل اسم المنتج");
+        } else if (etQuantity.getText().toString().isEmpty()) {
+            FxDialogs.showInformation("من فضلك", "ادخل الكمية المباعة");
+        } else if (isMyComboBoxEmpty) {
+            FxDialogs.showInformation("من فضلك", "اختر نوع العملية");
+        } else {
+            if (etBuyType.getText().toString().equals("قطاعى")) {
+                addProductforPartion();
+            } else if (etBuyType.getText().toString().equals("جملة")) {
+                addProductforGomla();
+            } else if (etBuyType.getText().toString().equals("جملة الجملة")) {
+                addProductforGomla_Gomla();
             }
-        } catch (Exception e) {
+
         }
 
     }
 
+    /**
+     * generate code id
+     */
     public void generateCode() {
         // Creating a random UUID (Universally unique identifier).
         UUID uuid = UUID.randomUUID();
@@ -269,17 +272,18 @@ public class BuyController implements Initializable {
                 //new 
                 if (knownUsFrom.equals("آجل")) {
                     et_remaining.setText(String.valueOf(totalCounter));
-                }else if (knownUsFrom.equals("نقدى")) {
+                } else if (knownUsFrom.equals("نقدى")) {
                     et_paid_up.setText(String.valueOf(totalCounter));
                 }
-               
+
                 etDiscount1.setText(String.valueOf(totalCounter));
             } else {
-                int alloLimit = usefullCalculas.allowOfunit(product.getProductid());
-                FxDialogs.showWarning("احزر", "الحد المسموح للبيع فى المخزن" + "\n" + alloLimit + "\t" + "قطعة\n");
+                float numberUnit = productDAO.getProductById(product.getProductid()).getUnitsWeightInStock();
+                // int alloLimit = usefullCalculas.allowOfunit(product.getProductid());
+                FxDialogs.showWarning("احزر", "يوجد فى المخزن" + "\n" + numberUnit + "\t" + "كجم\n");
             }
-
         }
+
         loadTabData();
         clearText();
     }
@@ -291,10 +295,8 @@ public class BuyController implements Initializable {
         for (Products product : items) {
             float product_gomlaPrice = productDAO.getProductById(product.getProductid()).getGomlaBuyPrice();
             // check allow of items 
-            if (usefullCalculas.isKG_allow(Integer.parseInt(etQuantity.getText().toString()), product.getProductid())) {
-
+            if (usefullCalculas.isKG_allow(Float.parseFloat(etQuantity.getText().toString()), product.getProductid())) {
                 float total = product_gomlaPrice * Float.parseFloat(etQuantity.getText().toString());
-
                 row.add(new custom_BuyTable(product.getProductid(),
                         product.getProductName(),
                         Float.parseFloat(etQuantity.getText().toString()),
@@ -304,11 +306,12 @@ public class BuyController implements Initializable {
                 txtTotal.setText(String.valueOf(totalCounter));
                 et_remaining.setText(String.valueOf(totalCounter));
                 etDiscount1.setText(String.valueOf(totalCounter));
-            } else {
-                int alloLimit = usefullCalculas.allowOfunit(product.getProductid());
-                FxDialogs.showWarning("احزر", "الحد المسموح للبيع فى المخزن" + "\n" + alloLimit + "\t" + "قطعة\n");
-            }
 
+            } else {
+                float numberUnit = productDAO.getProductById(product.getProductid()).getUnitsWeightInStock();
+                // int alloLimit = usefullCalculas.allowOfunit(product.getProductid());
+                FxDialogs.showWarning("احزر", "يوجد فى المخزن" + "\n" + numberUnit + "\t" + "كجم\n");
+            }
         }
         loadTabData();
         clearText();
@@ -316,14 +319,13 @@ public class BuyController implements Initializable {
 
     public void addProductforGomla_Gomla() {
         List<Products> items = productDAO.getProductId(etProductName.getText().toString());
-        
+
         for (Products product : items) {
             float product_Gomla_GomlaPrice = productDAO.getProductById(product.getProductid()).getGomelGomlaBuyPrice();
             // check allow of items 
-            if (usefullCalculas.isKG_allow(Integer.parseInt(etQuantity.getText().toString()), product.getProductid())) {
+            if (usefullCalculas.isKG_allow(Float.parseFloat(etQuantity.getText().toString()), product.getProductid())) {
 
                 float total = product_Gomla_GomlaPrice * Float.parseFloat(etQuantity.getText().toString());
-
                 row.add(new custom_BuyTable(product.getProductid(),
                         product.getProductName(),
                         Float.parseFloat(etQuantity.getText().toString()),
@@ -334,13 +336,32 @@ public class BuyController implements Initializable {
                 et_remaining.setText(String.valueOf(totalCounter));
                 etDiscount1.setText(String.valueOf(totalCounter));
             } else {
-                int alloLimit = usefullCalculas.allowOfunit(product.getProductid());
-                FxDialogs.showWarning("احزر", "الحد المسموح للبيع فى المخزن" + "\n" + alloLimit + "\t" + "قطعة\n");
+
+                float numberUnit = productDAO.getProductById(product.getProductid()).getUnitsWeightInStock();
+                if (FxDialogs.showConfirm("احزر\n " + "يوجد فى المخزن" + "\n" + numberUnit + "\t" + "كجم\n",
+                        "هل تريد تكملة البيع ؟", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
+                    
+                    float total = product_Gomla_GomlaPrice * Float.parseFloat(etQuantity.getText().toString());
+                    row.add(new custom_BuyTable(product.getProductid(),
+                            product.getProductName(),
+                            Float.parseFloat(etQuantity.getText().toString()),
+                            product_Gomla_GomlaPrice,
+                            total));
+                    totalCounter += total;
+                    txtTotal.setText(String.valueOf(totalCounter));
+                    et_remaining.setText(String.valueOf(totalCounter));
+                    etDiscount1.setText(String.valueOf(totalCounter));
+                }
+
             }
-            
+
         }
         loadTabData();
         clearText();
+    }
+
+    public void dialogLimite(int productId) {
+
     }
 
     public void clearText() {
@@ -468,10 +489,12 @@ public class BuyController implements Initializable {
                 etDiscount1.setText(String.valueOf(totalAfterDiscount));
                 et_remaining.setText(String.valueOf(totalAfterDiscount));
             } else if (knownUsFrom.equals("نقدى")) {
+
                 float totalAfterDiscount = Float.parseFloat(et_paid_up.getText().toString()) - Float.parseFloat(etDiscount.getText().toString());
                 etDiscount1.setText(String.valueOf(totalAfterDiscount));
                 et_paid_up.setText(String.valueOf(totalAfterDiscount));
                 //et_remaining.setText(String.valueOf(totalAfterDiscount));
+
             }
 
         }

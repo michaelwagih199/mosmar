@@ -5,7 +5,7 @@ import entities.Products;
 import java.util.List;
 
 public class UsefulCalculas {
-
+    
     ProductDAO productDAO = new ProductDAO();
 
     public int getUnitsFromHoleWeight(float weight_all_units, int weight_of_unit) {
