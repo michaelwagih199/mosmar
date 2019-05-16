@@ -70,7 +70,7 @@
             </TextField>
             <Label layoutX="1002.0" layoutY="21.0" styleClass="textSearch" text="المدفوع" />
             <Label layoutX="811.0" layoutY="25.0" styleClass="textSearch" text="المتبقى" />
-            <TextField fx:id="et_paid_up" alignment="CENTER" disable="true" layoutX="871.0" layoutY="12.0" onKeyPressed="#et_paid_up_pressed" opacity="0.9" prefHeight="49.0" prefWidth="114.0" styleClass="textFeild1" text="0">
+            <TextField fx:id="et_paid_up" alignment="CENTER" disable="true" layoutX="871.0" layoutY="12.0" onMouseClicked="#et_paid_up_pressedMouse" opacity="0.9" prefHeight="49.0" prefWidth="114.0" styleClass="textFeild1" text="0">
                <font>
                   <Font size="20.0" />
                </font>
@@ -80,7 +80,7 @@
                   <Font size="20.0" />
                </font>
             </TextField>
-            <TextField fx:id="etDiscount" alignment="CENTER" layoutX="518.0" layoutY="12.0" onKeyPressed="#etDiscount_pressed" opacity="0.9" prefHeight="49.0" prefWidth="108.0" styleClass="textFeild1" text="0">
+            <TextField fx:id="etDiscount" alignment="CENTER" layoutX="518.0" layoutY="12.0" onMouseClicked="#etDiscount_pressedMouse" opacity="0.9" prefHeight="49.0" prefWidth="108.0" styleClass="textFeild1" text="0">
                <font>
                   <Font size="20.0" />
                </font>
