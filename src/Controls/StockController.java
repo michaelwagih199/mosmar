@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controls;
 
 import com.jfoenix.controls.JFXComboBox;
@@ -91,6 +87,28 @@ public class StockController implements Initializable {
    
     @FXML
     private TableColumn<Products, Integer> col_id;
+    @FXML
+    private JFXComboBox<?> compoCategory;
+    @FXML
+    private Pane paneAddProductNumber;
+    @FXML
+    private JFXTextField et_product_nameNumber;
+    @FXML
+    private JFXTextField et_unitInStockNumber;
+    @FXML
+    private JFXTextField et_purchase_priceNumber;
+    @FXML
+    private JFXTextField et_kata3y_priceNumber;
+    @FXML
+    private JFXTextField et_gomla_priceNumber;
+    @FXML
+    private JFXTextField et_gomlet_gomlaNumber;
+    @FXML
+    private Label etNotifyNutify;
+    @FXML
+    private JFXTextField etAlertNumber;
+    @FXML
+    private Label txt_alert_unit1;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -293,6 +311,18 @@ public class StockController implements Initializable {
             };
         });
 
+    }
+
+    @FXML
+    private void compoCategoryClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void close_anchor_add_number(MouseEvent event) {
+    }
+
+    @FXML
+    private void btn_add_product_click_number(ActionEvent event) {
     }
 
 }

@@ -499,7 +499,6 @@ public class BuyController implements Initializable {
 
     @FXML
     private void homeClick(MouseEvent event) throws IOException {
-
         help.start("/mosmar/main.fxml", "الصفحة الرئيسية");
         help.closeC(compo_priceType);
 
@@ -533,12 +532,14 @@ public class BuyController implements Initializable {
 
     @FXML
     private void et_paid_up_pressedMouse(MouseEvent event) {
-        
-        String answer = FxDialogs.showTextInput("اكتب القيمة المدفوعة", "جنية", "0");
-        et_paid_up.setText(answer);
-        float remainin = Float.parseFloat(txtTotal.getText().toString()) - Float.parseFloat(answer);
-        et_remaining.setText(String.valueOf(remainin));
-        etDiscount1.setText(String.valueOf(remainin));
+        try {
+            String answer = FxDialogs.showTextInput("اكتب القيمة المدفوعة", "جنية", "0");
+            et_paid_up.setText(answer);
+            float remainin = Float.parseFloat(txtTotal.getText().toString()) - Float.parseFloat(answer);
+            et_remaining.setText(String.valueOf(remainin));
+            etDiscount1.setText(String.valueOf(remainin));
+        } catch (Exception e) {
+        }
 
     }
 

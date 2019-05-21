@@ -82,19 +82,25 @@ public class CustomersController implements Initializable {
     private JFXButton btnAddCost;
     @FXML
     private TableView<?> tablePayment;
-    @FXML
-    private TableColumn<?, ?> colDate;
-    @FXML
-    private TableColumn<?, ?> colpaidValue;
-    @FXML
-    private TableColumn<?, ?> colNotes;
-    @FXML
-    private TableColumn<?, ?> colCreator;
-    @FXML
-    private Label labelNotifi;
-    @FXML
-    private JFXButton btnAddCost1;
     Helper help = new Helper();
+    @FXML
+    private TableColumn<?, ?> colDatePaid;
+    @FXML
+    private TableColumn<?, ?> colpaidValuePaid;
+    @FXML
+    private TableColumn<?, ?> colNotesPaid;
+    @FXML
+    private JFXButton btnCustomersDetails;
+    @FXML
+    private AnchorPane anchorDetails;
+    @FXML
+    private TableColumn<?, ?> colDateDetail;
+    @FXML
+    private TableColumn<?, ?> colProductDetails;
+    @FXML
+    private TableColumn<?, ?> colPrice;
+    @FXML
+    private TableColumn<?, ?> colTotalDetails;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -241,6 +247,7 @@ public class CustomersController implements Initializable {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
+                            anchorPaid.setVisible(true);
 
                         });
                     }
@@ -283,9 +290,14 @@ public class CustomersController implements Initializable {
 
     @FXML
     private void ClosePaidAnchor(MouseEvent event) {
+           anchorPaid.setVisible(false);
     }
 
     @FXML
     private void addCostClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void btnCustomersDetailsClick(ActionEvent event) {
     }
 }

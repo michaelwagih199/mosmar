@@ -80,7 +80,7 @@
                   <Font size="20.0" />
                </font>
             </TextField>
-            <TextField fx:id="etDiscount" alignment="CENTER" layoutX="518.0" layoutY="12.0" onMouseClicked="#etDiscount_pressedMouse" opacity="0.9" prefHeight="49.0" prefWidth="108.0" styleClass="textFeild1" text="0">
+            <TextField fx:id="etDiscount" alignment="CENTER" layoutX="518.0" layoutY="12.0" onMouseClicked="#etDiscount_pressedMouse" opacity="0.9" prefHeight="49.0" prefWidth="114.0" styleClass="textFeild1" text="0">
                <font>
                   <Font size="20.0" />
                </font>
