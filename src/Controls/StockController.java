@@ -1,4 +1,3 @@
-
 package Controls;
 
 import com.jfoenix.controls.JFXComboBox;
@@ -20,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -29,11 +29,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
-/**
- * FXML Controller class
- *
- * @author OM EL NOUR
- */
 public class StockController implements Initializable {
 
     @FXML
@@ -84,11 +79,11 @@ public class StockController implements Initializable {
     private JFXTextField etAlert;
     @FXML
     private Label txt_alert_unit;
-   
+
     @FXML
     private TableColumn<Products, Integer> col_id;
     @FXML
-    private JFXComboBox<?> compoCategory;
+    private JFXComboBox<String> compoCategory;
     @FXML
     private Pane paneAddProductNumber;
     @FXML
@@ -109,13 +104,33 @@ public class StockController implements Initializable {
     private JFXTextField etAlertNumber;
     @FXML
     private Label txt_alert_unit1;
+    @FXML
+    private Pane pane_add_choice;
+    @FXML
+    private Pane paneMapping;
+    @FXML
+    private ListView<?> listProducts;
+    @FXML
+    private JFXTextField et_search;
+    @FXML
+    private JFXTextField productNumber;
+    @FXML
+    private Label mainProductName;
+    @FXML
+    private Label mainProductId;
+    @FXML
+    private Label subProductName;
+    @FXML
+    private Label subProductId;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadTabData();
         addButtonDeleteToTable();
         addButtonUbdateToTable();
-
+        addButtonProductMapppingToTable();
+        compoCategory.getItems().addAll("منتجات بكجم");
+        compoCategory.getItems().addAll("منتجات بالوحدة");
     }
 
     @FXML
@@ -126,13 +141,12 @@ public class StockController implements Initializable {
 
     @FXML
     private void addClick(MouseEvent event) {
-        paneAddProduct.setVisible(true);
+        pane_add_choice.setVisible(true);
     }
 
     @FXML
     private void close_anchor_add(MouseEvent event) {
         paneAddProduct.setVisible(false);
-        paneCalc.setVisible(false);
     }
 
     @FXML
@@ -150,7 +164,6 @@ public class StockController implements Initializable {
             products.setUnitsWeightInStock(Float.parseFloat(et_unitInStock.getText().toString()));
             products.setAllertWeight(Float.parseFloat(etAlert.getText().toString()));
 
-     
             productDAO.addProduct(products);
             etNotify.setText("تم الحفظ");
             clearText();
@@ -162,7 +175,8 @@ public class StockController implements Initializable {
 
     }
 
-    private void addButtonDeleteToTable() {
+    
+        private void addButtonDeleteToTable() {
         TableColumn<Products, Void> colBtn = new TableColumn();
 
         Callback<TableColumn<Products, Void>, TableCell<Products, Void>> cellFactory;
@@ -172,7 +186,6 @@ public class StockController implements Initializable {
                 final TableCell<Products, Void> cell = new TableCell<Products, Void>() {
 
                     private final Button btn = new Button("مسح");
-
                     {
 
                         btn.setOnAction((ActionEvent event) -> {
@@ -187,6 +200,44 @@ public class StockController implements Initializable {
                                 }
 
                             }
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            btn.getStyleClass().add("button_Small");
+                            setGraphic(btn);
+
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+        table.getColumns().add(colBtn);
+
+    }
+    private void addButtonProductMapppingToTable() {
+        TableColumn<Products, Void> colBtn = new TableColumn();
+
+        Callback<TableColumn<Products, Void>, TableCell<Products, Void>> cellFactory;
+        cellFactory = new Callback<TableColumn<Products, Void>, TableCell<Products, Void>>() {
+            @Override
+            public TableCell<Products, Void> call(final TableColumn<Products, Void> param) {
+                final TableCell<Products, Void> cell = new TableCell<Products, Void>() {
+
+                    private final Button btn = new Button("الملحقة");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+
+                            
                         });
                     }
 
@@ -250,7 +301,6 @@ public class StockController implements Initializable {
 
     }
 
-
     public void loadTabData() {
 
         col_product.setCellValueFactory(new PropertyValueFactory<>("productName"));
@@ -261,9 +311,8 @@ public class StockController implements Initializable {
         col_kata3y_price.setCellValueFactory(new PropertyValueFactory<>("partitionBuyPrice"));
         col_gomla_price.setCellValueFactory(new PropertyValueFactory<>("gomlaBuyPrice"));
         col_id.setCellValueFactory(new PropertyValueFactory<>("productid"));
-        
+
         //updateStatusColor();
-        
         table.setItems(productDAO.getAllProducts());
 
     }
@@ -298,7 +347,7 @@ public class StockController implements Initializable {
 
                     if (!isEmpty()) {
                         for (Products o : productDAO.getAllProducts()) {
-                            if (Float.compare(o.getUnitsWeightInStock(), o.getAllertWeight())==0) {
+                            if (Float.compare(o.getUnitsWeightInStock(), o.getAllertWeight()) == 0) {
                                 currentRow.setStyle("-fx-background-color:#FC0000");
                             } else {
                                 currentRow.setStyle("-fx-background-color:#57B846");
@@ -315,14 +364,49 @@ public class StockController implements Initializable {
 
     @FXML
     private void compoCategoryClick(ActionEvent event) {
+
     }
 
     @FXML
     private void close_anchor_add_number(MouseEvent event) {
+        
     }
 
     @FXML
     private void btn_add_product_click_number(ActionEvent event) {
+         
+    }
+
+    @FXML
+    private void KG_product(ActionEvent event) {
+         paneAddProduct.setVisible(true);
+         paneAddProductNumber.setVisible(false);
+         pane_add_choice.setVisible(false);
+    }
+
+    @FXML
+    private void UnitsProducts(ActionEvent event) {
+        paneAddProduct.setVisible(false);
+        paneAddProductNumber.setVisible(true);
+        pane_add_choice.setVisible(false);
+    }
+
+    @FXML
+    private void closeChoicePaneClick(MouseEvent event) {       
+        pane_add_choice.setVisible(false);     
+    }
+
+    @FXML
+    private void paneAddProductNumberClose(MouseEvent event) {
+        paneAddProductNumber.setVisible(false);
+    }
+
+    @FXML
+    private void closeMapping(MouseEvent event) {
+    }
+
+    @FXML
+    private void btnMappingSave(ActionEvent event) {
     }
 
 }
