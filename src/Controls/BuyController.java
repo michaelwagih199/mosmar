@@ -422,7 +422,6 @@ public class BuyController implements Initializable {
      * @return list of all customers
      */
     public ArrayList<String> getAllCustomerName() {
-
         ArrayList<String> result = new ArrayList<String>();
         for (Customers o : customerDAO.getAllCustomer()) {
             result.add(o.getCustomerName());
@@ -431,13 +430,11 @@ public class BuyController implements Initializable {
     }
 
     public void loadTabData() {
-
         col_id.setCellValueFactory(new PropertyValueFactory<>("idProduct"));
         col_product_name.setCellValueFactory(new PropertyValueFactory<>("productName"));
         col_product_price.setCellValueFactory(new PropertyValueFactory<>("price"));
         col_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         col_total.setCellValueFactory(new PropertyValueFactory<>("total"));
-
         table.setItems(row);
     }
 

@@ -65,7 +65,7 @@ public class StockController implements Initializable {
     private JFXTextField et_gomlet_gomla;
     @FXML
     private Label etNotify;
-    private Pane paneCalc;
+  
 
     String defult = "0";
     String clickBool = "m";
@@ -109,9 +109,7 @@ public class StockController implements Initializable {
     @FXML
     private Pane paneMapping;
     @FXML
-    private ListView<?> listProducts;
-    @FXML
-    private JFXTextField et_search;
+    private ListView<String> listProducts;
     @FXML
     private JFXTextField productNumber;
     @FXML
@@ -128,6 +126,7 @@ public class StockController implements Initializable {
         loadTabData();
         addButtonDeleteToTable();
         addButtonUbdateToTable();
+        addProductListItems();
         addButtonProductMapppingToTable();
         compoCategory.getItems().addAll("منتجات بكجم");
         compoCategory.getItems().addAll("منتجات بالوحدة");
@@ -223,6 +222,17 @@ public class StockController implements Initializable {
         table.getColumns().add(colBtn);
 
     }
+        
+    public void addProductListItems() {
+        ObservableList<String> productNames = FXCollections.observableArrayList();
+        productList.addAll(productDAO.getAllProducts());
+        
+        for (Products products : productList) {
+            productNames.add(products.getProductName());
+        }
+         listProducts.setItems(productNames);
+    }
+    
     private void addButtonProductMapppingToTable() {
         TableColumn<Products, Void> colBtn = new TableColumn();
 
@@ -236,8 +246,15 @@ public class StockController implements Initializable {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
+                            try {
+                                 Products data = getTableView().getItems().get(getIndex());
+                                mainProductName.setText(data.getProductName());
+                                mainProductId.setText(String.valueOf(data.getProductid()));
+                                paneMapping.setVisible(true);
+                                
+                            } catch (Exception e) {
+                            }
 
-                            
                         });
                     }
 
@@ -407,6 +424,16 @@ public class StockController implements Initializable {
 
     @FXML
     private void btnMappingSave(ActionEvent event) {
+        
+    }
+
+    @FXML
+    private void selectItemList(MouseEvent event) {
+        
+        String  mainProductNam = listProducts.getSelectionModel().getSelectedItem();
+        subProductName.setText(mainProductNam);
+        subProductId.setText(String.valueOf(productDAO.getProductId(mainProductNam).get(0).getProductid()));
+        
     }
 
 }
