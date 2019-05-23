@@ -29,6 +29,17 @@
             <TableColumn fx:id="col_gomel_gomla" prefWidth="101.333251953125" text="سعر جملة الجملة" />
         </columns>
       </TableView>
+      <TableView fx:id="tableNumber" layoutX="5.0" layoutY="82.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="589.0" prefWidth="1113.0" styleClass="table" visible="false">
+         <columns>
+            <TableColumn fx:id="col_idNumber" prefWidth="77.6666259765625" text="كود" />
+            <TableColumn fx:id="col_productNumber" prefWidth="106.3333740234375" text="الصنف" />
+            <TableColumn fx:id="col_unitInStockNumber" prefWidth="88.6666259765625" text="الكمية الموجوده" />
+            <TableColumn fx:id="col_purchase_priceNumber" prefWidth="103.0" text="سعر الشراء" />
+            <TableColumn fx:id="col_gomla_priceNumber" prefWidth="102.0" text="سعر الجملة" />
+            <TableColumn fx:id="col_kata3y_priceNumber" prefWidth="108.33331298828125" text="سعر القطاعى" />
+            <TableColumn fx:id="col_gomel_gomlaNumber" prefWidth="106.0" text="سعر جملة الجملة" />
+         </columns>
+      </TableView>
       <Pane layoutX="382.0" layoutY="5.0" prefHeight="72.0" prefWidth="334.0" styleClass="grey_wite_back">
          <children>
             <Label alignment="CENTER" layoutX="17.0" layoutY="5.0" prefHeight="49.0" prefWidth="301.0" styleClass="textHeder" text="المخزن" />
@@ -47,7 +58,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <JFXComboBox fx:id="compoCategory" layoutX="754.0" layoutY="19.0" onAction="#compoCategoryClick" prefHeight="36.0" prefWidth="285.0" styleClass="combobox" />
+      <JFXComboBox fx:id="compoCategory" layoutX="750.0" layoutY="18.0" onAction="#compoCategoryClick" prefHeight="36.0" prefWidth="293.0" styleClass="combobox" />
       <Pane fx:id="paneAddProduct" layoutX="576.0" layoutY="9.0" prefHeight="646.0" prefWidth="496.0" styleClass="grey_wite_back" visible="false">
          <children>
             <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#close_anchor_add" pickOnBounds="true" preserveRatio="true">
@@ -113,14 +124,14 @@
             <Label layoutX="364.0" layoutY="194.0" prefHeight="27.0" prefWidth="117.0" styleClass="text_Black" text="سعرشراء القطعة" />
             <JFXTextField fx:id="et_purchase_priceNumber" alignment="CENTER" layoutX="82.0" layoutY="176.0" prefHeight="36.0" prefWidth="214.0" styleClass="textFeild" />
             <Label layoutX="15.0" layoutY="195.0" prefHeight="27.0" prefWidth="49.0" styleClass="text_Black" text="جنية" />
-            <Label layoutX="349.0" layoutY="323.0" prefHeight="27.0" prefWidth="137.0" styleClass="text_Black" text="سعربيع كجم الجملة" />
+            <Label layoutX="343.0" layoutY="327.0" prefHeight="27.0" prefWidth="148.0" styleClass="text_Black" text="سعربيع القطعة الجملة" />
             <JFXTextField fx:id="et_kata3y_priceNumber" alignment="CENTER" layoutX="79.0" layoutY="243.0" prefHeight="36.0" prefWidth="214.0" styleClass="textFeild" />
             <Label layoutX="15.0" layoutY="262.0" prefHeight="27.0" prefWidth="49.0" styleClass="text_Black" text="جنية" />
-            <Label layoutX="327.0" layoutY="262.0" prefHeight="27.0" prefWidth="153.0" styleClass="text_Black" text="سعربيع كجم القطاعى" />
+            <Label layoutX="325.0" layoutY="263.0" prefHeight="27.0" prefWidth="164.0" styleClass="text_Black" text="سعربيع القطعة القطاعى" />
             <JFXTextField fx:id="et_gomla_priceNumber" alignment="CENTER" layoutX="79.0" layoutY="308.0" prefHeight="36.0" prefWidth="214.0" styleClass="textFeild" />
             <Label layoutX="15.0" layoutY="327.0" prefHeight="27.0" prefWidth="49.0" styleClass="text_Black" text="جنية" />
             <JFXTextField fx:id="et_gomlet_gomlaNumber" alignment="CENTER" layoutX="82.0" layoutY="375.0" prefHeight="36.0" prefWidth="214.0" styleClass="textFeild" />
-            <Label layoutX="318.0" layoutY="394.0" prefHeight="27.0" prefWidth="174.0" styleClass="text_Black" text="سعربيع كجم جملة الجملة" />
+            <Label layoutX="307.0" layoutY="394.0" prefHeight="27.0" prefWidth="185.0" styleClass="text_Black" text="سعربيع القطعة جملة الجملة" />
             <Label layoutX="12.0" layoutY="393.0" prefHeight="27.0" prefWidth="39.0" styleClass="text_Black" text="جنية" />
             <JFXButton layoutX="148.0" layoutY="507.0" onAction="#btn_add_product_click_number" prefHeight="36.0" prefWidth="174.0" styleClass="button_Normal" text="حفظ" />
             <Label fx:id="etNotifyNutify" alignment="CENTER" layoutX="23.0" layoutY="558.0" prefHeight="27.0" prefWidth="443.0" styleClass="text_Black" />
@@ -148,7 +159,7 @@
             </ImageView>
          </children>
       </Pane>
-      <Pane fx:id="paneMapping" layoutX="175.0" layoutY="160.0" prefHeight="490.0" prefWidth="749.0" styleClass="grey_back">
+      <Pane fx:id="paneMapping" layoutX="175.0" layoutY="160.0" prefHeight="490.0" prefWidth="749.0" styleClass="grey_back" visible="false">
          <children>
             <Pane layoutX="440.0" layoutY="11.0" prefHeight="419.0" prefWidth="301.0" styleClass="main_back">
                <children>
@@ -159,17 +170,18 @@
                <image>
                   <Image url="@../res/close2.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <Label alignment="CENTER" layoutX="58.0" layoutY="12.0" prefHeight="38.0" prefWidth="317.0" styleClass="textHeder2" text="المنتج الرئيسى" />
             <Label alignment="CENTER" layoutX="58.0" layoutY="207.0" prefHeight="38.0" prefWidth="317.0" styleClass="textHeder2" text="المنتج الملحق بية" />
             <JFXButton layoutX="236.0" layoutY="437.0" onAction="#btnMappingSave" prefHeight="38.0" prefWidth="255.0" styleClass="button_Normal" text="حفظ" />
-            <JFXTextField fx:id="productNumber" layoutX="15.0" layoutY="369.0" prefHeight="36.0" prefWidth="317.0" styleClass="textFeild" />
             <Separator layoutX="10.0" layoutY="57.0" prefHeight="4.0" prefWidth="428.0" />
             <Label layoutX="355.0" layoutY="119.0" prefHeight="38.0" prefWidth="83.0" styleClass="textFeild2" text="اسم المنتج :" />
             <Label fx:id="mainProductName" layoutX="21.0" layoutY="119.0" prefHeight="38.0" prefWidth="317.0" styleClass="textFeild2" />
             <Label layoutX="352.0" layoutY="74.0" prefHeight="38.0" prefWidth="83.0" styleClass="textFeild2" text="كود المنتج :" />
             <Label fx:id="mainProductId" layoutX="16.0" layoutY="74.0" prefHeight="38.0" prefWidth="325.0" styleClass="textFeild2" text="0" />
-            <Label layoutX="375.0" layoutY="368.0" prefHeight="38.0" prefWidth="58.0" styleClass="textFeild2" text="العدد:" />
             <Label layoutX="350.0" layoutY="324.0" prefHeight="38.0" prefWidth="83.0" styleClass="textFeild2" text="اسم المنتج :" />
             <Label fx:id="subProductName" layoutX="16.0" layoutY="324.0" prefHeight="38.0" prefWidth="317.0" styleClass="textFeild2" />
             <Label layoutX="351.0" layoutY="281.0" prefHeight="38.0" prefWidth="83.0" styleClass="textFeild2" text="كود المنتج :" />

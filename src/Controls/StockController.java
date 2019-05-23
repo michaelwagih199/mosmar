@@ -3,7 +3,11 @@ package Controls;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import dao.ProductDAO;
+import dao.ProductMappingDAO;
+import dao.ProductNumbersDAO;
+import entities.Productmappping;
 import entities.Products;
+import entities.Productsnumber;
 import helper.FxDialogs;
 import helper.Helper;
 import helper.UsefulCalculas;
@@ -65,15 +69,16 @@ public class StockController implements Initializable {
     private JFXTextField et_gomlet_gomla;
     @FXML
     private Label etNotify;
-  
 
     String defult = "0";
     String clickBool = "m";
     boolean isUnit = false;
     Helper helper = new Helper();
+    ProductMappingDAO productMappingDAO = new ProductMappingDAO();
 
     private final ObservableList<Products> productList = FXCollections.observableArrayList();
     private final ProductDAO productDAO = new ProductDAO();
+    ProductNumbersDAO productNumbersDAO = new ProductNumbersDAO();
 
     @FXML
     private JFXTextField etAlert;
@@ -111,8 +116,6 @@ public class StockController implements Initializable {
     @FXML
     private ListView<String> listProducts;
     @FXML
-    private JFXTextField productNumber;
-    @FXML
     private Label mainProductName;
     @FXML
     private Label mainProductId;
@@ -120,6 +123,22 @@ public class StockController implements Initializable {
     private Label subProductName;
     @FXML
     private Label subProductId;
+    @FXML
+    private TableView<Productsnumber> tableNumber;
+    @FXML
+    private TableColumn<Productsnumber, Integer> col_idNumber;
+    @FXML
+    private TableColumn<Productsnumber, String> col_productNumber;
+    @FXML
+    private TableColumn<Productsnumber, Float> col_unitInStockNumber;
+    @FXML
+    private TableColumn<Productsnumber, Float> col_purchase_priceNumber;
+    @FXML
+    private TableColumn<Productsnumber, Float> col_gomla_priceNumber;
+    @FXML
+    private TableColumn<Productsnumber, Float> col_kata3y_priceNumber;
+    @FXML
+    private TableColumn<Productsnumber, Float> col_gomel_gomlaNumber;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -145,7 +164,9 @@ public class StockController implements Initializable {
 
     @FXML
     private void close_anchor_add(MouseEvent event) {
+
         paneAddProduct.setVisible(false);
+
     }
 
     @FXML
@@ -162,7 +183,6 @@ public class StockController implements Initializable {
             products.setGomlaBuyPrice(Float.parseFloat(et_gomla_price.getText().toString()));
             products.setUnitsWeightInStock(Float.parseFloat(et_unitInStock.getText().toString()));
             products.setAllertWeight(Float.parseFloat(etAlert.getText().toString()));
-
             productDAO.addProduct(products);
             etNotify.setText("تم الحفظ");
             clearText();
@@ -174,8 +194,7 @@ public class StockController implements Initializable {
 
     }
 
-    
-        private void addButtonDeleteToTable() {
+    private void addButtonDeleteToTable() {
         TableColumn<Products, Void> colBtn = new TableColumn();
 
         Callback<TableColumn<Products, Void>, TableCell<Products, Void>> cellFactory;
@@ -185,6 +204,7 @@ public class StockController implements Initializable {
                 final TableCell<Products, Void> cell = new TableCell<Products, Void>() {
 
                     private final Button btn = new Button("مسح");
+
                     {
 
                         btn.setOnAction((ActionEvent event) -> {
@@ -222,17 +242,17 @@ public class StockController implements Initializable {
         table.getColumns().add(colBtn);
 
     }
-        
+
     public void addProductListItems() {
         ObservableList<String> productNames = FXCollections.observableArrayList();
         productList.addAll(productDAO.getAllProducts());
-        
+
         for (Products products : productList) {
             productNames.add(products.getProductName());
         }
-         listProducts.setItems(productNames);
+        listProducts.setItems(productNames);
     }
-    
+
     private void addButtonProductMapppingToTable() {
         TableColumn<Products, Void> colBtn = new TableColumn();
 
@@ -247,11 +267,11 @@ public class StockController implements Initializable {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             try {
-                                 Products data = getTableView().getItems().get(getIndex());
+                                Products data = getTableView().getItems().get(getIndex());
                                 mainProductName.setText(data.getProductName());
                                 mainProductId.setText(String.valueOf(data.getProductid()));
                                 paneMapping.setVisible(true);
-                                
+
                             } catch (Exception e) {
                             }
 
@@ -334,6 +354,20 @@ public class StockController implements Initializable {
 
     }
 
+    public void loadTabDataNumber() {
+
+        col_productNumber.setCellValueFactory(new PropertyValueFactory<>("productnumberName"));
+        col_unitInStockNumber.setCellValueFactory(new PropertyValueFactory<>("unitsInStock"));
+        col_gomel_gomlaNumber.setCellValueFactory(new PropertyValueFactory<>("gomelGomlanumberBuyPrice"));
+        col_purchase_priceNumber.setCellValueFactory(new PropertyValueFactory<>("perchusenumberPrice"));
+        col_kata3y_priceNumber.setCellValueFactory(new PropertyValueFactory<>("partitionnumberBuyPrice"));
+        col_gomla_priceNumber.setCellValueFactory(new PropertyValueFactory<>("gomlaBuynumberPrice"));
+        col_idNumber.setCellValueFactory(new PropertyValueFactory<>("productnumberid"));
+        //updateStatusColor();
+        tableNumber.setItems(productNumbersDAO.getAllProductmappping());
+
+    }
+
     @FXML
     private void et_product_name_click(MouseEvent event) {
         etNotify.setText("");
@@ -348,6 +382,17 @@ public class StockController implements Initializable {
         et_product_weight.clear();
         et_purchase_price.clear();
         et_unitInStock.clear();
+    }
+
+    public void clearNumberText() {
+        et_product_nameNumber.clear();
+        et_purchase_priceNumber.clear();
+        et_kata3y_priceNumber.clear();
+        et_gomlet_gomlaNumber.clear();
+        et_gomla_priceNumber.clear();
+        et_unitInStockNumber.clear();
+        etAlertNumber.clear();
+
     }
 
     public void updateStatusColor() {
@@ -382,23 +427,50 @@ public class StockController implements Initializable {
     @FXML
     private void compoCategoryClick(ActionEvent event) {
 
+        String knownUsFrom = compoCategory.getSelectionModel().getSelectedItem().toString();
+        if (knownUsFrom.equals("منتجات بالوحدة")) {
+            loadTabDataNumber();
+            tableNumber.setVisible(true);
+        } else {
+            tableNumber.setVisible(false);
+        }
     }
 
     @FXML
     private void close_anchor_add_number(MouseEvent event) {
-        
+
     }
 
     @FXML
     private void btn_add_product_click_number(ActionEvent event) {
-         
+        // insert data to products 
+        try {
+
+            Productsnumber productsnumber = new Productsnumber();
+
+            productsnumber.setProductnumberName(et_product_nameNumber.getText().toString());
+            productsnumber.setPerchusenumberPrice(Float.parseFloat(et_purchase_priceNumber.getText().toString()));
+            productsnumber.setPartitionnumberBuyPrice(Float.parseFloat(et_kata3y_priceNumber.getText().toString()));
+            productsnumber.setGomelGomlanumberBuyPrice(Float.parseFloat(et_gomlet_gomlaNumber.getText().toString()));
+            productsnumber.setGomlaBuynumberPrice(Float.parseFloat(et_gomla_priceNumber.getText().toString()));
+            productsnumber.setUnitsInStock(Float.parseFloat(et_unitInStockNumber.getText().toString()));
+            productsnumber.setAllertNumber(Float.parseFloat(etAlertNumber.getText().toString()));
+            productNumbersDAO.addProductsnumber(productsnumber);
+            etNotifyNutify.setText("تم الحفظ");
+            clearNumberText();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        loadTabData();
+
     }
 
     @FXML
     private void KG_product(ActionEvent event) {
-         paneAddProduct.setVisible(true);
-         paneAddProductNumber.setVisible(false);
-         pane_add_choice.setVisible(false);
+        paneAddProduct.setVisible(true);
+        paneAddProductNumber.setVisible(false);
+        pane_add_choice.setVisible(false);
     }
 
     @FXML
@@ -409,8 +481,8 @@ public class StockController implements Initializable {
     }
 
     @FXML
-    private void closeChoicePaneClick(MouseEvent event) {       
-        pane_add_choice.setVisible(false);     
+    private void closeChoicePaneClick(MouseEvent event) {
+        pane_add_choice.setVisible(false);
     }
 
     @FXML
@@ -420,20 +492,32 @@ public class StockController implements Initializable {
 
     @FXML
     private void closeMapping(MouseEvent event) {
+        paneMapping.setVisible(false);
     }
 
     @FXML
-    private void btnMappingSave(ActionEvent event) {
-        
+    private void btnMappingSave(ActionEvent event) throws Exception {
+        Productmappping productMapping = new Productmappping();
+        try {
+
+            productMapping.setProductmainId(Integer.parseInt(mainProductId.getText().toString()));
+            productMapping.setSubProductId(Integer.parseInt(subProductId.getText().toString()));
+            productMappingDAO.addProductmappping(productMapping);
+
+        } catch (Exception e) {
+
+        }
+        paneMapping.setVisible(false);
+
     }
 
     @FXML
     private void selectItemList(MouseEvent event) {
-        
-        String  mainProductNam = listProducts.getSelectionModel().getSelectedItem();
+
+        String mainProductNam = listProducts.getSelectionModel().getSelectedItem();
         subProductName.setText(mainProductNam);
         subProductId.setText(String.valueOf(productDAO.getProductId(mainProductNam).get(0).getProductid()));
-        
+
     }
 
 }
