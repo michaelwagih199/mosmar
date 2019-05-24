@@ -49,6 +49,9 @@
          <image>
             <Image url="@../res/002-home.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ImageView>
       <ImageView fitHeight="54.0" fitWidth="59.0" layoutX="1056.0" layoutY="9.0" onMouseClicked="#addClick" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -58,8 +61,8 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <JFXComboBox fx:id="compoCategory" layoutX="750.0" layoutY="18.0" onAction="#compoCategoryClick" prefHeight="36.0" prefWidth="293.0" styleClass="combobox" />
-      <Pane fx:id="paneAddProduct" layoutX="576.0" layoutY="9.0" prefHeight="646.0" prefWidth="496.0" styleClass="grey_wite_back" visible="false">
+      <JFXComboBox fx:id="compoCategory" layoutX="750.0" layoutY="18.0" onAction="#compoCategoryClick" prefHeight="36.0" prefWidth="293.0" promptText="نوع المنتج" styleClass="combobox" />
+      <Pane fx:id="paneAddProduct" layoutX="576.0" layoutY="21.0" prefHeight="646.0" prefWidth="496.0" styleClass="grey_wite_back" visible="false">
          <children>
             <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#close_anchor_add" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -102,6 +105,7 @@
             </Label>
             <Label fx:id="txt_alert_unit" layoutX="12.0" layoutY="507.0" prefHeight="27.0" prefWidth="39.0" styleClass="text_Black" />
             <Label layoutX="12.0" layoutY="518.0" prefHeight="27.0" prefWidth="39.0" styleClass="text_Black" text="كجم" />
+            <JFXButton fx:id="btn_edit_product" layoutX="167.0" layoutY="552.0" onAction="#btn_edit_productClick" prefHeight="36.0" prefWidth="174.0" styleClass="button_Normal" text="تعديل" visible="false" />
          </children>
       </Pane>
       <Pane fx:id="paneAddProductNumber" layoutX="43.0" layoutY="35.0" onMouseClicked="#paneAddProductNumberClose" prefHeight="595.0" prefWidth="496.0" styleClass="grey_wite_back" visible="false">
@@ -143,6 +147,7 @@
             </Label>
             <Label fx:id="txt_alert_unit1" layoutX="12.0" layoutY="507.0" prefHeight="27.0" prefWidth="39.0" styleClass="text_Black" />
             <Label layoutX="12.0" layoutY="461.0" prefHeight="27.0" prefWidth="39.0" styleClass="text_Black" text="قطعة" />
+            <JFXButton fx:id="btn_edit_product_number" layoutX="147.0" layoutY="506.0" onAction="#btn_edit_product_click_number" prefHeight="36.0" prefWidth="174.0" styleClass="button_Normal" text="تعديل" />
          </children>
       </Pane>
       <Pane fx:id="pane_add_choice" layoutX="922.0" layoutY="69.0" prefHeight="126.0" prefWidth="197.0" styleClass="grey_back" visible="false">

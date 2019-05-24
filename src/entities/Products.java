@@ -47,9 +47,9 @@ public class Products implements Serializable {
     @Lob
     @Column(name = "ProductName")
     private String productName;
-    @Column(name = "productWeight")
-    private Integer productWeight;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "productWeight")
+    private Float productWeight;
     @Column(name = "PerchusePrice")
     private Float perchusePrice;
     @Column(name = "GomlaBuyPrice")
@@ -88,11 +88,11 @@ public class Products implements Serializable {
         this.productName = productName;
     }
 
-    public Integer getProductWeight() {
+    public Float getProductWeight() {
         return productWeight;
     }
 
-    public void setProductWeight(Integer productWeight) {
+    public void setProductWeight(Float productWeight) {
         this.productWeight = productWeight;
     }
 

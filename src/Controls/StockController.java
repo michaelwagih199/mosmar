@@ -1,5 +1,6 @@
 package Controls;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import dao.ProductDAO;
@@ -79,6 +80,8 @@ public class StockController implements Initializable {
     private final ObservableList<Products> productList = FXCollections.observableArrayList();
     private final ProductDAO productDAO = new ProductDAO();
     ProductNumbersDAO productNumbersDAO = new ProductNumbersDAO();
+    Products data;
+    Productsnumber dataN;
 
     @FXML
     private JFXTextField etAlert;
@@ -139,6 +142,10 @@ public class StockController implements Initializable {
     private TableColumn<Productsnumber, Float> col_kata3y_priceNumber;
     @FXML
     private TableColumn<Productsnumber, Float> col_gomel_gomlaNumber;
+    @FXML
+    private JFXButton btn_edit_product;
+    @FXML
+    private JFXButton btn_edit_product_number;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -159,7 +166,11 @@ public class StockController implements Initializable {
 
     @FXML
     private void addClick(MouseEvent event) {
+        
+        btn_edit_product.setVisible(false);
+        btn_edit_product_number.setVisible(false);
         pane_add_choice.setVisible(true);
+        
     }
 
     @FXML
@@ -176,7 +187,7 @@ public class StockController implements Initializable {
             Products products = new Products();
             UsefulCalculas calc = new UsefulCalculas();
             products.setProductName(et_product_name.getText().toString());
-            products.setProductWeight(Integer.parseInt(et_product_weight.getText().toString()));
+            products.setProductWeight(Float.parseFloat(et_product_weight.getText().toString()));
             products.setPerchusePrice(Float.parseFloat(et_purchase_price.getText().toString()));
             products.setPartitionBuyPrice(Float.parseFloat(et_kata3y_price.getText().toString()));
             products.setGomelGomlaBuyPrice(Float.parseFloat(et_gomlet_gomla.getText().toString()));
@@ -198,6 +209,7 @@ public class StockController implements Initializable {
         TableColumn<Products, Void> colBtn = new TableColumn();
 
         Callback<TableColumn<Products, Void>, TableCell<Products, Void>> cellFactory;
+
         cellFactory = new Callback<TableColumn<Products, Void>, TableCell<Products, Void>>() {
             @Override
             public TableCell<Products, Void> call(final TableColumn<Products, Void> param) {
@@ -238,8 +250,51 @@ public class StockController implements Initializable {
             }
         };
 
+        TableColumn<Productsnumber, Void> colBtnNumber = new TableColumn();
+        Callback<TableColumn<Productsnumber, Void>, TableCell<Productsnumber, Void>> cellFactoryN;
+        cellFactoryN = new Callback<TableColumn<Productsnumber, Void>, TableCell<Productsnumber, Void>>() {
+            @Override
+            public TableCell<Productsnumber, Void> call(final TableColumn<Productsnumber, Void> param) {
+                final TableCell<Productsnumber, Void> cell = new TableCell<Productsnumber, Void>() {
+
+                    private final Button btn = new Button("مسح");
+
+                    {
+
+                        btn.setOnAction((ActionEvent event) -> {
+
+                            if (FxDialogs.showConfirm("مسح المنتج", "هل تريد مسح المنتج?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
+                                Productsnumber data = getTableView().getItems().get(getIndex());
+                                try {
+                                    productNumbersDAO.removeProductsnumber(data.getProductnumberid());
+                                    loadTabDataNumber();
+                                } catch (Exception ex) {
+                                    Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            btn.getStyleClass().add("button_Small");
+                            setGraphic(btn);
+
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
         colBtn.setCellFactory(cellFactory);
+        colBtnNumber.setCellFactory(cellFactoryN);
         table.getColumns().add(colBtn);
+        tableNumber.getColumns().add(colBtnNumber);
 
     }
 
@@ -307,14 +362,31 @@ public class StockController implements Initializable {
             @Override
             public TableCell<Products, Void> call(final TableColumn<Products, Void> param) {
                 final TableCell<Products, Void> cell = new TableCell<Products, Void>() {
-
+                    
                     private final Button btn = new Button("تعديل");
-
+                    
                     {
                         btn.setOnAction((ActionEvent event) -> {
-
-                            Products data = getTableView().getItems().get(getIndex());
-                            System.out.println("selectedData: " + data);
+                            
+                            data = getTableView().getItems().get(getIndex());
+                            paneAddProduct.setVisible(true);
+                            btn_edit_product.setVisible(true);
+                            
+                            try {
+                                
+                                et_product_name.setText(data.getProductName());
+                                et_product_weight.setText(String.valueOf(data.getProductWeight()));
+                                et_unitInStock.setText(String.valueOf(data.getUnitsWeightInStock()));
+                                et_purchase_price.setText(String.valueOf(data.getPerchusePrice()));
+                                et_kata3y_price.setText(String.valueOf(data.getPartitionBuyPrice()));
+                                et_gomla_price.setText(String.valueOf(data.getGomlaBuyPrice()));
+                                et_gomlet_gomla.setText(String.valueOf(data.getGomelGomlaBuyPrice()));
+                                etAlert.setText(String.valueOf(data.getAllertWeight()));
+                              
+                            } catch (Exception ex) {
+                                
+                                Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         });
                     }
 
@@ -335,7 +407,59 @@ public class StockController implements Initializable {
         };
         colBtn.setCellFactory(cellFactory);
         table.getColumns().add(colBtn);
+        
+        TableColumn<Productsnumber, Void> colBtnN = new TableColumn();
+        Callback<TableColumn<Productsnumber, Void>, TableCell<Productsnumber, Void>> cellFactoryN;
+        cellFactoryN = new Callback<TableColumn<Productsnumber, Void>, TableCell<Productsnumber, Void>>() {
+            @Override
+            public TableCell<Productsnumber, Void> call(final TableColumn<Productsnumber, Void> param) {
+                final TableCell<Productsnumber, Void> cell = new TableCell<Productsnumber, Void>() {
+                    
+                    private final Button btn = new Button("تعديل");
+                    
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            
+                            dataN = getTableView().getItems().get(getIndex());
+                            paneAddProduct.setVisible(true);
+                            btn_edit_product_number.setVisible(true);
+                            
+                            try {
+                                
+                                et_product_nameNumber.setText(dataN.getProductnumberName());                               
+                                et_unitInStockNumber.setText(String.valueOf(dataN.getUnitsInStock()));                               
+                                et_purchase_priceNumber.setText(String.valueOf(dataN.getPerchusenumberPrice()));
+                                et_kata3y_priceNumber.setText(String.valueOf(dataN.getPartitionnumberBuyPrice()));
+                                et_gomla_priceNumber.setText(String.valueOf(dataN.getGomlaBuynumberPrice()));
+                                et_gomlet_gomlaNumber.setText(String.valueOf(dataN.getGomelGomlanumberBuyPrice()));
+                                etAlertNumber.setText(String.valueOf(dataN.getAllertNumber()));
+                              
+                            } catch (Exception ex) {
+                                
+                                Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        });
+                    }
 
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            btn.getStyleClass().add("button_Small");
+                            setGraphic(btn);
+
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+        colBtnN.setCellFactory(cellFactoryN);
+        tableNumber.getColumns().add(colBtnN);
+        
+        
     }
 
     public void loadTabData() {
@@ -445,9 +569,7 @@ public class StockController implements Initializable {
     private void btn_add_product_click_number(ActionEvent event) {
         // insert data to products 
         try {
-
             Productsnumber productsnumber = new Productsnumber();
-
             productsnumber.setProductnumberName(et_product_nameNumber.getText().toString());
             productsnumber.setPerchusenumberPrice(Float.parseFloat(et_purchase_priceNumber.getText().toString()));
             productsnumber.setPartitionnumberBuyPrice(Float.parseFloat(et_kata3y_priceNumber.getText().toString()));
@@ -462,7 +584,7 @@ public class StockController implements Initializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        loadTabData();
+        loadTabDataNumber();
 
     }
 
@@ -520,4 +642,44 @@ public class StockController implements Initializable {
 
     }
 
+    @FXML
+    private void btn_edit_productClick(ActionEvent event) throws Exception {
+        try {
+            data.setAllertWeight(Float.parseFloat(etAlert.getText().toString()));
+            data.setGomelGomlaBuyPrice(Float.parseFloat(et_gomlet_gomla.getText().toString()));
+            data.setGomlaBuyPrice(Float.parseFloat(et_gomla_price.getText().toString()));
+            data.setPartitionBuyPrice(Float.parseFloat(et_kata3y_price.getText().toString()));
+            data.setPerchusePrice(Float.parseFloat(et_purchase_price.getText().toString()));
+            data.setProductName(et_product_name.getText().toString());
+            data.setProductWeight(Float.parseFloat(et_purchase_price.getText().toString()));
+            data.setUnitsWeightInStock(Float.parseFloat(et_unitInStock.getText().toString()));
+            productDAO.editProduct(data);
+            table.refresh();
+        
+        } catch (Exception e) {
+        }
+          
+    }
+
+    @FXML
+    private void btn_edit_product_click_number(ActionEvent event) {
+         try {
+           
+            dataN.setGomelGomlanumberBuyPrice(Float.parseFloat(et_gomlet_gomla.getText().toString()));
+            dataN.setGomlaBuynumberPrice(Float.parseFloat(et_gomla_priceNumber.getText().toString()));
+            dataN.setPartitionnumberBuyPrice(Float.parseFloat(et_kata3y_priceNumber.getText().toString()));
+            dataN.setPerchusenumberPrice(Float.parseFloat(et_purchase_priceNumber.getText().toString()));
+            dataN.setProductnumberName(et_product_nameNumber.getText().toString());
+            dataN.setAllertNumber(Float.parseFloat(etAlertNumber.getText().toString()));
+            dataN.setUnitsInStock(Float.parseFloat(et_unitInStockNumber.getText().toString()));           
+            productDAO.editProduct(data);
+            table.refresh();
+            
+        } catch (Exception e) {
+            
+        }
+        
+    }
+    
+   
 }
