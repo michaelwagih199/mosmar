@@ -421,7 +421,7 @@ public class StockController implements Initializable {
                         btn.setOnAction((ActionEvent event) -> {
                             
                             dataN = getTableView().getItems().get(getIndex());
-                            paneAddProduct.setVisible(true);
+                            paneAddProductNumber.setVisible(true);
                             btn_edit_product_number.setVisible(true);
                             
                             try {
@@ -663,17 +663,17 @@ public class StockController implements Initializable {
 
     @FXML
     private void btn_edit_product_click_number(ActionEvent event) {
-         try {
-           
-            dataN.setGomelGomlanumberBuyPrice(Float.parseFloat(et_gomlet_gomla.getText().toString()));
+        
+         try {             
+            dataN.setGomelGomlanumberBuyPrice(Float.parseFloat(et_gomlet_gomlaNumber.getText().toString()));
             dataN.setGomlaBuynumberPrice(Float.parseFloat(et_gomla_priceNumber.getText().toString()));
             dataN.setPartitionnumberBuyPrice(Float.parseFloat(et_kata3y_priceNumber.getText().toString()));
             dataN.setPerchusenumberPrice(Float.parseFloat(et_purchase_priceNumber.getText().toString()));
             dataN.setProductnumberName(et_product_nameNumber.getText().toString());
             dataN.setAllertNumber(Float.parseFloat(etAlertNumber.getText().toString()));
             dataN.setUnitsInStock(Float.parseFloat(et_unitInStockNumber.getText().toString()));           
-            productDAO.editProduct(data);
-            table.refresh();
+            productNumbersDAO.editProductsnumber(dataN);
+            tableNumber.refresh();
             
         } catch (Exception e) {
             
