@@ -488,7 +488,7 @@ public class StockController implements Initializable {
         col_gomla_priceNumber.setCellValueFactory(new PropertyValueFactory<>("gomlaBuynumberPrice"));
         col_idNumber.setCellValueFactory(new PropertyValueFactory<>("productnumberid"));
         //updateStatusColor();
-        tableNumber.setItems(productNumbersDAO.getAllProductmappping());
+        tableNumber.setItems(productNumbersDAO.getAllProductsnumber());
 
     }
 

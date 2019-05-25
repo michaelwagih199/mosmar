@@ -86,13 +86,12 @@
 	}
 	.Button4{
     -fx-background-radius: 20;
-    -fx-font-size:18pt;
+    -fx-font-size:14pt;
     -fx-text-fill: white;
     -fx-border-color: #ffffff;
     -fx-border-width: 2;
     -fx-border-radius: 20;
-    -fx-background-color: #1F2C45;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);  
+    -fx-background-color: #54C0EB;
     -fx-font-family: "Arial"; 
 }
 	
@@ -119,7 +118,7 @@
 
   .textFeild1 {
     -fx-font-family: "Arial";
-    -fx-font-size: 14pt;
+    -fx-font-size: 12pt;
     -fx-text-fill: #000000;
     -fx-prompt-text-fill:#004E64;
 }
@@ -127,20 +126,20 @@
   .textSearch {
     -fx-font-family: "Arial";
     -fx-font-size: 16pt;
- 
-   
     -fx-text-fill: black;
 }
 
 
+
   .text5 {
-   -fx-background-color: #84DBFF;  
+   -fx-background-color: #004E64;  
     -fx-background-radius: 20;
-    -fx-border-color: rgb(0, 32, 136);
-    -fx-border-width: 2;
-    -fx-border-radius: 20;
+    -fx-text-fill: white;
     -fx-font-family: "Arial";
-    -fx-font-size: 18pt;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+    -fx-font-size: 12pt;
 }
 .labelSetting {
     -fx-font-family: "Arial";

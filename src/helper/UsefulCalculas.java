@@ -18,11 +18,12 @@ public class UsefulCalculas {
     public float getProductPartitionPriceforunit(int id) {
         float unite_price = 0;
         try {
+            
             float partitionPriceforKG = productDAO.getProductById(id).getPartitionBuyPrice();
             float unitWeight = productDAO.getProductById(id).getProductWeight();
             float priceGM = partitionPriceforKG / 1000;
             unite_price = priceGM * unitWeight;
-
+            
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
