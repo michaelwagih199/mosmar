@@ -77,22 +77,22 @@ public class ProductNumbersDAO {
         return cars;
     }
 
-    public void updateWeight(float unitsWeightInStock, int productId) {
-
+    public void updateStock(float unitsInStock, int productId) {
+        
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
-
+        
         try {
             eman.getTransaction().begin();
-            String sql = "update Products set unitsWeightInStock = :unitsWeightInStock WHERE productid = :productid";
+            //"SELECT p FROM Productsnumber p WHERE p.unitsInStock = :unitsInStock"
+            String sql = "update Productsnumber set unitsInStock = :unitsInStock WHERE productnumberid = :productnumberid";
             Query query = eman.createQuery(sql);
-            query.setParameter("unitsWeightInStock", unitsWeightInStock);
-            query.setParameter("productid", productId);
+            query.setParameter("unitsInStock", unitsInStock);
+            query.setParameter("productnumberid", productId);
             query.executeUpdate();
             eman.getTransaction().commit();
 
         } finally {
-
             eman.close();
             emf.close();
         }
