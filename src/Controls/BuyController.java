@@ -55,6 +55,7 @@ public class BuyController implements Initializable {
     @FXML
     private TextField txtTotal;
     @FXML
+    
     private TextField et_paid_up;
     @FXML
     private TextField et_remaining;
@@ -237,11 +238,11 @@ public class BuyController implements Initializable {
             compoFunctionType.setDisable(true);
 
         } else if (knownUsFrom.equals("نقدى")) {
+            
             et_paid_up.setDisable(true);
             paymentId = 2;
-
             compoFunctionType.setDisable(true);
-
+            
         }
 
     }
@@ -956,6 +957,10 @@ public class BuyController implements Initializable {
             }
         } catch (Exception e) {
         }
+        
+        
+        
+        
 
     }
 

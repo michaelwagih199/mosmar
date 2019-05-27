@@ -30,11 +30,11 @@
       </Pane>
       <Pane layoutY="-4.0" prefHeight="150.0" prefWidth="999.0">
          <children>
-            <JFXButton layoutX="61.0" layoutY="82.0" onAction="#btnProfitClick" prefHeight="36.0" prefWidth="217.0" styleClass="button_Small" text="عرض الارباح والمصاريف" />
-            <DatePicker fx:id="orderDate" layoutX="586.0" layoutY="81.0" prefHeight="37.0" prefWidth="205.0" styleClass="combobox_user" />
-            <Label layoutX="800.0" layoutY="81.0" prefHeight="26.0" prefWidth="107.0" styleClass="text_Black" text="تاريخ الحساب" />
-            <Label fx:id="labelOrderType" layoutX="294.0" layoutY="81.0" prefHeight="26.0" prefWidth="80.0" styleClass="text_Black" text="نوع الطلب" />
-            <ComboBox fx:id="compoOrdeType" layoutX="55.0" layoutY="81.0" prefHeight="36.0" prefWidth="229.0" styleClass="combobox_user" />
+            <JFXButton layoutX="61.0" layoutY="99.0" onAction="#btnProfitClick" prefHeight="36.0" prefWidth="217.0" styleClass="button_Small" text="عرض الارباح والمصاريف" />
+            <DatePicker fx:id="orderDate" layoutX="774.0" layoutY="102.0" prefHeight="29.0" prefWidth="184.0" />
+            <Label layoutX="715.0" layoutY="69.0" prefHeight="26.0" prefWidth="107.0" styleClass="text_Black" text="تاريخ الحساب" />
+            <Label fx:id="labelOrderType" layoutX="297.0" layoutY="87.0" prefHeight="26.0" prefWidth="80.0" styleClass="text_Black" text="نوع الطلب" />
+            <ComboBox fx:id="compoOrdeType" layoutX="55.0" layoutY="98.0" prefHeight="36.0" prefWidth="229.0" styleClass="combobox_user" />
             <Separator layoutX="6.0" layoutY="143.0" prefHeight="8.0" prefWidth="986.0" />
             <ImageView fitHeight="51.0" fitWidth="46.0" layoutX="14.0" layoutY="10.0" onMouseClicked="#homeClick" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -44,7 +44,10 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <Button fx:id="btnShow" layoutX="401.0" layoutY="100.0" mnemonicParsing="false" onAction="#btnShowClick" prefHeight="25.0" prefWidth="160.0" styleClass="button_Small" text="عرض الحساب" />
+            <Button fx:id="btnShow" layoutX="401.0" layoutY="100.0" mnemonicParsing="false" onAction="#btnShowClick" prefHeight="36.0" prefWidth="144.0" styleClass="button_Small" text="عرض الحساب" />
+            <Label layoutX="964.0" layoutY="104.0" prefHeight="26.0" prefWidth="21.0" styleClass="text_Black" text="من" />
+            <DatePicker fx:id="orderDate1" layoutX="557.0" layoutY="103.0" prefHeight="29.0" prefWidth="184.0" />
+            <Label layoutX="751.0" layoutY="102.0" prefHeight="26.0" prefWidth="28.0" styleClass="text_Black" text="إلى" />
          </children>
       </Pane>
       <TabPane layoutX="6.0" layoutY="151.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="520.0" prefWidth="991.0" tabClosingPolicy="UNAVAILABLE">
