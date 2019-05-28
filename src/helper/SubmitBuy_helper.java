@@ -17,8 +17,9 @@ public class SubmitBuy_helper {
     OrderPaymentDAO orderPaymentDAO = new OrderPaymentDAO();
     ProductDAO productDAO = new ProductDAO();
     
-    public void insert_order(int customerId, int paymentId, String orderType,String uuid) {
+    public void insert_order(int customerId, int paymentId,int categoryId, String orderType,String uuid) {
         // insert data to order
+       
         try {
             Orders order = new Orders();
             order.setCustomerId(customerId);
@@ -26,10 +27,10 @@ public class SubmitBuy_helper {
             order.setOrderType(orderType);
             order.setPaymentId(paymentId);
             order.setUuid(uuid);
+            order.setCategoryId(categoryId);
             //order.setSuppliersId(supliersId);
             orderDAO.addOrders(order);
             
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -59,7 +60,7 @@ public class SubmitBuy_helper {
 
     }
    
-    
+     
       public void insertOrderPayment(int orderId, float totalCost,float paid , float remaining, String notes,float discount) {
         // insert data to OrderPayment
         try { 

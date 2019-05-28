@@ -55,7 +55,7 @@ public class BuyController implements Initializable {
     @FXML
     private TextField txtTotal;
     @FXML
-    
+
     private TextField et_paid_up;
     @FXML
     private TextField et_remaining;
@@ -90,8 +90,9 @@ public class BuyController implements Initializable {
     SubmitBuy_helper submitBuy_helper = new SubmitBuy_helper();
 
     float totalCounter = 0;
-    int paymentId = 0;
+    int paymentId = 0,categoryId=0;
     public int customerId = 0;
+    
 
     public int OrderId = 0;
     String uuidUniq;
@@ -152,16 +153,16 @@ public class BuyController implements Initializable {
                 } else if (!etClientName.getText().toString().isEmpty()) {
                     customerId = customerDAO.getcCustomerId(etClientName.getText().toString());
                 }
-
+           
                 generateCode();
                 // insert order 
-                submitBuy_helper.insert_order(customerId, paymentId, etBuyType.getText().toString(), uuidUniq);
-
+                submitBuy_helper.insert_order(customerId, paymentId,categoryId,etBuyType.getText().toString(), uuidUniq);
+                
                 // insert order detail 
                 getAllDetail();
                 //insert order payment 
                 submitBuy_helper.insertOrderPayment((orderDAO.getLastOrderId(uuidUniq)),
-                        Float.parseFloat(etDiscount1.getText().toString()),
+                        Float.parseFloat(txtTotal.getText().toString()),
                         Float.parseFloat(et_paid_up.getText().toString()),
                         Float.parseFloat(et_remaining.getText().toString()),
                         "notes",
@@ -183,7 +184,6 @@ public class BuyController implements Initializable {
         clear_afterSubmit();
 
     }
-
     public void getAllDetail() {
         for (custom_BuyTable o : row) {
             submitBuy_helper.insertOrderDetails((orderDAO.getLastOrderId(uuidUniq)),
@@ -238,11 +238,11 @@ public class BuyController implements Initializable {
             compoFunctionType.setDisable(true);
 
         } else if (knownUsFrom.equals("نقدى")) {
-            
+
             et_paid_up.setDisable(true);
             paymentId = 2;
             compoFunctionType.setDisable(true);
-            
+
         }
 
     }
@@ -921,12 +921,14 @@ public class BuyController implements Initializable {
 
     @FXML
     private void compo_product_Type_click(ActionEvent event) {
-
+        
         String knownUsFrom = compo_product_Type.getSelectionModel().getSelectedItem().toString();
         if (knownUsFrom.equals("منتجات بكجم")) {
             TextFields.bindAutoCompletion(etProductName, getAllProductName());
+            categoryId = 1;
         } else {
             TextFields.bindAutoCompletion(etProductName, getAllProductNumberName());
+             categoryId = 2;
         }
 
     }
@@ -957,10 +959,6 @@ public class BuyController implements Initializable {
             }
         } catch (Exception e) {
         }
-        
-        
-        
-        
 
     }
 
