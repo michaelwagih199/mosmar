@@ -16,32 +16,37 @@ import javax.persistence.Query;
 public class CalculasHelper {
   ExpensessDAO expensessDAO = new ExpensessDAO();
   
-  public double getDaySales(Date ordderDate) {
-        List<Double> cars = new ArrayList<Double>();
-        double result = 0;
+    public List<Float> getDaySales(Date startDate, Date endDate) {
+
+        List<Float> cars = new ArrayList<Float>();
+       
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
-        try {
-            String sql = "SELECT SUM(o.paid) FROM OrderPayment o WHERE o.date = :date";
+        try {           
+            String sql = "SELECT SUM(o.paid) FROM OrderPayment o WHERE o.date BETWEEN :startDate AND :endDate";
             Query query = eman.createQuery(sql);
-            query.setParameter("date", ordderDate);
+            query.setParameter("startDate", startDate);
+            query.setParameter("endDate", endDate);
             cars = query.getResultList();
-            result = cars.get(0);
+           
         } finally {
             eman.close();
             emf.close();
         }
-        return result;
+        return cars;
     }
-   public ObservableList<Expenses> getExpencseByDate(Date expenceDate) {
+  
+  
+   public ObservableList<Expenses> getExpencseByDate (Date startDate, Date endDate) {
         List<Expenses> cars = new ArrayList<Expenses>();
         ObservableList<Expenses> row = FXCollections.observableArrayList();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
         try {
-            String sql = "SELECT e FROM Expenses e WHERE e.expensesDate = :expensesDate";
+            String sql = "SELECT e FROM Expenses e WHERE e.expensesDate BETWEEN :startDate AND :endDate";
             Query query = eman.createQuery(sql);
-            query.setParameter("expensesDate", expenceDate);
+            query.setParameter("startDate", startDate);
+            query.setParameter("endDate", endDate);
             cars = query.getResultList();
             row.addAll(cars);
            
@@ -52,6 +57,7 @@ public class CalculasHelper {
         return row;
     }
 
+   
     public void insertExpensess(Date expensesDate, String expensesContext, float expensesValue, String notes) {
         // insert data to order
         try {
@@ -67,24 +73,24 @@ public class CalculasHelper {
         }
         
     }
+
     
-    
-      public double getDayExpenses(Date expensesDate) {
-        List<Double> cars = new ArrayList<Double>();
-        double result = 0;
+      public List<Float> getDayExpenses (Date startDate, Date endDate) {
+        List<Float> cars = new ArrayList<Float>();     
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
         try {
-            String sql = "SELECT SUM(e.expensesValue) FROM Expenses e WHERE e.expensesDate = :expensesDate";
+            String sql = "SELECT SUM(e.expensesValue) FROM Expenses e WHERE e.expensesDate BETWEEN :startDate AND :endDate";
             Query query = eman.createQuery(sql);
-            query.setParameter("expensesDate", expensesDate);
+            query.setParameter("startDate", startDate);
+            query.setParameter("endDate", endDate);
             cars = query.getResultList();
-            result = cars.get(0);
+           
         } finally {
             eman.close();
             emf.close();
         }
-        return result;
+        return cars;
     }
 
 }

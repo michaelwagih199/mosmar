@@ -74,7 +74,7 @@ public class OrderDAO {
         return result;
     }
 
-    public List<Object[]> getOrderByDate(Date orderDate , String orderType) {
+    public List<Object[]> getOrderByDate(Date startDate , Date endDate) {
         
         List<Object[]> results;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
@@ -82,16 +82,16 @@ public class OrderDAO {
 
         try {
             // select b.fname, b.lname from Users b JOIN Groups c where c.groupName = :groupName
-            String sql = "SELECT o.orderId, o.orderDate, c.customerName ,o_p.totslCost,o_p.paid,o_p.remaining,o_p.orderDiscount ,o.paymentId \n"
+            String sql = "SELECT o.orderId, o.orderDate, c.customerName ,o_p.totslCost,o_p.paid,o_p.remaining,o_p.orderDiscount ,o.paymentId,o.categoryId\n"
                     + " FROM Orders o left OUTER JOIN Customers c ON o.customerId = c.customerId JOIN OrderPayment o_p ON o.orderId=o_p.orderId\n"
-                    + "  WHERE o.orderDate = :orderDate AND o.orderType = :orderType";
+                    + "  WHERE o.orderDate BETWEEN :startDate AND :endDate ";
             Query query = eman.createQuery(sql);
-            query.setParameter("orderDate", orderDate);
-            query.setParameter("orderType", orderType);
+            query.setParameter("startDate", startDate);
+            query.setParameter("endDate", endDate);
             results = query.getResultList();
-
+            
         } finally {
-
+            
             eman.close();
             emf.close();
         }

@@ -1,4 +1,3 @@
-
 package Controls;
 
 import com.jfoenix.controls.JFXTextArea;
@@ -15,11 +14,13 @@ import helper.CalculasHelper;
 import helper.Helper;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,21 +68,21 @@ public class AcountsCenterController implements Initializable {
     private TableColumn<custom_orders, Float> col_discount;
     @FXML
     private TableColumn<custom_orders, String> col_orderType;
-    
+
     ObservableList<custom_orders> row = FXCollections.observableArrayList();
     ObservableList<Custom_OrderDetails> orderDetailrow = FXCollections.observableArrayList();
-    
+
     OrderDAO orderDAO = new OrderDAO();
     OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+   
     CalculasHelper calculasHelper = new CalculasHelper();
     OrderPaymentDAO orderPaymentDAO = new OrderPaymentDAO();
     ExpensessDAO expensessDAO = new ExpensessDAO();
-    
+
     @FXML
     private DatePicker orderDate;
-    @FXML
-    private ComboBox<String> compoOrdeType;
-    
+  
+
     Helper help = new Helper();
     @FXML
     private Pane paneOrderDetail;
@@ -95,6 +96,8 @@ public class AcountsCenterController implements Initializable {
     private TableColumn<Custom_OrderDetails, Float> col_quantity_orderDetail;
     @FXML
     private TableColumn<Custom_OrderDetails, Float> colAllCostOrderDetail;
+    @FXML
+    private TableColumn<Custom_OrderDetails, String> colProductType;
     @FXML
     private Label lableOrderDetailId;
     @FXML
@@ -125,18 +128,15 @@ public class AcountsCenterController implements Initializable {
     private TableColumn<Expenses, Float> col_expenseValue;
     @FXML
     private TableColumn<Expenses, String> col_expenseNotes;
-    @FXML
-    private Label labelOrderType;
+    DecimalFormat df = new DecimalFormat("#.###");
     @FXML
     private Button btnShow;
+    @FXML
+    private DatePicker orderEndDate;
 
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        compoOrdeType.getItems().addAll("قطاعى");
-        compoOrdeType.getItems().addAll("جملة");
-        compoOrdeType.getItems().addAll("جملة الجملة");
 
         String pattern = "yyyy-MM-dd";
 
@@ -164,16 +164,19 @@ public class AcountsCenterController implements Initializable {
         };
         orderDate.setConverter(converter);
         orderDate.setPromptText(pattern.toLowerCase());
-        
+
         dateExpenes.setConverter(converter);
         dateExpenes.setPromptText(pattern.toLowerCase());
-          
+        
+        orderEndDate.setConverter(converter);
+        orderEndDate.setPromptText(pattern.toLowerCase());
+
     }
 
     @FXML
     private void homeClick(MouseEvent event) throws IOException {
         help.start("/mosmar/main.fxml", "الصفحة الرئيسية");
-        help.closeC(compoOrdeType);
+        help.close(btnShow);
     }
 
     public void loadTabData() throws ParseException {
@@ -185,19 +188,20 @@ public class AcountsCenterController implements Initializable {
         col_remainning.setCellValueFactory(new PropertyValueFactory<>("remaining"));
         col_discount.setCellValueFactory(new PropertyValueFactory<>("orderDiscount"));
         col_orderType.setCellValueFactory(new PropertyValueFactory<>("orderType"));
+        colProductType.setCellValueFactory(new PropertyValueFactory<>("productType"));
         formateDate();
-       // row.addAll(orderDAO.getOrderByDate());
+        // row.addAll(orderDAO.getOrderByDate());
         orderTable.setItems(row);
     }
-    
+
     public void loadorderDetailTabData() throws ParseException {
         col_productName_orderDetails.setCellValueFactory(new PropertyValueFactory<>("ProductName"));
         col_price_orderDetail.setCellValueFactory(new PropertyValueFactory<>("price"));
-        col_quantity_orderDetail.setCellValueFactory(new PropertyValueFactory<>("quantity"));    
-        colAllCostOrderDetail.setCellValueFactory(new PropertyValueFactory<>("total"));    
+        col_quantity_orderDetail.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colAllCostOrderDetail.setCellValueFactory(new PropertyValueFactory<>("total"));
         tableOrderDetails.setItems(orderDetailrow);
     }
-    
+
     public void formateDate() {
         col_orderDate.setCellFactory(column -> {
             TableCell<custom_orders, Date> cell = new TableCell<custom_orders, Date>() {
@@ -215,7 +219,7 @@ public class AcountsCenterController implements Initializable {
             };
             return cell;
         });
-        
+
         col_expenseDate.setCellFactory(column -> {
             TableCell<Expenses, Date> cell = new TableCell<Expenses, Date>() {
                 private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -232,36 +236,46 @@ public class AcountsCenterController implements Initializable {
             };
             return cell;
         });
-        
+
     }
 
-    public void yarab(Date orderDate , String orderType) throws ParseException {
+    public void yarab(Date startDate, Date endDate) throws ParseException {
         String paymentType = null;
-          //formatting date in Java using SimpleDateFormat
+        String productType = null;
+                
+        //formatting date in Java using SimpleDateFormat
         SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
-     for (int i = 0; i < orderDAO.getOrderByDate(orderDate,orderType).size(); i++) {
-            int orderId = (int) orderDAO.getOrderByDate(orderDate,orderType).get(i)[0];
+        for (int i = 0; i < orderDAO.getOrderByDate(startDate, endDate).size(); i++) {
+            int orderId = (int) orderDAO.getOrderByDate(startDate, endDate).get(i)[0];
             //Date date = (Date) orderDAO.getOrderByDate().get(i)[1];
-            String date = DATE_FORMAT.format(orderDAO.getOrderByDate(orderDate,orderType).get(i)[1]);
-            Date date1=new SimpleDateFormat("dd-MM-yyyy").parse(date);  
-            String customerName = (String) orderDAO.getOrderByDate(orderDate,orderType).get(i)[2];
-            float totslCost = (float) orderDAO.getOrderByDate(orderDate,orderType).get(i)[3];
-            float paid = (float) orderDAO.getOrderByDate(orderDate,orderType).get(i)[4];
-            float remaining = (float) orderDAO.getOrderByDate(orderDate,orderType).get(i)[5];
-            float orderDiscount = (float) orderDAO.getOrderByDate(orderDate,orderType).get(i)[6];
-            int paymentId = (int) orderDAO.getOrderByDate(orderDate,orderType).get(i)[7];
+            String date = DATE_FORMAT.format(orderDAO.getOrderByDate(startDate, endDate).get(i)[1]);
+            Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(date);
+            String customerName = (String) orderDAO.getOrderByDate(startDate, endDate).get(i)[2];
+            float totslCost = (float) orderDAO.getOrderByDate(startDate, endDate).get(i)[3];
+            float paid = (float) orderDAO.getOrderByDate(startDate, endDate).get(i)[4];
+            float remaining = (float) orderDAO.getOrderByDate(startDate, endDate).get(i)[5];
+            float orderDiscount = (float) orderDAO.getOrderByDate(startDate, endDate).get(i)[6];
+            int paymentId = (int) orderDAO.getOrderByDate(startDate, endDate).get(i)[7];
+            int categoryId = (int) orderDAO.getOrderByDate(startDate, endDate).get(i)[8];
+            
             if (paymentId == 1) {
                 paymentType = "اجل";
-            }else if (paymentId == 2) {
+            } else if (paymentId == 2) {
                 paymentType = "نقدى";
-
-         }
+            }
             
+            if (categoryId == 1) {
+                productType = "وزن";
+            } else if (paymentId == 2) {
+                productType = "قطعة";
+            }
+
             //paid,remaining,orderDiscount;;
             row.add(new custom_orders(orderId,
                     date1,
                     customerName,
                     paymentType,
+                    productType,
                     totslCost,
                     paid,
                     remaining,
@@ -271,62 +285,72 @@ public class AcountsCenterController implements Initializable {
     }
 
     @FXML
-    private void btnShowClick(ActionEvent event) throws ParseException { 
+    private void btnShowClick(ActionEvent event) throws ParseException {
 
         try {
             orderTable.getItems().clear();
-            String knownUsFrom = compoOrdeType.getSelectionModel().getSelectedItem().toString();
+          
             java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
-            yarab(gettedDatePickerDate, knownUsFrom);
+            java.sql.Date orderEndDatee = java.sql.Date.valueOf(orderEndDate.getValue());
+           
+//            System.out.println(orderDAO.getOrderByDate(gettedDatePickerDate, orderEndDatee));
+            yarab(gettedDatePickerDate, orderEndDatee);
+            
             loadTabData();
             txt_sales.setText("");
-            
-           
-          
-           
-            
-           
+
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
-
         }
-
     }
 
     @FXML
-    private void orderTable_click(MouseEvent event) {
-         if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getClickCount() == 2){
+    private void orderTable_click(MouseEvent event) throws ParseException {
+        if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getClickCount() == 2) {
                 
-                try{
+                try {
                     custom_orders list = orderTable.getSelectionModel().getSelectedItem();
                     paneOrderDetail.setVisible(true);
                     lableOrderDetailId.setText(String.valueOf(list.getOrderId()));
-                    
-                    yaraborderTe(list.getOrderId());
-                    loadorderDetailTabData();
-                                     
+                    if (list.getProductType().equals("وزن")) {
+                        yaraborderTe(list.getOrderId());
+                    }else if (list.getProductType().equals("قطعة")) {
+                        yaraborderTeN(list.getOrderId());
+                    }                 
+                   loadorderDetailTabData();
                 } catch (Exception e) {
-                    System.out.println(e.getLocalizedMessage());
                 }
+                
             }
         }
 
     }
-    
+
     public void yaraborderTe(int orderId) throws ParseException {
 
         for (int i = 0; i < orderDetailDAO.getOrderDetailByOrderId(orderId).size(); i++) {
-          
             String ProductName = (String) orderDetailDAO.getOrderDetailByOrderId(orderId).get(i)[0];
             float price = (float) orderDetailDAO.getOrderDetailByOrderId(orderId).get(i)[1];
             float quantity = (float) orderDetailDAO.getOrderDetailByOrderId(orderId).get(i)[2];
             float total = (float) orderDetailDAO.getOrderDetailByOrderId(orderId).get(i)[3];
-         
             //paid,remaining,orderDiscount;;
             orderDetailrow.add(new Custom_OrderDetails(ProductName, price, quantity, total));
         }
-           
+
+    }
+
+    public void yaraborderTeN(int orderId) throws ParseException {
+
+        for (int i = 0; i < orderDetailDAO.getOrderDetailByOrderIdNumber(orderId).size(); i++) {
+            String ProductName = (String) orderDetailDAO.getOrderDetailByOrderIdNumber(orderId).get(i)[0];
+            float price = (float) orderDetailDAO.getOrderDetailByOrderIdNumber(orderId).get(i)[1];
+            float quantity = (float) orderDetailDAO.getOrderDetailByOrderIdNumber(orderId).get(i)[2];
+            float total = (float) orderDetailDAO.getOrderDetailByOrderIdNumber(orderId).get(i)[3];
+            //paid,remaining,orderDiscount;;
+            orderDetailrow.add(new Custom_OrderDetails(ProductName, price, quantity, total));
+        }
+
     }
 
     @FXML
@@ -344,6 +368,8 @@ public class AcountsCenterController implements Initializable {
     private void btn_save_expenceClick(ActionEvent event) throws ParseException {
         try {
             java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(dateExpenes.getValue());
+            java.sql.Date endDate = java.sql.Date.valueOf(orderEndDate.getValue());
+            
             calculasHelper.insertExpensess(gettedDatePickerDate,
                     et_expenseContrext.getText().toString(),
                     Float.parseFloat(et_expenceValue.getText().toString()),
@@ -351,7 +377,7 @@ public class AcountsCenterController implements Initializable {
             //
 
             clearExpenses();
-            loadExpensesData(gettedDatePickerDate);
+            loadExpensesData(gettedDatePickerDate,endDate);
             ProfitCalulas();
         } catch (Exception e) {
             System.err.println(e.getLocalizedMessage());
@@ -359,15 +385,15 @@ public class AcountsCenterController implements Initializable {
         pane_addPaid.setVisible(false);
 
     }
-    
-    public void clearExpenses(){
+
+    public void clearExpenses() {
         et_expenseContrext.clear();
         et_expenceValue.clear();
         et_expenceNotes.setText("");
     }
-    public void trasury(){
-        
-       
+
+    public void trasury() {
+
     }
 
     @FXML
@@ -376,27 +402,26 @@ public class AcountsCenterController implements Initializable {
         clearExpenses();
     }
 
-    public void loadExpensesData(Date date) throws ParseException {
-        
+    public void loadExpensesData(Date startDate , Date endDate)throws ParseException {
+
         col_expenseDate.setCellValueFactory(new PropertyValueFactory<>("expensesDate"));
         col_expenseContext.setCellValueFactory(new PropertyValueFactory<>("expensesContext"));
         col_expenseValue.setCellValueFactory(new PropertyValueFactory<>("expensesValue"));
         col_expenseNotes.setCellValueFactory(new PropertyValueFactory<>("notes"));
         formateDate();
-        tableExpense.setItems(calculasHelper.getExpencseByDate(date));
-        
+        tableExpense.setItems(calculasHelper.getExpencseByDate(startDate,endDate));
+
     }
 
     @FXML
     private void netProfiteClick(Event event) throws ParseException {
-        compoOrdeType.setVisible(false);
-        labelOrderType.setVisible(false);
+       
         btnShow.setVisible(false);
         clearProfit();
 
     }
-    
-    public void clearProfit(){
+
+    public void clearProfit() {
         tableExpense.getItems().clear();
         txt_sales.setText("");
         txt_treasury.setText("");
@@ -406,8 +431,8 @@ public class AcountsCenterController implements Initializable {
 
     @FXML
     private void TapordersClick(Event event) {
-        compoOrdeType.setVisible(true);
-         labelOrderType.setVisible(true);
+        
+   
         btnShow.setVisible(true);
     }
 
@@ -416,21 +441,22 @@ public class AcountsCenterController implements Initializable {
         ProfitCalulas();
 
     }
-    
-    public void ProfitCalulas(){
-        try {
-             tableExpense.getItems().clear();
-             java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
-             //culculas methods
-            txt_sales.setText(calculasHelper.getDaySales(gettedDatePickerDate) + "");
-            loadExpensesData(gettedDatePickerDate);  
-            
-            txt_treasury.setText(String.valueOf(
-            calculasHelper.getDaySales(gettedDatePickerDate) - calculasHelper.getDayExpenses(gettedDatePickerDate)
-            ));
-        } catch (Exception e) {
-        }
-    }
 
+    public void ProfitCalulas() throws ParseException {
+  
+            tableExpense.getItems().clear();
+            java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
+            java.sql.Date lastDate = java.sql.Date.valueOf(orderEndDate.getValue());
+            //culculas methods
+            List<Float> daySales = calculasHelper.getDaySales(gettedDatePickerDate, lastDate);
+            List<Float> dayExpenses = calculasHelper.getDayExpenses(gettedDatePickerDate, lastDate);
+            
+            txt_sales.setText(df.format(daySales.get(0)));
+            loadExpensesData(gettedDatePickerDate,lastDate);  
+            System.out.println(df.format(dayExpenses.get(0)));
+            float treasury =  daySales.get(0) - daySales.get(0);
+            txt_treasury.setText(df.format(treasury));
+            
+    }
 
 }

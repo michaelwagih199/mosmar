@@ -6,15 +6,16 @@ import java.util.Date;
 public class custom_orders {
     private int orderId;
     private Date orderDate;
-    private String customerName,orderType;
+    private String customerName,orderType,productType;
    
     private float totslCost,paid,remaining,orderDiscount;
 
-    public custom_orders(int orderId, Date orderDate, String customerName, String orderType, float totslCost, float paid, float remaining, float orderDiscount) {
+    public custom_orders(int orderId, Date orderDate, String customerName, String orderType, String productType, float totslCost, float paid, float remaining, float orderDiscount) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.customerName = customerName;
         this.orderType = orderType;
+        this.productType = productType;
         this.totslCost = totslCost;
         this.paid = paid;
         this.remaining = remaining;
@@ -53,6 +54,14 @@ public class custom_orders {
         this.orderType = orderType;
     }
 
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
     public float getTotslCost() {
         return totslCost;
     }
@@ -85,4 +94,5 @@ public class custom_orders {
         this.orderDiscount = orderDiscount;
     }
 
+    
 }

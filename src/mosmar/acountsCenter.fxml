@@ -6,7 +6,6 @@
 <?import java.net.URL?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -28,14 +27,12 @@
             <Label alignment="CENTER" layoutX="40.0" layoutY="7.0" prefHeight="38.0" prefWidth="644.0" styleClass="textHeder2" text="مركز الحسابات" />
          </children>
       </Pane>
-      <Pane layoutY="-4.0" prefHeight="150.0" prefWidth="999.0">
+      <Pane layoutY="-4.0" prefHeight="172.0" prefWidth="999.0">
          <children>
-            <JFXButton layoutX="61.0" layoutY="99.0" onAction="#btnProfitClick" prefHeight="36.0" prefWidth="217.0" styleClass="button_Small" text="عرض الارباح والمصاريف" />
-            <DatePicker fx:id="orderDate" layoutX="774.0" layoutY="102.0" prefHeight="29.0" prefWidth="184.0" />
-            <Label layoutX="715.0" layoutY="69.0" prefHeight="26.0" prefWidth="107.0" styleClass="text_Black" text="تاريخ الحساب" />
-            <Label fx:id="labelOrderType" layoutX="297.0" layoutY="87.0" prefHeight="26.0" prefWidth="80.0" styleClass="text_Black" text="نوع الطلب" />
-            <ComboBox fx:id="compoOrdeType" layoutX="55.0" layoutY="98.0" prefHeight="36.0" prefWidth="229.0" styleClass="combobox_user" />
-            <Separator layoutX="6.0" layoutY="143.0" prefHeight="8.0" prefWidth="986.0" />
+            <JFXButton layoutX="18.0" layoutY="83.0" onAction="#btnProfitClick" prefHeight="77.0" prefWidth="232.0" styleClass="mainButton" text="عرض الارباح والمصاريف" />
+            <DatePicker fx:id="orderDate" layoutX="766.0" layoutY="90.0" prefHeight="29.0" prefWidth="192.0" />
+            <Label layoutX="795.0" layoutY="61.0" prefHeight="26.0" prefWidth="107.0" styleClass="text_Black" text="تاريخ الحساب" />
+            <Separator layoutX="6.0" layoutY="165.0" prefHeight="8.0" prefWidth="986.0" />
             <ImageView fitHeight="51.0" fitWidth="46.0" layoutX="14.0" layoutY="10.0" onMouseClicked="#homeClick" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../res/002-home.png" />
@@ -44,28 +41,29 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <Button fx:id="btnShow" layoutX="401.0" layoutY="100.0" mnemonicParsing="false" onAction="#btnShowClick" prefHeight="36.0" prefWidth="144.0" styleClass="button_Small" text="عرض الحساب" />
-            <Label layoutX="964.0" layoutY="104.0" prefHeight="26.0" prefWidth="21.0" styleClass="text_Black" text="من" />
-            <DatePicker fx:id="orderDate1" layoutX="557.0" layoutY="103.0" prefHeight="29.0" prefWidth="184.0" />
-            <Label layoutX="751.0" layoutY="102.0" prefHeight="26.0" prefWidth="28.0" styleClass="text_Black" text="إلى" />
+            <Button fx:id="btnShow" layoutX="19.0" layoutY="80.0" mnemonicParsing="false" onAction="#btnShowClick" prefHeight="84.0" prefWidth="232.0" styleClass="mainButton" text="عرض الحساب" />
+            <Label layoutX="966.0" layoutY="92.0" prefHeight="26.0" prefWidth="21.0" styleClass="text_Black" text="من" />
+            <DatePicker fx:id="orderEndDate" layoutX="766.0" layoutY="136.0" prefHeight="29.0" prefWidth="192.0" />
+            <Label layoutX="969.0" layoutY="137.0" prefHeight="26.0" prefWidth="29.0" styleClass="text_Black" text="إلى" />
          </children>
       </Pane>
-      <TabPane layoutX="6.0" layoutY="151.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="520.0" prefWidth="991.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="6.0" layoutY="174.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="512.0" prefWidth="991.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab onSelectionChanged="#TapordersClick" text="تفاصيل طلبات اليوم">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="orderTable" layoutX="4.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#orderTable_click" prefHeight="486.0" prefWidth="983.0" stylesheets="@../res/Java.css">
+                        <TableView fx:id="orderTable" layoutX="4.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#orderTable_click" prefHeight="473.0" prefWidth="983.0" styleClass="table">
                           <columns>
                             <TableColumn fx:id="col_orderId" prefWidth="109.0" text="رقم الطلب" />
-                            <TableColumn fx:id="col_orderDate" prefWidth="118.0" text="تاريخ الطلب" />
-                              <TableColumn fx:id="col_customerName" prefWidth="99.0" text="اسم العميل" />
-                              <TableColumn fx:id="col_totalCost" prefWidth="149.0" text="التكلفة بعد الخصم" />
-                              <TableColumn fx:id="col_paid" prefWidth="116.0" text="المدفوع" />
-                              <TableColumn fx:id="col_remainning" prefWidth="113.0" text="المتبقى" />
-                              <TableColumn fx:id="col_discount" prefWidth="121.0" text="الخصمم" />
-                              <TableColumn fx:id="col_orderType" prefWidth="96.0" text="نوع الطلب" />
+                            <TableColumn fx:id="col_orderDate" prefWidth="92.0" text="تاريخ الطلب" />
+                              <TableColumn fx:id="col_customerName" prefWidth="84.0" text="اسم العميل" />
+                              <TableColumn fx:id="col_totalCost" prefWidth="121.0" text="اجمالى التكلفة" />
+                              <TableColumn fx:id="col_paid" prefWidth="89.0" text="المدفوع" />
+                              <TableColumn fx:id="col_remainning" prefWidth="101.0" text="المتبقى" />
+                              <TableColumn fx:id="col_discount" prefWidth="95.0" text="الخصم" />
+                              <TableColumn fx:id="col_orderType" prefWidth="95.0" text="نوع الطلب" />
+                              <TableColumn fx:id="colProductType" prefWidth="95.0" text="نوع المنتج" />
                           </columns>
                         </TableView>
                         <Pane fx:id="paneOrderDetail" layoutX="18.0" layoutY="47.0" prefHeight="353.0" prefWidth="951.0" styleClass="grey_wite_back" visible="false">

@@ -67,30 +67,40 @@ public class OrderDetailDAO {
         return row;
     }
     
-    
-     public List<Object[]> getOrderDetailByOrderId(int orderId) {
-        
+    public List<Object[]> getOrderDetailByOrderId(int orderId) {
         List<Object[]> results;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
-
         try {
             // select b.fname, b.lname from Users b JOIN Groups c where c.groupName = :groupName
             String sql = " SELECT p.productName , o.price,o.quantity,o.total  FROM OrderDetail o JOIN Products p on o.productId = p.productid WHERE o.orderId = :orderId";
             Query query = eman.createQuery(sql);
             query.setParameter("orderId", orderId);
-            
             results = query.getResultList();
-
         } finally {
-
             eman.close();
             emf.close();
         }
 
         return results;
-        
     }
-        
 
+       public List<Object[]> getOrderDetailByOrderIdNumber(int orderId) {
+        List<Object[]> results;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+            // select b.fname, b.lname from Users b JOIN Groups c where c.groupName = :groupName
+            String sql = "SELECT p.productnumberName,o.price,o.quantity,o.total FROM OrderDetail o JOIN Productsnumber p on o.productId = p.productnumberid WHERE o.orderId = :orderId";
+            Query query = eman.createQuery(sql);
+            query.setParameter("orderId", orderId);
+            results = query.getResultList();
+        } finally {
+            eman.close();
+            emf.close();
+        }
+        return results;
+    }
+
+       
 }
