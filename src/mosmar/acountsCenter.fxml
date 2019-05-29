@@ -49,7 +49,7 @@
       </Pane>
       <TabPane layoutX="6.0" layoutY="174.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="512.0" prefWidth="991.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab onSelectionChanged="#TapordersClick" text="تفاصيل طلبات اليوم">
+          <Tab onSelectionChanged="#TapordersClick" text="تفاصيل طلبات ">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -94,7 +94,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab onSelectionChanged="#netProfiteClick" text="ارباح ومصاريف اليوم">
+          <Tab onSelectionChanged="#netProfiteClick" text="ارباح ومصاريف ">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -105,7 +105,7 @@
                         <Label alignment="CENTER" layoutX="589.0" layoutY="291.0" prefHeight="17.0" prefWidth="271.0" styleClass="textHeder" text="صافى الربح " />
                         <Separator layoutX="480.0" layoutY="286.0" prefHeight="6.0" prefWidth="502.0" />
                         <Separator layoutX="458.0" layoutY="6.0" orientation="VERTICAL" prefHeight="479.0" prefWidth="14.0" />
-                        <Label alignment="CENTER" layoutX="63.0" layoutY="2.0" prefHeight="17.0" prefWidth="271.0" styleClass="textHeder" text="المصروفات" />
+                        <Label alignment="CENTER" layoutX="117.0" layoutY="8.0" prefHeight="31.0" prefWidth="232.0" styleClass="textHeder" text="المصروفات" />
                         <ImageView fitHeight="38.0" fitWidth="53.0" layoutX="421.0" layoutY="3.0" onMouseClicked="#addExpesessClick" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../res/add.png" />
@@ -114,7 +114,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </ImageView>
-                        <TableView fx:id="tableExpense" layoutX="10.0" layoutY="49.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="406.0" prefWidth="446.0">
+                        <TableView fx:id="tableExpense" layoutX="10.0" layoutY="49.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="378.0" prefWidth="446.0">
                           <columns>
                             <TableColumn fx:id="col_expenseDate" prefWidth="95.33334350585938" text="التاريخ" />
                             <TableColumn fx:id="col_expenseContext" prefWidth="96.33331298828125" text="البيان" />
@@ -153,6 +153,8 @@
                         <Label fx:id="txt_treasury" alignment="CENTER" layoutX="592.0" layoutY="202.0" prefHeight="50.0" prefWidth="285.0" styleClass="text5" />
                         <Label fx:id="txt_net_profit_before_paid" alignment="CENTER" layoutX="753.0" layoutY="397.0" prefHeight="50.0" prefWidth="215.0" styleClass="text5" />
                         <Label fx:id="txt_net_profit_after_paid" alignment="CENTER" layoutX="496.0" layoutY="397.0" prefHeight="50.0" prefWidth="215.0" styleClass="text5" />
+                        <Label fx:id="txtAllExpencess" alignment="CENTER" layoutX="11.0" layoutY="436.0" prefHeight="38.0" prefWidth="244.0" styleClass="text5" text="0" />
+                        <Label alignment="CENTER" layoutX="264.0" layoutY="440.0" prefHeight="31.0" prefWidth="192.0" styleClass="textHeder" text="إجمالى المصروفات" />
                      </children></AnchorPane>
             </content>
           </Tab>

@@ -133,6 +133,8 @@ public class AcountsCenterController implements Initializable {
     private Button btnShow;
     @FXML
     private DatePicker orderEndDate;
+    @FXML
+    private Label txtAllExpencess;
 
 
     @Override
@@ -374,11 +376,10 @@ public class AcountsCenterController implements Initializable {
                     et_expenseContrext.getText().toString(),
                     Float.parseFloat(et_expenceValue.getText().toString()),
                     et_expenceNotes.getText().toString());
-            //
 
             clearExpenses();
             loadExpensesData(gettedDatePickerDate,endDate);
-            ProfitCalulas();
+            profitCalulas();
         } catch (Exception e) {
             System.err.println(e.getLocalizedMessage());
         }
@@ -438,24 +439,24 @@ public class AcountsCenterController implements Initializable {
 
     @FXML
     private void btnProfitClick(ActionEvent event) throws ParseException {
-        ProfitCalulas();
+        profitCalulas();
 
     }
 
-    public void ProfitCalulas() throws ParseException {
-  
+    public void profitCalulas() throws ParseException {
             tableExpense.getItems().clear();
             java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
             java.sql.Date lastDate = java.sql.Date.valueOf(orderEndDate.getValue());
             //culculas methods
+            loadExpensesData(gettedDatePickerDate,lastDate);
             List<Float> daySales = calculasHelper.getDaySales(gettedDatePickerDate, lastDate);
-            List<Float> dayExpenses = calculasHelper.getDayExpenses(gettedDatePickerDate, lastDate);
-            
+            List<Float> dayExpenses = calculasHelper.getDayExpenses(gettedDatePickerDate, lastDate);            
             txt_sales.setText(df.format(daySales.get(0)));
-            loadExpensesData(gettedDatePickerDate,lastDate);  
-            System.out.println(df.format(dayExpenses.get(0)));
-            float treasury =  daySales.get(0) - daySales.get(0);
-            txt_treasury.setText(df.format(treasury));
+            txtAllExpencess.setText(df.format(dayExpenses.get(0)));           
+            float treasury = Float.parseFloat(txt_sales.getText().toString()) - Float.parseFloat(txtAllExpencess.getText().toString()) ;
+            txt_treasury.setText(String.valueOf(treasury));
+       
+           //Float c = (Float)daySalesV- (Float)dayExpensesV;
             
     }
 

@@ -55,7 +55,6 @@ public class BuyController implements Initializable {
     @FXML
     private TextField txtTotal;
     @FXML
-
     private TextField et_paid_up;
     @FXML
     private TextField et_remaining;
@@ -92,8 +91,6 @@ public class BuyController implements Initializable {
     float totalCounter = 0;
     int paymentId = 0,categoryId=0;
     public int customerId = 0;
-    
-
     public int OrderId = 0;
     String uuidUniq;
 
@@ -146,6 +143,7 @@ public class BuyController implements Initializable {
             String compo_productType = compo_product_Type.getSelectionModel().getSelectedItem().toString();
             if (knownUsFrom.equals("آجل") && etClientName.getText().toString().isEmpty()) {
                 FxDialogs.showInformation("من فضلك", "ادخل اسم العميل والمدفوع");
+                totalCounter =0;
             } else {
 
                 if (etClientName.getText().toString().isEmpty()) {
@@ -825,18 +823,27 @@ public class BuyController implements Initializable {
                                 custom_BuyTable data = getTableView().getItems().get(getIndex());
                                 try {
                                     // clearTT();
-
-                                    table.getItems().remove(data);
+                                    
+                                    String knownUsFrom = compoFunctionType.getSelectionModel().getSelectedItem().toString();
+                                    
+                                    
+                                     table.getItems().remove(data);
                                     totalCounter -= data.getTotal();
                                     txtTotal.setText(String.valueOf(totalCounter));
-                                    et_remaining.setText(String.valueOf(totalCounter));
+                                   
                                     etDiscount1.setText(String.valueOf(totalCounter));
-                                    et_paid_up.setText(String.valueOf(totalCounter));
+                                   
                                     etDiscount.clear();
+                                    
+                                    if (knownUsFrom.equals("نقدى")) {
+                                      et_paid_up.setText(String.valueOf(totalCounter));   
+                                                                          
+                                    }else  {
+                                       et_remaining.setText(String.valueOf(totalCounter));  
+                                    }                                  
 
                                     if (table.getItems().isEmpty()) {
                                         clear_afterSubmit();
-
                                     }
 
                                 } catch (Exception ex) {
