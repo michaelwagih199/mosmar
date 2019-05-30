@@ -7,10 +7,16 @@ import com.jfoenix.controls.JFXTextField;
 import dao.CustomerDAO;
 import entities.Customers;
 import entities.Products;
+import entities.custom_orders;
+import helper.CustumersCalculas;
 import helper.FxDialogs;
 import helper.Helper;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,7 +77,7 @@ public class CustomersController implements Initializable {
     @FXML
     private Label lablRemainingCost;
     @FXML
-    private JFXTextField etTotalCost;
+    private Label etTotalCost;
     @FXML
     private JFXTextField etPaidValue;
     @FXML
@@ -83,6 +89,7 @@ public class CustomersController implements Initializable {
     @FXML
     private TableView<?> tablePayment;
     Helper help = new Helper();
+    CustumersCalculas custumersCalculas = new CustumersCalculas();
     @FXML
     private TableColumn<?, ?> colDatePaid;
     @FXML
@@ -93,14 +100,18 @@ public class CustomersController implements Initializable {
     private JFXButton btnCustomersDetails;
     @FXML
     private AnchorPane anchorDetails;
+
+    DecimalFormat df = new DecimalFormat("#.###");
     @FXML
-    private TableColumn<?, ?> colDateDetail;
+    private TableColumn<?, ?> colIdDate;
     @FXML
-    private TableColumn<?, ?> colProductDetails;
+    private TableColumn<?, ?> colDateDetails;
     @FXML
-    private TableColumn<?, ?> colPrice;
+    private TableColumn<?, ?> colDetailsDetails;
     @FXML
-    private TableColumn<?, ?> colTotalDetails;
+    private TableColumn<?, ?> colRemainingDetails;
+    @FXML
+    private TableColumn<?, ?> colDiscountDetails;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -244,11 +255,14 @@ public class CustomersController implements Initializable {
                 final TableCell<Customers, Void> cell = new TableCell<Customers, Void>() {
 
                     private final Button btn = new Button("الحساب");
-
                     {
+                       
                         btn.setOnAction((ActionEvent event) -> {
+                             Customers data = getTableView().getItems().get(getIndex());
                             anchorPaid.setVisible(true);
-
+                            customerAccountsCalc(data.getCustomerName(), data.getCustomerId());
+                            
+                            
                         });
                     }
 
@@ -299,5 +313,43 @@ public class CustomersController implements Initializable {
 
     @FXML
     private void btnCustomersDetailsClick(ActionEvent event) {
+       
+       anchorDetails.setVisible(true);
     }
+    
+    public void customerAccountsCalc(String customerName,int customerId){
+        labelClientName.setText(customerName);
+        etTotalCost.setText(df.format(custumersCalculas.getCustomersRemaining(customerId).get(0))); 
+    }
+ 
+//      public void yarab(Date startDate, Date endDate) throws ParseException {
+//        String paymentType = null;
+//        String productType = null;
+//        //formatting date in Java using SimpleDateFormat
+//        SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+//        for (int i = 0; i < orderDAO.getOrderByDate(startDate, endDate).size(); i++) {
+//            int orderId = (int) orderDAO.getOrderByDate(startDate, endDate).get(i)[0];
+//            //Date date = (Date) orderDAO.getOrderByDate().get(i)[1];
+// 
+//            //paid,remaining,orderDiscount;;
+//            row.add(new custom_orders(orderId,
+//                    date1,
+//                    customerName,
+//                    paymentType,
+//                    productType,
+//                    totslCost,
+//                    paid,
+//                    remaining,
+//                    orderDiscount));
+//        }
+//
+//    }
+
+    @FXML
+    private void closeOrderDetails(MouseEvent event) {
+        anchorDetails.setVisible(false);
+    }
+    
+    
+      
 }

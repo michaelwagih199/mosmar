@@ -74,12 +74,11 @@ public class OrderDAO {
         return result;
     }
 
-    public List<Object[]> getOrderByDate(Date startDate , Date endDate) {
-        
+    public List<Object[]> getOrderByDate(Date startDate , Date endDate) {      
         List<Object[]> results;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
-
+        
         try {
             // select b.fname, b.lname from Users b JOIN Groups c where c.groupName = :groupName
             String sql = "SELECT o.orderId, o.orderDate, c.customerName ,o_p.totslCost,o_p.paid,o_p.remaining,o_p.orderDiscount ,o.paymentId,o.categoryId\n"
@@ -95,9 +94,7 @@ public class OrderDAO {
             eman.close();
             emf.close();
         }
-
         return results;
-        
     }
 
 }

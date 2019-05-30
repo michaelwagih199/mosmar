@@ -19,7 +19,7 @@ public class SubmitBuy_helper {
     
     public void insert_order(int customerId, int paymentId,int categoryId, String orderType,String uuid) {
         // insert data to order
-       
+        
         try {
             Orders order = new Orders();
             order.setCustomerId(customerId);
