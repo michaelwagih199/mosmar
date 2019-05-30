@@ -14,30 +14,30 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 public class CalculasHelper {
-  ExpensessDAO expensessDAO = new ExpensessDAO();
-  
+
+    ExpensessDAO expensessDAO = new ExpensessDAO();
+
     public List<Float> getDaySales(Date startDate, Date endDate) {
 
         List<Float> cars = new ArrayList<Float>();
-       
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
-        try {           
+        try {
             String sql = "SELECT SUM(o.paid) FROM OrderPayment o WHERE o.date BETWEEN :startDate AND :endDate";
             Query query = eman.createQuery(sql);
             query.setParameter("startDate", startDate);
             query.setParameter("endDate", endDate);
             cars = query.getResultList();
-           
+
         } finally {
             eman.close();
             emf.close();
         }
         return cars;
     }
-  
-  
-   public ObservableList<Expenses> getExpencseByDate (Date startDate, Date endDate) {
+
+    public ObservableList<Expenses> getExpencseByDate(Date startDate, Date endDate) {
         List<Expenses> cars = new ArrayList<Expenses>();
         ObservableList<Expenses> row = FXCollections.observableArrayList();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
@@ -49,7 +49,7 @@ public class CalculasHelper {
             query.setParameter("endDate", endDate);
             cars = query.getResultList();
             row.addAll(cars);
-           
+
         } finally {
             eman.close();
             emf.close();
@@ -57,7 +57,6 @@ public class CalculasHelper {
         return row;
     }
 
-   
     public void insertExpensess(Date expensesDate, String expensesContext, float expensesValue, String notes) {
         // insert data to order
         try {
@@ -67,16 +66,15 @@ public class CalculasHelper {
             expenses.setExpensesValue(expensesValue);
             expenses.setNotes(notes);
             expensessDAO.addexpenses(expenses);
-            
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
+
     }
 
-    
-      public List<Float> getDayExpenses (Date startDate, Date endDate) {
-        List<Float> cars = new ArrayList<Float>();     
+    public List<Float> getDayExpenses(Date startDate, Date endDate) {
+        List<Float> cars = new ArrayList<Float>();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
         try {
@@ -85,7 +83,27 @@ public class CalculasHelper {
             query.setParameter("startDate", startDate);
             query.setParameter("endDate", endDate);
             cars = query.getResultList();
-           
+
+        } finally {
+            eman.close();
+            emf.close();
+        }
+        return cars;
+    }
+
+    public List<Float> getAccountsRevenue(Date startDate, Date endDate) {
+
+        List<Float> cars = new ArrayList<Float>();
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+            String sql = "SELECT SUM(o.remaining) FROM OrderPayment o WHERE o.date BETWEEN :startDate AND :endDate";
+            Query query = eman.createQuery(sql);
+            query.setParameter("startDate", startDate);
+            query.setParameter("endDate", endDate);
+            cars = query.getResultList();
+
         } finally {
             eman.close();
             emf.close();

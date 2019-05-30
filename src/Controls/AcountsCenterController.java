@@ -135,6 +135,10 @@ public class AcountsCenterController implements Initializable {
     private DatePicker orderEndDate;
     @FXML
     private Label txtAllExpencess;
+    @FXML
+    private Label txtAccountsPayable;
+    @FXML
+    private Label txtAccountsRevenue;
 
 
     @Override
@@ -268,7 +272,7 @@ public class AcountsCenterController implements Initializable {
             
             if (categoryId == 1) {
                 productType = "وزن";
-            } else if (paymentId == 2) {
+            } else if (categoryId == 2) {
                 productType = "قطعة";
             }
 
@@ -310,9 +314,7 @@ public class AcountsCenterController implements Initializable {
     private void orderTable_click(MouseEvent event) throws ParseException {
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             if (event.getClickCount() == 2) {
-                
-                try {
-                    custom_orders list = orderTable.getSelectionModel().getSelectedItem();
+                custom_orders list = orderTable.getSelectionModel().getSelectedItem();
                     paneOrderDetail.setVisible(true);
                     lableOrderDetailId.setText(String.valueOf(list.getOrderId()));
                     if (list.getProductType().equals("وزن")) {
@@ -321,8 +323,7 @@ public class AcountsCenterController implements Initializable {
                         yaraborderTeN(list.getOrderId());
                     }                 
                    loadorderDetailTabData();
-                } catch (Exception e) {
-                }
+                
                 
             }
         }
@@ -443,21 +444,24 @@ public class AcountsCenterController implements Initializable {
 
     }
 
+    
+    /**
+     * main function to show reports
+     * @throws ParseException 
+     */
     public void profitCalulas() throws ParseException {
             tableExpense.getItems().clear();
             java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
             java.sql.Date lastDate = java.sql.Date.valueOf(orderEndDate.getValue());
             //culculas methods
             loadExpensesData(gettedDatePickerDate,lastDate);
-            List<Float> daySales = calculasHelper.getDaySales(gettedDatePickerDate, lastDate);
-            List<Float> dayExpenses = calculasHelper.getDayExpenses(gettedDatePickerDate, lastDate);            
-            txt_sales.setText(df.format(daySales.get(0)));
-            txtAllExpencess.setText(df.format(dayExpenses.get(0)));           
+            txt_sales.setText(df.format(calculasHelper.getDaySales(gettedDatePickerDate, lastDate).get(0)));
+            txtAllExpencess.setText(df.format(calculasHelper.getDayExpenses(gettedDatePickerDate, lastDate).get(0)));           
             float treasury = Float.parseFloat(txt_sales.getText().toString()) - Float.parseFloat(txtAllExpencess.getText().toString()) ;
-            txt_treasury.setText(String.valueOf(treasury));
+            txt_treasury.setText(String.valueOf(treasury));           
+            txtAccountsRevenue.setText(df.format(calculasHelper.getAccountsRevenue(gettedDatePickerDate, lastDate).get(0)));
        
            //Float c = (Float)daySalesV- (Float)dayExpensesV;
-            
     }
 
 }

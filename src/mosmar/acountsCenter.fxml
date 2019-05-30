@@ -30,8 +30,8 @@
       <Pane layoutY="-4.0" prefHeight="172.0" prefWidth="999.0">
          <children>
             <JFXButton layoutX="18.0" layoutY="83.0" onAction="#btnProfitClick" prefHeight="77.0" prefWidth="232.0" styleClass="mainButton" text="عرض الارباح والمصاريف" />
-            <DatePicker fx:id="orderDate" layoutX="766.0" layoutY="90.0" prefHeight="29.0" prefWidth="192.0" />
-            <Label layoutX="795.0" layoutY="61.0" prefHeight="26.0" prefWidth="107.0" styleClass="text_Black" text="تاريخ الحساب" />
+            <DatePicker fx:id="orderDate" layoutX="592.0" layoutY="114.0" prefHeight="29.0" prefWidth="192.0" />
+            <Label layoutX="845.0" layoutY="112.0" prefHeight="31.0" prefWidth="128.0" styleClass="textHeder" text="تاريخ الحساب" />
             <Separator layoutX="6.0" layoutY="165.0" prefHeight="8.0" prefWidth="986.0" />
             <ImageView fitHeight="51.0" fitWidth="46.0" layoutX="14.0" layoutY="10.0" onMouseClicked="#homeClick" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -42,9 +42,9 @@
                </cursor>
             </ImageView>
             <Button fx:id="btnShow" layoutX="19.0" layoutY="80.0" mnemonicParsing="false" onAction="#btnShowClick" prefHeight="84.0" prefWidth="232.0" styleClass="mainButton" text="عرض الحساب" />
-            <Label layoutX="966.0" layoutY="92.0" prefHeight="26.0" prefWidth="21.0" styleClass="text_Black" text="من" />
-            <DatePicker fx:id="orderEndDate" layoutX="766.0" layoutY="136.0" prefHeight="29.0" prefWidth="192.0" />
-            <Label layoutX="969.0" layoutY="137.0" prefHeight="26.0" prefWidth="29.0" styleClass="text_Black" text="إلى" />
+            <Label layoutX="794.0" layoutY="116.0" prefHeight="26.0" prefWidth="21.0" styleClass="text_Black" text="من" />
+            <DatePicker fx:id="orderEndDate" layoutX="342.0" layoutY="113.0" prefHeight="29.0" prefWidth="192.0" />
+            <Label layoutX="537.0" layoutY="115.0" prefHeight="26.0" prefWidth="29.0" styleClass="text_Black" text="إلى" />
          </children>
       </Pane>
       <TabPane layoutX="6.0" layoutY="174.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="512.0" prefWidth="991.0" tabClosingPolicy="UNAVAILABLE">
@@ -102,8 +102,8 @@
                         <Label alignment="CENTER" layoutX="599.0" layoutY="8.0" prefHeight="17.0" prefWidth="271.0" styleClass="textHeder" text="المبيعات" />
                         <Separator layoutX="476.0" layoutY="139.0" prefHeight="6.0" prefWidth="506.0" />
                         <Label alignment="CENTER" layoutX="598.0" layoutY="151.0" prefHeight="17.0" prefWidth="271.0" styleClass="textHeder" text="الخزنة (الدرج )" />
-                        <Label alignment="CENTER" layoutX="589.0" layoutY="291.0" prefHeight="17.0" prefWidth="271.0" styleClass="textHeder" text="صافى الربح " />
-                        <Separator layoutX="480.0" layoutY="286.0" prefHeight="6.0" prefWidth="502.0" />
+                        <Label alignment="CENTER" layoutX="589.0" layoutY="257.0" prefHeight="17.0" prefWidth="271.0" styleClass="textHeder" text="صافى الربح " />
+                        <Separator layoutX="480.0" layoutY="253.0" prefHeight="6.0" prefWidth="502.0" />
                         <Separator layoutX="458.0" layoutY="6.0" orientation="VERTICAL" prefHeight="479.0" prefWidth="14.0" />
                         <Label alignment="CENTER" layoutX="117.0" layoutY="8.0" prefHeight="31.0" prefWidth="232.0" styleClass="textHeder" text="المصروفات" />
                         <ImageView fitHeight="38.0" fitWidth="53.0" layoutX="421.0" layoutY="3.0" onMouseClicked="#addExpesessClick" pickOnBounds="true" preserveRatio="true">
@@ -145,16 +145,21 @@
                               <Label layoutX="259.0" layoutY="244.0" prefHeight="26.0" prefWidth="68.0" styleClass="text_Black" text="ملاحظات" />
                            </children>
                         </Pane>
-                        <Separator layoutX="730.0" layoutY="338.0" orientation="VERTICAL" prefHeight="144.0" prefWidth="6.0" />
-                        <Separator layoutX="474.0" layoutY="327.0" prefHeight="6.0" prefWidth="502.0" />
-                        <Label alignment="CENTER" layoutX="762.0" layoutY="339.0" prefHeight="31.0" prefWidth="196.0" styleClass="textHeder" text="قبل المصاريف" />
-                        <Label alignment="CENTER" layoutX="512.0" layoutY="338.0" prefHeight="31.0" prefWidth="196.0" styleClass="textHeder" text="بعد المصاريف" />
+                        <Separator layoutX="722.0" layoutY="305.0" orientation="VERTICAL" prefHeight="172.0" prefWidth="6.0" />
+                        <Separator layoutX="474.0" layoutY="290.0" prefHeight="6.0" prefWidth="502.0" />
+                        <Label alignment="CENTER" layoutX="762.0" layoutY="293.0" prefHeight="31.0" prefWidth="196.0" styleClass="textHeder" text="قبل المصاريف" />
+                        <Label alignment="CENTER" layoutX="512.0" layoutY="295.0" prefHeight="31.0" prefWidth="196.0" styleClass="textHeder" text="بعد المصاريف" />
                         <Label fx:id="txt_sales" alignment="CENTER" layoutX="599.0" layoutY="57.0" prefHeight="50.0" prefWidth="285.0" styleClass="text5" />
-                        <Label fx:id="txt_treasury" alignment="CENTER" layoutX="592.0" layoutY="202.0" prefHeight="50.0" prefWidth="285.0" styleClass="text5" />
-                        <Label fx:id="txt_net_profit_before_paid" alignment="CENTER" layoutX="753.0" layoutY="397.0" prefHeight="50.0" prefWidth="215.0" styleClass="text5" />
-                        <Label fx:id="txt_net_profit_after_paid" alignment="CENTER" layoutX="496.0" layoutY="397.0" prefHeight="50.0" prefWidth="215.0" styleClass="text5" />
+                        <Label fx:id="txt_treasury" alignment="CENTER" layoutX="592.0" layoutY="193.0" prefHeight="50.0" prefWidth="285.0" styleClass="text5" />
+                        <Label fx:id="txt_net_profit_before_paid" alignment="CENTER" layoutX="753.0" layoutY="326.0" prefHeight="50.0" prefWidth="215.0" styleClass="text5" />
+                        <Label fx:id="txt_net_profit_after_paid" alignment="CENTER" layoutX="492.0" layoutY="329.0" prefHeight="50.0" prefWidth="215.0" styleClass="text5" />
                         <Label fx:id="txtAllExpencess" alignment="CENTER" layoutX="11.0" layoutY="436.0" prefHeight="38.0" prefWidth="244.0" styleClass="text5" text="0" />
                         <Label alignment="CENTER" layoutX="264.0" layoutY="440.0" prefHeight="31.0" prefWidth="192.0" styleClass="textHeder" text="إجمالى المصروفات" />
+                        <Separator layoutX="470.0" layoutY="388.0" prefHeight="6.0" prefWidth="502.0" />
+                        <Label alignment="CENTER" layoutX="484.0" layoutY="394.0" prefHeight="31.0" prefWidth="232.0" styleClass="textHeder" text="Accounts Payable" />
+                        <Label fx:id="txtAccountsPayable" alignment="CENTER" layoutX="489.0" layoutY="430.0" prefHeight="46.0" prefWidth="216.0" styleClass="text5" />
+                        <Label alignment="CENTER" layoutX="750.0" layoutY="396.0" prefHeight="31.0" prefWidth="232.0" styleClass="textHeder" text="Accounts Revenue" />
+                        <Label fx:id="txtAccountsRevenue" alignment="CENTER" layoutX="753.0" layoutY="432.0" prefHeight="46.0" prefWidth="216.0" styleClass="text5" />
                      </children></AnchorPane>
             </content>
           </Tab>
