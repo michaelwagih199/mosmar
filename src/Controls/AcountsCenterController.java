@@ -7,10 +7,12 @@ import dao.OrderDAO;
 import dao.OrderDetailDAO;
 import dao.OrderPaymentDAO;
 import entities.Custom_OrderDetails;
+import entities.Customers;
 import entities.Expenses;
 import entities.OrderDetail;
 import entities.custom_orders;
 import helper.CalculasHelper;
+import helper.FxDialogs;
 import helper.Helper;
 import java.io.IOException;
 import java.net.URL;
@@ -41,6 +43,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 /**
@@ -173,10 +176,10 @@ public class AcountsCenterController implements Initializable {
 
         dateExpenes.setConverter(converter);
         dateExpenes.setPromptText(pattern.toLowerCase());
-        
+
         orderEndDate.setConverter(converter);
         orderEndDate.setPromptText(pattern.toLowerCase());
-
+        addButtonDeleteToTable();
     }
 
     @FXML
@@ -298,12 +301,13 @@ public class AcountsCenterController implements Initializable {
           
             java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
             java.sql.Date orderEndDatee = java.sql.Date.valueOf(orderEndDate.getValue());
-           
+         
 //            System.out.println(orderDAO.getOrderByDate(gettedDatePickerDate, orderEndDatee));
             yarab(gettedDatePickerDate, orderEndDatee);
             
             loadTabData();
             txt_sales.setText("");
+            loadExpensesData(gettedDatePickerDate, orderEndDatee);
 
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
@@ -450,18 +454,82 @@ public class AcountsCenterController implements Initializable {
      * @throws ParseException 
      */
     public void profitCalulas() throws ParseException {
+        try {
             tableExpense.getItems().clear();
             java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
             java.sql.Date lastDate = java.sql.Date.valueOf(orderEndDate.getValue());
             //culculas methods
             loadExpensesData(gettedDatePickerDate,lastDate);
-            txt_sales.setText(df.format(calculasHelper.getDaySales(gettedDatePickerDate, lastDate).get(0)));
+            Double sale = calculasHelper.getDaySales(gettedDatePickerDate, lastDate) + calculasHelper.getSumCustomerPaid();
+            txt_sales.setText(df.format(sale));
             txtAllExpencess.setText(df.format(calculasHelper.getDayExpenses(gettedDatePickerDate, lastDate).get(0)));           
             float treasury = Float.parseFloat(txt_sales.getText().toString()) - Float.parseFloat(txtAllExpencess.getText().toString()) ;
             txt_treasury.setText(String.valueOf(treasury));           
             txtAccountsRevenue.setText(df.format(calculasHelper.getAccountsRevenue(gettedDatePickerDate, lastDate).get(0)));
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+            
        
            //Float c = (Float)daySalesV- (Float)dayExpensesV;
+    }
+    
+    
+        //delete row
+    private void addButtonDeleteToTable() {
+        TableColumn<Expenses, Void> colBtn = new TableColumn();
+
+        Callback<TableColumn<Expenses, Void>, TableCell<Expenses, Void>> cellFactory;
+        cellFactory = new Callback<TableColumn<Expenses, Void>, TableCell<Expenses, Void>>() {
+            @Override
+            public TableCell<Expenses, Void> call(final TableColumn<Expenses, Void> param) {
+                final TableCell<Expenses, Void> cell = new TableCell<Expenses, Void>() {
+
+                    private final Button btn = new Button("مسح");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+
+                            if (FxDialogs.showConfirm("مسح المنتج", "هل تريد مسح المصروف?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
+                                
+                                
+                                Expenses data = getTableView().getItems().get(getIndex());
+                                try {
+
+                                    java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
+                                    java.sql.Date orderEndDatee = java.sql.Date.valueOf(orderEndDate.getValue());
+                                    expensessDAO.removexpenses(data.getExpensesId());
+                                    loadExpensesData(gettedDatePickerDate, orderEndDatee);
+                                    txt_sales.setText("");
+                                    txt_treasury.setText("");
+                                    profitCalulas();
+
+                                } catch (Exception ex) {
+                                    Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                           // btn.getStyleClass().add("button_Small");
+                            setGraphic(btn);
+
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+        tableExpense.getColumns().add(colBtn);
     }
 
 }

@@ -17,10 +17,8 @@ public class CalculasHelper {
 
     ExpensessDAO expensessDAO = new ExpensessDAO();
 
-    public List<Float> getDaySales(Date startDate, Date endDate) {
-
-        List<Float> cars = new ArrayList<Float>();
-
+    public Double getDaySales(Date startDate, Date endDate) {
+       Double  result;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
         try {
@@ -28,16 +26,34 @@ public class CalculasHelper {
             Query query = eman.createQuery(sql);
             query.setParameter("startDate", startDate);
             query.setParameter("endDate", endDate);
-            cars = query.getResultList();
+            result = (Double) query.getSingleResult();
 
         } finally {
             eman.close();
             emf.close();
         }
-        return cars;
+        return result;
+    }
+    
+     public Double getSumCustomerPaid() {
+        Double  result;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+            String sql = "SELECT SUM(c.paymentValue) FROM CustomersPayment c";
+            Query query = eman.createQuery(sql);
+            result = (Double) query.getSingleResult();
+            //System.out.println(result);
+            
+            
+        } finally {
+            eman.close();
+            emf.close();
+        }
+        return result;
     }
 
-    public ObservableList<Expenses> getExpencseByDate(Date startDate, Date endDate) {
+    public ObservableList<Expenses> getExpencseByDate(Date startDate, Date endDate) {      
         List<Expenses> cars = new ArrayList<Expenses>();
         ObservableList<Expenses> row = FXCollections.observableArrayList();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
@@ -49,7 +65,7 @@ public class CalculasHelper {
             query.setParameter("endDate", endDate);
             cars = query.getResultList();
             row.addAll(cars);
-
+            
         } finally {
             eman.close();
             emf.close();

@@ -43,5 +43,25 @@ public class CustumersCalculas {
         }
         return results;
     }
+    
+    
+     public List<Float> getCustomersPayment(int customerId) {
+        List<Float> cars = new ArrayList<Float>();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+            String sql = "SELECT SUM(c.paymentValue) FROM CustomersPayment c WHERE c.customerId =  :customerId ";
+            Query query = eman.createQuery(sql);
+            query.setParameter("customerId", customerId);
+            cars = query.getResultList();
+
+        } finally {
+            eman.close();
+            emf.close();
+        }
+        return cars;
+    }
+
+
 
 }

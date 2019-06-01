@@ -114,7 +114,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </ImageView>
-                        <TableView fx:id="tableExpense" layoutX="10.0" layoutY="49.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="378.0" prefWidth="446.0">
+                        <TableView fx:id="tableExpense" layoutX="6.0" layoutY="46.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="385.0" prefWidth="449.0">
                           <columns>
                             <TableColumn fx:id="col_expenseDate" prefWidth="95.33334350585938" text="التاريخ" />
                             <TableColumn fx:id="col_expenseContext" prefWidth="96.33331298828125" text="البيان" />

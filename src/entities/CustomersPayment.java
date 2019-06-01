@@ -45,7 +45,7 @@ public class CustomersPayment implements Serializable {
     @Column(name = "customer_id")
     private Integer customerId;
     @Column(name = "paymentDate")
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.DATE)
     private Date paymentDate;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "paymentValue")

@@ -54,8 +54,11 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void btnBurshesClick(ActionEvent event) {
-
+    private void btnBurshesClick(ActionEvent event) throws IOException {
+        
+        helper.start("/mosmar/suppliers.fxml", "المخزن");
+        helper.close(btn_buy);
+        
     }
 
     @FXML
