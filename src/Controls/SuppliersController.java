@@ -8,6 +8,8 @@ package Controls;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import helper.Helper;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -97,6 +99,7 @@ public class SuppliersController implements Initializable {
     @FXML
     private ImageView purchase;
 
+    Helper helper = new Helper();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -140,7 +143,9 @@ public class SuppliersController implements Initializable {
     }
 
     @FXML
-    private void purchaseClick(MouseEvent event) {
+    private void purchaseClick(MouseEvent event) throws IOException {
+         helper.start("/mosmar/sho7nat.fxml", "المخزن");
+         helper.closeI(purchase);
     }
     
 }

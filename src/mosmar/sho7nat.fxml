@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -11,37 +10,28 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="main_back" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1101.0" styleClass="grey_back_noShadow" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.SuppliersBills">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-      <Pane layoutX="344.0" layoutY="8.0" prefHeight="52.0" prefWidth="300.0" styleClass="grey_wite_back">
+      <Pane layoutX="351.0" layoutY="6.0" prefHeight="52.0" prefWidth="300.0" styleClass="grey_wite_back">
          <children>
-            <Label alignment="CENTER" layoutX="13.0" layoutY="6.0" prefHeight="36.0" prefWidth="263.0" styleClass="textHeder2" text="الشحنات" />
+            <Label alignment="CENTER" layoutX="19.0" layoutY="7.0" prefHeight="38.0" prefWidth="262.0" styleClass="textHeder2" text="فواتير الشراء" />
          </children>
       </Pane>
-      <Label alignment="CENTER" layoutX="752.0" layoutY="87.0" prefHeight="39.0" prefWidth="197.0" styleClass="text_normal" text="حساب المورد :" />
-      <JFXTextField fx:id="txe_name" layoutX="503.0" layoutY="85.0" prefHeight="28.0" prefWidth="255.0" styleClass="textSearch" />
-      <TableView fx:id="table" layoutX="35.0" layoutY="150.0" prefHeight="374.0" prefWidth="938.0" styleClass="table">
+      <TableView fx:id="table" layoutX="4.0" layoutY="64.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="469.0" prefWidth="1094.0">
         <columns>
-          <TableColumn fx:id="col_paid" prefWidth="140.33333587646484" text="المدفوع" />
-          <TableColumn fx:id="col_rest" prefWidth="186.66666412353516" text="الباقى" />
-            <TableColumn fx:id="col_quantity" prefWidth="220.66665649414062" text="اجمالى تكلفة الشحنة" />
-            <TableColumn fx:id="col_all_quantity" prefWidth="247.33334350585938" text="اجمالى التكلفة بالموصلات" />
-            <TableColumn fx:id="col_date" minWidth="0.0" prefWidth="139.6666259765625" text="تاريخ الشحنة" />
+            <TableColumn fx:id="col_all_quantity" prefWidth="284.33329248428345" text="ملاحظات" />
+          <TableColumn fx:id="col_paid" prefWidth="196.66668701171875" text="المدفوع" />
+          <TableColumn fx:id="col_rest" prefWidth="150.0" text="الباقى" />
+            <TableColumn fx:id="col_quantity" prefWidth="154.6666259765625" text=" تكلفة الشحنة" />
+            <TableColumn fx:id="col_all_quantity1" prefWidth="146.0" text="المورد" />
+            <TableColumn fx:id="col_date" minWidth="0.0" prefWidth="97.333251953125" text="تاريخ الشحنة" />
+            <TableColumn fx:id="col_date1" minWidth="0.0" prefWidth="62.666748046875" text="م" />
         </columns>
       </TableView>
-      <JFXButton fx:id="btn_add" layoutX="400.0" layoutY="533.0" onAction="#btn_addclick" prefHeight="53.0" prefWidth="204.0" styleClass="button_Normal" text="اضافة شحنة" />
-      <ImageView fitHeight="46.0" fitWidth="59.0" layoutX="949.0" layoutY="12.0" onMouseClicked="#note_click" pickOnBounds="true" preserveRatio="true">
+      <JFXButton fx:id="btn_add" layoutX="369.0" layoutY="537.0" onAction="#btn_addclick" prefHeight="53.0" prefWidth="309.0" styleClass="button_Normal" text="اضافة شحنة" />
+      <ImageView fitHeight="46.0" fitWidth="59.0" layoutX="14.0" layoutY="12.0" onMouseClicked="#home_Click" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@img/001-edit.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <ImageView fitHeight="46.0" fitWidth="59.0" layoutX="27.0" layoutY="16.0" onMouseClicked="#home_Click" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@img/002-home.png" />
+            <Image url="@../res/left-arrow%20copy.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
