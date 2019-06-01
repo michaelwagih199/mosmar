@@ -248,7 +248,7 @@ public class CustomersController implements Initializable {
         table.getColumns().add(colBtn);
     }
 
-    //delete row
+
     private void addButtonModfyToTable() {
         TableColumn<Customers, Void> colBtn = new TableColumn();
 
