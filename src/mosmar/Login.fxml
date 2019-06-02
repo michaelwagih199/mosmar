@@ -9,7 +9,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="700.0" styleClass="Login_background" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.LoginController">
    <children>
-      <AnchorPane layoutX="195.0" layoutY="83.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="310.0" styleClass="back2">
+      <AnchorPane layoutX="195.0" layoutY="105.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="310.0" styleClass="back2">
          <children>
             <JFXButton fx:id="btnLogin" layoutX="33.0" layoutY="271.0" onAction="#loginClick" prefHeight="50.0" prefWidth="249.0" styleClass="button_Normal" text="دخول">
                <font>
@@ -29,6 +29,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="134.0" layoutY="14.0" prefHeight="62.0" prefWidth="433.0" styleClass="textHeder" text="محلات أشرف مسمار " />
+      <Label alignment="CENTER" layoutX="124.0" layoutY="14.0" prefHeight="50.0" prefWidth="470.0" styleClass="text5" text="محلات أشرف مسمار " />
+      <Label alignment="CENTER" layoutX="136.0" layoutY="551.0" prefHeight="42.0" prefWidth="440.0" styleClass="text5" text="Amigos for development" />
    </children>
 </AnchorPane>

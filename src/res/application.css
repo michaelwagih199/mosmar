@@ -131,9 +131,9 @@
   .textFeild {
     -fx-font-family: "Arial";
     -fx-font-size: 14pt;
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-prompt-text-fill: white;
-    -fx-background-color: #F0EEEF;
+    -fx-background-color: #959595;
 }
 
 .table{
@@ -150,20 +150,20 @@
 }
 
  .button:hover {
-    -fx-text-fill: #333335;
+    -fx-text-fill: #D10000;
 }
 
 .greubtn {
     -fx-font-size: 13pt;
     -fx-text-fill: white;
-    -fx-background-color: #696969;
+    -fx-background-color: #959595;
     -fx-font-family: "Arial";
     
 }
 
 .combobox {
     -fx-font-family: "Arial";
-     -fx-background-color: #F0EEEF;
+     -fx-background-color: #959595;
     -fx-font-size: 14pt;
     -fx-prompt-text-fill: #333335;
 }
@@ -185,4 +185,15 @@
     -fx-font-family: "Arial";
     -fx-font-size: 16pt;
     -fx-text-fill: white;
+}
+
+  .text5 {
+   -fx-background-color: #004E64;  
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
+    -fx-font-family: "Arial";
+    -fx-border-color: #ffffff;
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+    -fx-font-size: 16pt;
 }

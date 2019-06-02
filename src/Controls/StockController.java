@@ -146,6 +146,10 @@ public class StockController implements Initializable {
     private JFXButton btn_edit_product;
     @FXML
     private JFXButton btn_edit_product_number;
+    @FXML
+    private Label capitalWeight;
+    @FXML
+    private Label capitalWeightUnits;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -301,7 +305,6 @@ public class StockController implements Initializable {
     public void addProductListItems() {
         ObservableList<String> productNames = FXCollections.observableArrayList();
         productList.addAll(productDAO.getAllProducts());
-
         for (Products products : productList) {
             productNames.add(products.getProductName());
         }
@@ -322,10 +325,16 @@ public class StockController implements Initializable {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             try {
+                                subProductName.setText("");
+                                subProductId.setText("");
                                 Products data = getTableView().getItems().get(getIndex());
                                 mainProductName.setText(data.getProductName());
-                                mainProductId.setText(String.valueOf(data.getProductid()));
+                                mainProductId.setText(String.valueOf(data.getProductid()));                             
                                 paneMapping.setVisible(true);
+                                subProductName.setText(String.valueOf(productMappingDAO.getSubProduct(data.getProductid())));
+                                subProductId.setText(String.valueOf(productDAO.getProductId(subProductName.getText().toString()).get(0).getProductid()));
+                               
+                                
 
                             } catch (Exception e) {
                             }
@@ -635,7 +644,6 @@ public class StockController implements Initializable {
 
     @FXML
     private void selectItemList(MouseEvent event) {
-
         String mainProductNam = listProducts.getSelectionModel().getSelectedItem();
         subProductName.setText(mainProductNam);
         subProductId.setText(String.valueOf(productDAO.getProductId(mainProductNam).get(0).getProductid()));
@@ -651,7 +659,7 @@ public class StockController implements Initializable {
             data.setPartitionBuyPrice(Float.parseFloat(et_kata3y_price.getText().toString()));
             data.setPerchusePrice(Float.parseFloat(et_purchase_price.getText().toString()));
             data.setProductName(et_product_name.getText().toString());
-            data.setProductWeight(Float.parseFloat(et_purchase_price.getText().toString()));
+            data.setProductWeight(Float.parseFloat(et_product_weight.getText().toString()));
             data.setUnitsWeightInStock(Float.parseFloat(et_unitInStock.getText().toString()));
             productDAO.editProduct(data);
             table.refresh();

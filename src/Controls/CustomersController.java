@@ -41,11 +41,7 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 import org.controlsfx.control.textfield.TextFields;
 
-/**
- * FXML Controller class
- *
- * @author OM EL NOUR
- */
+
 public class CustomersController implements Initializable {
 
     @FXML

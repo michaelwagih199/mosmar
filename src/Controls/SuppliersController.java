@@ -337,10 +337,10 @@ public class SuppliersController implements Initializable {
                     private final Button btn = new Button("الحساب");
                     {                      
                         btn.setOnAction((ActionEvent event) -> {
-//                            txtCustomersPayment.setText("0");
-//                            lablRemainingCost.setText("0");
-//                            Customers data = getTableView().getItems().get(getIndex());
-//                            anchorPaid.setVisible(true);
+                            Suppliers data = getTableView().getItems().get(getIndex());
+                            txtCustomersPayment.setText("0");
+                            lablRemainingCost.setText("0");                          
+                            anchorPaid.setVisible(true);
 //                            customerAccountsCalc(data.getCustomerName(), data.getCustomerId());
 //                            txtCustomerId.setText(data.getCustomerId().toString());
 //                            loadtablePaymentData(data.getCustomerId());

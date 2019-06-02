@@ -158,7 +158,7 @@
                         <Separator layoutX="470.0" layoutY="388.0" prefHeight="6.0" prefWidth="502.0" />
                         <Label alignment="CENTER" layoutX="484.0" layoutY="394.0" prefHeight="31.0" prefWidth="232.0" styleClass="textHeder" text="Accounts Payable" />
                         <Label fx:id="txtAccountsPayable" alignment="CENTER" layoutX="489.0" layoutY="430.0" prefHeight="46.0" prefWidth="216.0" styleClass="text5" />
-                        <Label alignment="CENTER" layoutX="750.0" layoutY="396.0" prefHeight="31.0" prefWidth="232.0" styleClass="textHeder" text="Accounts Revenue" />
+                        <Label alignment="CENTER" layoutX="750.0" layoutY="396.0" prefHeight="31.0" prefWidth="232.0" styleClass="textHeder" text="Accounts Rec" />
                         <Label fx:id="txtAccountsRevenue" alignment="CENTER" layoutX="753.0" layoutY="432.0" prefHeight="46.0" prefWidth="216.0" styleClass="text5" />
                      </children></AnchorPane>
             </content>

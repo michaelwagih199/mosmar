@@ -6,14 +6,19 @@
 package Controls;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -40,6 +45,42 @@ public class SuppliersBills implements Initializable {
     private TableColumn<?, ?> col_date1;
     @FXML
     private JFXButton btn_add;
+    @FXML
+    private JFXTextField etSuppliersId;
+    @FXML
+    private JFXTextField etTotalBils;
+    @FXML
+    private JFXTextField etPaidBils;
+    @FXML
+    private JFXTextField etRemainig;
+    @FXML
+    private DatePicker bilsDate;
+    @FXML
+    private JFXTextArea etNotes;
+    @FXML
+    private TableView<?> tableProducts;
+    @FXML
+    private TableColumn<?, ?> col_productId;
+    @FXML
+    private TableColumn<?, ?> col_productName;
+    @FXML
+    private TableColumn<?, ?> colproductQuantity;
+    @FXML
+    private TableColumn<?, ?> colPrice;
+    @FXML
+    private TableColumn<?, ?> coltotal;
+    @FXML
+    private TableColumn<?, ?> colProducttype;
+    @FXML
+    private JFXTextField etProduct;
+    @FXML
+    private JFXTextField etQuantity;
+    @FXML
+    private JFXTextField etPrice;
+    @FXML
+    private JFXComboBox<?> comboCategory;
+    @FXML
+    private Pane paneAddBils;
 
     /**
      * Initializes the controller class.
@@ -55,6 +96,19 @@ public class SuppliersBills implements Initializable {
 
     @FXML
     private void home_Click(MouseEvent event) {
+    }
+
+    @FXML
+    private void btnClosePurchaseBils(MouseEvent event) {
+        paneAddBils.setVisible(false);
+    }
+
+    @FXML
+    private void addProductClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void btnSaveBilsClick(ActionEvent event) {
     }
     
 }

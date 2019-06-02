@@ -400,8 +400,10 @@ public class BuyController implements Initializable {
                 if (FxDialogs.showConfirm("احزر\n " + "يوجد فى المخزن" + "\n" + numberUnit + "\t" + "كجم\n",
                         "هل تريد تكملة البيع ؟", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
                     if (numberUnit <= Float.parseFloat(etQuantity.getText().toString())) {
+                        
                         FxDialogs.showWarning("احزر", "الكمية اقل من المخزن");
                     } else {
+                        
                         addGomlaProduct(product.getProductid(), product.getProductName());
                     }
                 }

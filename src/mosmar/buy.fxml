@@ -101,24 +101,27 @@
                   <Font size="20.0" />
                </font>
             </TextField>
-            <TextField fx:id="etDiscount" alignment="CENTER" layoutX="518.0" layoutY="28.0" onMouseClicked="#etDiscount_pressedMouse" opacity="0.9" prefHeight="32.0" prefWidth="108.0" styleClass="textFeild1" text="0">
+            <TextField fx:id="etDiscount" alignment="CENTER" layoutX="520.0" layoutY="28.0" onMouseClicked="#etDiscount_pressedMouse" opacity="0.9" prefHeight="32.0" prefWidth="108.0" styleClass="textFeild1" text="0">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
             <Label layoutX="631.0" layoutY="30.0" styleClass="textSearch" text="الخصم" />
-            <Label layoutX="484.0" layoutY="30.0" styleClass="textSearch" text="جنية" />
-            <JFXButton layoutX="21.0" layoutY="16.0" onAction="#btn_submit_buy" prefHeight="49.0" prefWidth="118.0" styleClass="mainButton" text="تأكيد">
+            <Label layoutX="485.0" layoutY="30.0" styleClass="textSearch" text="جنية" />
+            <JFXButton layoutX="9.0" layoutY="16.0" onAction="#btn_submit_buy" prefHeight="49.0" prefWidth="118.0" styleClass="mainButton" text="تأكيد">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></JFXButton>
-            <Label layoutX="333.0" layoutY="30.0" styleClass="textSearch" text="الاجمالى بعد الخصم" />
-            <TextField fx:id="etDiscount1" alignment="CENTER" disable="true" editable="false" layoutX="208.0" layoutY="26.0" opacity="0.9" prefHeight="26.0" prefWidth="118.0" styleClass="textFeild1" text="0">
+            <Label layoutX="307.0" layoutY="30.0" text="اجمالى المتبقى بعد الخصم">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
+            <TextField fx:id="etDiscount1" alignment="CENTER" disable="true" editable="false" layoutX="181.0" layoutY="26.0" opacity="0.9" prefHeight="26.0" prefWidth="118.0" styleClass="textFeild1" text="0">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
-            <Label layoutX="167.0" layoutY="29.0" styleClass="textSearch" text="جنية" />
+            <Label layoutX="143.0" layoutY="29.0" styleClass="textSearch" text="جنية" />
          </children></AnchorPane>
       <TableView fx:id="table" layoutX="253.0" layoutY="197.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="354.0" prefWidth="988.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="197.0">
         <columns>
