@@ -78,10 +78,10 @@ public class ProductNumbersDAO {
     }
 
     public void updateStock(float unitsInStock, int productId) {
-        
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
-        
+
         try {
             eman.getTransaction().begin();
             //"SELECT p FROM Productsnumber p WHERE p.unitsInStock = :unitsInStock"
@@ -97,6 +97,23 @@ public class ProductNumbersDAO {
             emf.close();
         }
 
+    }
+
+    public Double getUnitsCapital() {
+        Double result;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+            String sql = "SELECT SUM(p.unitsInStock * p.perchusenumberPrice) as Result FROM Productsnumber p";
+            Query query = eman.createQuery(sql);
+
+            result = (Double) query.getSingleResult();
+
+        } finally {
+            eman.close();
+            emf.close();
+        }
+        return result;
     }
 
 }

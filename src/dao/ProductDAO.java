@@ -2,6 +2,7 @@ package dao;
 
 import entities.Products;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -75,10 +76,10 @@ public class ProductDAO {
      * select list of product name
      *
      * @param ProductName
-     * @return 
+     * @return
      */
     public List<Products> getProductId(String ProductName) {
-        
+
         List<Products> cars = new ArrayList<Products>();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
@@ -98,8 +99,6 @@ public class ProductDAO {
 
         return cars;
     }
-
-    
 
     public Products getProductById(int Id) {
         return productsController.findProducts(Id);
@@ -127,6 +126,40 @@ public class ProductDAO {
 
     }
 
- 
+    public Double getUnitsCapital() {
+        Double result;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+            String sql = "SELECT SUM(p.unitsWeightInStock * p.perchusePrice) as Result FROM Products p";
+            Query query = eman.createQuery(sql);
+           
+            result = (Double) query.getSingleResult();
+
+        } finally {
+            eman.close();
+            emf.close();
+        }
+        return result;
+    }
+    
+     public List<String> getProductsName() {
+        List<String> cars = new ArrayList<String>();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+
+        try {
+
+            String sql = "SELECT p.productName FROM Products p";
+            Query query = eman.createQuery(sql);          
+            cars = query.getResultList();
+        } finally {
+
+            eman.close();
+            emf.close();
+        }
+
+        return cars;
+    }
 
 }

@@ -387,26 +387,26 @@ public class BuyController implements Initializable {
     }
 
     public void addProductforGomla() {
-
         List<Products> items = productDAO.getProductId(etProductName.getText().toString());
         for (Products product : items) {
-            float product_gomlaPrice = productDAO.getProductById(product.getProductid()).getGomlaBuyPrice();
             // check allow of items 
             if (usefullCalculas.isKG_allow(Float.parseFloat(etQuantity.getText().toString()), product.getProductid())) {
                 addGomlaProduct(product.getProductid(), product.getProductName());
             } else {
-
                 float numberUnit = productDAO.getProductById(product.getProductid()).getUnitsWeightInStock();
+                
                 if (FxDialogs.showConfirm("احزر\n " + "يوجد فى المخزن" + "\n" + numberUnit + "\t" + "كجم\n",
                         "هل تريد تكملة البيع ؟", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
-                    if (numberUnit <= Float.parseFloat(etQuantity.getText().toString())) {
-                        
+                    
+                    if (numberUnit <= Float.parseFloat(etQuantity.getText().toString()) ) {
+                       
                         FxDialogs.showWarning("احزر", "الكمية اقل من المخزن");
-                    } else {
                         
+                    } else {
                         addGomlaProduct(product.getProductid(), product.getProductName());
                     }
                 }
+
             }
         }
         loadTabData();
@@ -581,23 +581,22 @@ public class BuyController implements Initializable {
         String knownUsFrom = compoFunctionType.getSelectionModel().getSelectedItem().toString();
         float product_gomlaPrice = productDAO.getProductById(productId).getGomlaBuyPrice();
         // check allow of items 
-        if (usefullCalculas.isKG_allow(Float.parseFloat(etQuantity.getText().toString()), productId)) {
-            float total = product_gomlaPrice * Float.parseFloat(etQuantity.getText().toString());
-            row.add(new custom_BuyTable(productId,
-                    productName,
-                    Float.parseFloat(etQuantity.getText().toString()),
-                    product_gomlaPrice,
-                    total));
-            totalCounter += total;
-            txtTotal.setText(String.valueOf(df.format(totalCounter)));
-            //new 
-            if (knownUsFrom.equals("آجل")) {
-                et_remaining.setText(String.valueOf(df.format(totalCounter)));
-            } else if (knownUsFrom.equals("نقدى")) {
-                et_paid_up.setText(String.valueOf(df.format(totalCounter)));
-            }
-            etDiscount1.setText(String.valueOf(df.format(totalCounter)));
+        float total = product_gomlaPrice * Float.parseFloat(etQuantity.getText().toString());
+        row.add(new custom_BuyTable(productId,
+                productName,
+                Float.parseFloat(etQuantity.getText().toString()),
+                product_gomlaPrice,
+                total));
+        totalCounter += total;
+        txtTotal.setText(String.valueOf(df.format(totalCounter)));
+        //new 
+        if (knownUsFrom.equals("آجل")) {
+            et_remaining.setText(String.valueOf(df.format(totalCounter)));
+        } else if (knownUsFrom.equals("نقدى")) {
+            et_paid_up.setText(String.valueOf(df.format(totalCounter)));
         }
+        etDiscount1.setText(String.valueOf(df.format(totalCounter)));
+
     }
 
     public void addSubGomlaProduct(int productId, String productName) {
@@ -760,18 +759,6 @@ public class BuyController implements Initializable {
         etClientName.setText("");
     }
 
-    /**
-     *
-     * @return all product name
-     */
-    public ArrayList<String> getAllProductName() {
-
-        ArrayList<String> result = new ArrayList<String>();
-        for (Products o : productDAO.getAllProducts()) {
-            result.add(o.getProductName());
-        }
-        return result;
-    }
 
     /**
      *
@@ -933,7 +920,7 @@ public class BuyController implements Initializable {
         
         String knownUsFrom = compo_product_Type.getSelectionModel().getSelectedItem().toString();
         if (knownUsFrom.equals("منتجات بكجم")) {
-            TextFields.bindAutoCompletion(etProductName, getAllProductName());
+            TextFields.bindAutoCompletion(etProductName, productDAO.getProductsName());
             categoryId = 1;
         } else {
             TextFields.bindAutoCompletion(etProductName, getAllProductNumberName());

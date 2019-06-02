@@ -3,9 +3,11 @@ package Controls;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+
 import dao.ProductDAO;
 import dao.ProductMappingDAO;
 import dao.ProductNumbersDAO;
+import entities.Expenses;
 import entities.Productmappping;
 import entities.Products;
 import entities.Productsnumber;
@@ -14,6 +16,7 @@ import helper.Helper;
 import helper.UsefulCalculas;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -121,11 +124,7 @@ public class StockController implements Initializable {
     @FXML
     private Label mainProductName;
     @FXML
-    private Label mainProductId;
-    @FXML
-    private Label subProductName;
-    @FXML
-    private Label subProductId;
+    private Label mainProductId;  
     @FXML
     private TableView<Productsnumber> tableNumber;
     @FXML
@@ -148,18 +147,34 @@ public class StockController implements Initializable {
     private JFXButton btn_edit_product_number;
     @FXML
     private Label capitalWeight;
+  
+    DecimalFormat df = new DecimalFormat("#.###");
     @FXML
-    private Label capitalWeightUnits;
-
+    private Label capitalUnits;
+    @FXML
+    private TableView<?> subTable;
+    @FXML
+    private TableColumn<?, ?> colSup1;
+    @FXML
+    private TableColumn<?, ?> colSub2;
+    @FXML
+    private TableColumn<?, ?> colSub3;
+    @FXML
+    private TableColumn<?, ?> colSub4;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         loadTabData();
         addButtonDeleteToTable();
         addButtonUbdateToTable();
+       // updateStatusColor();
         addProductListItems();
         addButtonProductMapppingToTable();
         compoCategory.getItems().addAll("منتجات بكجم");
-        compoCategory.getItems().addAll("منتجات بالوحدة");
+        compoCategory.getItems().addAll("منتجات بالوحدة");       
+        calcCapital();
+        
     }
 
     @FXML
@@ -220,11 +235,9 @@ public class StockController implements Initializable {
                 final TableCell<Products, Void> cell = new TableCell<Products, Void>() {
 
                     private final Button btn = new Button("مسح");
-
                     {
-
                         btn.setOnAction((ActionEvent event) -> {
-
+                            
                             if (FxDialogs.showConfirm("مسح المنتج", "هل تريد مسح المنتج?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
                                 Products data = getTableView().getItems().get(getIndex());
                                 try {
@@ -233,11 +246,10 @@ public class StockController implements Initializable {
                                 } catch (Exception ex) {
                                     Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
-
                             }
                         });
                     }
-
+                    
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -325,14 +337,14 @@ public class StockController implements Initializable {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             try {
-                                subProductName.setText("");
-                                subProductId.setText("");
+                             
+                             
                                 Products data = getTableView().getItems().get(getIndex());
                                 mainProductName.setText(data.getProductName());
                                 mainProductId.setText(String.valueOf(data.getProductid()));                             
                                 paneMapping.setVisible(true);
-                                subProductName.setText(String.valueOf(productMappingDAO.getSubProduct(data.getProductid())));
-                                subProductId.setText(String.valueOf(productDAO.getProductId(subProductName.getText().toString()).get(0).getProductid()));
+                              
+                             
                                
                                 
 
@@ -364,6 +376,7 @@ public class StockController implements Initializable {
     }
 
     private void addButtonUbdateToTable() {
+        
         TableColumn<Products, Void> colBtn = new TableColumn();
 
         Callback<TableColumn<Products, Void>, TableCell<Products, Void>> cellFactory;
@@ -398,7 +411,6 @@ public class StockController implements Initializable {
                             }
                         });
                     }
-
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -407,7 +419,6 @@ public class StockController implements Initializable {
                         } else {
                             btn.getStyleClass().add("button_Small");
                             setGraphic(btn);
-
                         }
                     }
                 };
@@ -529,33 +540,34 @@ public class StockController implements Initializable {
     }
 
     public void updateStatusColor() {
-        col_unitInStock.setCellFactory(column -> {
-            return new TableCell<Products, Float>() {
-                @Override
-                protected void updateItem(Float item, boolean empty) {
-                    super.updateItem(item, empty);
+        
+        col_unitInStock.setCellFactory(new Callback<TableColumn<Products, Float>, TableCell<Products, Float>>() {
+            @Override
+            public TableCell<Products, Float> call(TableColumn<Products, Float> param) {
+                return new TableCell<Products, Float>() {
 
-                    setText(empty ? "" : getItem().toString());
-                    setGraphic(null);
+                    @Override
+                    protected void updateItem(Float item, boolean empty) {
+                        super.updateItem(item, empty);
 
-                    TableRow<Products> currentRow = getTableRow();
+                        if (!empty) {
+                            Products p = new Products();
 
-                    if (!isEmpty()) {
-                        for (Products o : productDAO.getAllProducts()) {
-                            if (Float.compare(o.getUnitsWeightInStock(), o.getAllertWeight()) == 0) {
-                                currentRow.setStyle("-fx-background-color:#FC0000");
+                            if (p.getAllertWeight()<5) {
+                                 setStyle("-fx-background-color: #06FF00");
                             } else {
-                                currentRow.setStyle("-fx-background-color:#57B846");
+                               setStyle("-fx-background-color: #720000");
                             }
 
+                        } else {
+                            setText(null);
                         }
-
                     }
-                }
-            };
+                };
+            }
         });
-
     }
+    
 
     @FXML
     private void compoCategoryClick(ActionEvent event) {
@@ -578,6 +590,7 @@ public class StockController implements Initializable {
     private void btn_add_product_click_number(ActionEvent event) {
         // insert data to products 
         try {
+            
             Productsnumber productsnumber = new Productsnumber();
             productsnumber.setProductnumberName(et_product_nameNumber.getText().toString());
             productsnumber.setPerchusenumberPrice(Float.parseFloat(et_purchase_priceNumber.getText().toString()));
@@ -630,11 +643,9 @@ public class StockController implements Initializable {
     private void btnMappingSave(ActionEvent event) throws Exception {
         Productmappping productMapping = new Productmappping();
         try {
-
-            productMapping.setProductmainId(Integer.parseInt(mainProductId.getText().toString()));
-            productMapping.setSubProductId(Integer.parseInt(subProductId.getText().toString()));
-            productMappingDAO.addProductmappping(productMapping);
-
+            
+        
+            
         } catch (Exception e) {
 
         }
@@ -644,9 +655,8 @@ public class StockController implements Initializable {
 
     @FXML
     private void selectItemList(MouseEvent event) {
+        
         String mainProductNam = listProducts.getSelectionModel().getSelectedItem();
-        subProductName.setText(mainProductNam);
-        subProductId.setText(String.valueOf(productDAO.getProductId(mainProductNam).get(0).getProductid()));
 
     }
 
@@ -689,5 +699,19 @@ public class StockController implements Initializable {
         
     }
     
-   
+   /**
+    * helper methods
+    */
+    public void calcCapital(){
+        try {
+            capitalWeight.setText(df.format(productDAO.getUnitsCapital()));
+            capitalUnits.setText(df.format(productNumbersDAO.getUnitsCapital()));
+            
+        } catch (Exception e) {
+        }
+    }
+      
+    
+  
+    
 }

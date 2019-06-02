@@ -27,6 +27,20 @@
     -fx-font-family: "Arial";
 }
 
+.button_green {
+    -fx-font-size: 9pt;
+    -fx-text-fill: white;
+    -fx-background-color: greenyellow;
+    -fx-font-family: "Arial";
+}
+
+.button_red {
+    -fx-font-size: 9pt;
+    -fx-text-fill: white;
+    -fx-background-color: red;
+    -fx-font-family: "Arial";
+}
+
 
 .grey_back{
     -fx-background-color: #696969;  
