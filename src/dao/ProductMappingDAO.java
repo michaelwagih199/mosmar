@@ -32,7 +32,7 @@ public class ProductMappingDAO {
         productmapppingJpaController.edit(productmappping);
     }
     
-    public void removeProductmappping(int id) throws Exception {
+ public void removeProductmappping(int id) throws Exception {
         productmapppingJpaController.destroy(id);
     }
     
@@ -46,17 +46,15 @@ public class ProductMappingDAO {
         return productmapppingJpaController.findProductmappping(Id);
     }
     
-     public String getSubProduct(int productmainId) {
-
+     public String getSubProduct1(int productmainId) {
         List<String> cars = new ArrayList<String>();
         String result;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
-
         try {
-            //SELECT o FROM Orders o WHERE o.customerId = :customerId
+            //SELECT p.ProductName from Products p JOIN Productmappping pm ON p.Product_id = pm.subProductId_1 WHERE pm.productmainId = 39
             String sql = "SELECT p.productName from Products p JOIN Productmappping pm "
-                    + "ON p.productid = pm.subProductId WHERE pm.productmainId = :productmainId";
+                    + "ON p.productid = pm.subProductId1 WHERE pm.productmainId = :productmainId";
             Query query = eman.createQuery(sql);
             query.setParameter("productmainId", productmainId);
             cars = query.getResultList();
@@ -68,5 +66,88 @@ public class ProductMappingDAO {
         }
         return result;
     }
-    
+    public String getSubProduct2(int productmainId) {
+        List<String> cars = new ArrayList<String>();
+        String result;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+            //SELECT p.ProductName from Products p JOIN Productmappping pm ON p.Product_id = pm.subProductId_1 WHERE pm.productmainId = 39
+            String sql = "SELECT p.productName from Products p JOIN Productmappping pm "
+                    + "ON p.productid = pm.subProduct2 WHERE pm.productmainId = :productmainId";
+            Query query = eman.createQuery(sql);
+            query.setParameter("productmainId", productmainId);
+            cars = query.getResultList();
+            result = cars.get(0);
+        } finally {
+
+            eman.close();
+            emf.close();
+        }
+        return result;
+    }
+     public String getSubProduct3(int productmainId) {
+        List<String> cars = new ArrayList<String>();
+        String result;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+            //SELECT p.ProductName from Products p JOIN Productmappping pm ON p.Product_id = pm.subProductId_1 WHERE pm.productmainId = 39
+            String sql = "SELECT p.productName from Products p JOIN Productmappping pm "
+                    + "ON p.productid = pm.subProduct3 WHERE pm.productmainId = :productmainId";
+            Query query = eman.createQuery(sql);
+            query.setParameter("productmainId", productmainId);
+            cars = query.getResultList();
+            result = cars.get(0);
+        } finally {
+
+            eman.close();
+            emf.close();
+        }
+        return result;
+    }
+     
+     public String getSubProduct4(int productmainId) {
+        List<String> cars = new ArrayList<String>();
+        String result;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+            //SELECT p.ProductName from Products p JOIN Productmappping pm ON p.Product_id = pm.subProductId_1 WHERE pm.productmainId = 39
+            String sql = "SELECT p.productName from Products p JOIN Productmappping pm "
+                    + "ON p.productid = pm.subProduct4 WHERE pm.productmainId = :productmainId";
+            Query query = eman.createQuery(sql);
+            query.setParameter("productmainId", productmainId);
+            cars = query.getResultList();
+            result = cars.get(0);
+        } finally {
+
+            eman.close();
+            emf.close();
+        }
+        return result;
+    }
+     
+     public int getIdFromMain(int productmainId) {
+        List<Integer> cars = new ArrayList<Integer>();
+        int result;
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+
+            String sql = "SELECT p.productMappingId from Productmappping p WHERE p.productmainId = :productmainId";                
+            Query query = eman.createQuery(sql);
+            query.setParameter("productmainId", productmainId);
+            cars = query.getResultList();
+            result = cars.get(0);
+            
+        } finally {
+            eman.close();
+            emf.close();
+        }
+        return result;
+    }
+     
+     
 }

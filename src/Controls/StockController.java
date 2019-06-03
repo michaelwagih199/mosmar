@@ -8,6 +8,7 @@ import dao.ProductDAO;
 import dao.ProductMappingDAO;
 import dao.ProductNumbersDAO;
 import entities.Expenses;
+
 import entities.Productmappping;
 import entities.Products;
 import entities.Productsnumber;
@@ -81,6 +82,7 @@ public class StockController implements Initializable {
     ProductMappingDAO productMappingDAO = new ProductMappingDAO();
 
     private final ObservableList<Products> productList = FXCollections.observableArrayList();
+  
     private final ProductDAO productDAO = new ProductDAO();
     ProductNumbersDAO productNumbersDAO = new ProductNumbersDAO();
     Products data;
@@ -152,15 +154,24 @@ public class StockController implements Initializable {
     @FXML
     private Label capitalUnits;
     @FXML
-    private TableView<?> subTable;
+    private Label subId1;
     @FXML
-    private TableColumn<?, ?> colSup1;
+    private Label subId2;
     @FXML
-    private TableColumn<?, ?> colSub2;
+    private Label subId3;
     @FXML
-    private TableColumn<?, ?> colSub3;
+    private Label subId4;
     @FXML
-    private TableColumn<?, ?> colSub4;
+    private Label lP1;
+    @FXML
+    private Label lP2;
+    @FXML
+    private Label lP3;
+    @FXML
+    private Label lp4;
+    private Label index;
+    @FXML
+    private Label lableIndex;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -174,6 +185,8 @@ public class StockController implements Initializable {
         compoCategory.getItems().addAll("منتجات بكجم");
         compoCategory.getItems().addAll("منتجات بالوحدة");       
         calcCapital();
+        
+    
         
     }
 
@@ -337,17 +350,20 @@ public class StockController implements Initializable {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             try {
-                             
-                             
-                                Products data = getTableView().getItems().get(getIndex());
-                                mainProductName.setText(data.getProductName());
-                                mainProductId.setText(String.valueOf(data.getProductid()));                             
-                                paneMapping.setVisible(true);
-                              
-                             
-                               
+                                clearMapping();
                                 
-
+                                Products data = getTableView().getItems().get(getIndex());
+                              
+                                mainProductName.setText(data.getProductName());
+                                mainProductId.setText(String.valueOf(data.getProductid()));  
+                                paneMapping.setVisible(true);
+                                
+                                lP1.setText(productMappingDAO.getSubProduct1(data.getProductid()));
+                                lP2.setText(productMappingDAO.getSubProduct2(data.getProductid()));
+                                lP3.setText(productMappingDAO.getSubProduct3(data.getProductid()));
+                                lp4.setText(productMappingDAO.getSubProduct3(data.getProductid()));
+                                
+                               lableIndex.setText(String.valueOf(productMappingDAO.getIdFromMain(data.getProductid())));
                             } catch (Exception e) {
                             }
 
@@ -642,21 +658,47 @@ public class StockController implements Initializable {
     @FXML
     private void btnMappingSave(ActionEvent event) throws Exception {
         Productmappping productMapping = new Productmappping();
-        try {
-            
-        
-            
-        } catch (Exception e) {
-
+        productMapping.setProductmainId(Integer.parseInt(mainProductId.getText().toString()));
+        if (subId1.getText().toString() == "") {
+            subId1.setText("0");
         }
-        paneMapping.setVisible(false);
+        productMapping.setSubProductId1(Integer.parseInt(subId1.getText().toString()));
+         if (subId2.getText().toString() == "") {
+            subId2.setText("0");
+        }
+        productMapping.setSubProduct2(Integer.parseInt(subId2.getText().toString()));
+         if (subId3.getText().toString() == "") {
+            subId3.setText("0");
+        }
+         
+        productMapping.setSubProduct3(Integer.parseInt(subId3.getText().toString()));
+         if (subId4.getText().toString() == "") {
+            subId4.setText("0");
+        }
+        productMapping.setSubProduct4(Integer.parseInt(subId4.getText().toString()));
+        productMappingDAO.addProductmappping(productMapping);
 
+        // paneMapping.setVisible(false);
+        //clearMapping();
     }
 
     @FXML
     private void selectItemList(MouseEvent event) {
         
         String mainProductNam = listProducts.getSelectionModel().getSelectedItem();
+        if (subId1.getText().toString().isEmpty()) {
+             subId1.setText(String.valueOf(productDAO.getProductId(mainProductNam).get(0).getProductid()));
+             lP1.setText(mainProductNam);
+        }else if (subId2.getText().toString().isEmpty()) {
+           subId2.setText(String.valueOf(productDAO.getProductId(mainProductNam).get(0).getProductid())); 
+           lP2.setText(mainProductNam);
+        }else if (subId3.getText().toString().isEmpty()) {
+            subId3.setText(String.valueOf(productDAO.getProductId(mainProductNam).get(0).getProductid()));
+            lP3.setText(mainProductNam);
+        }else if (subId4.getText().toString().isEmpty()) {
+            subId4.setText(String.valueOf(productDAO.getProductId(mainProductNam).get(0).getProductid())); 
+            lp4.setText(mainProductNam);
+        }
 
     }
 
@@ -710,8 +752,30 @@ public class StockController implements Initializable {
         } catch (Exception e) {
         }
     }
-      
     
+    
+    public void clearMapping() {       
+        subId1.setText("");
+        subId2.setText("");
+        subId3.setText("");
+        subId4.setText("");
+        lP1.setText("");
+        lP2.setText("");
+        lP3.setText("");
+        lp4.setText("");
+        
+    }
+
+    @FXML
+    private void btnMappingDelete(ActionEvent event) throws Exception {
+        try {
+            productMappingDAO.removeProductmappping(Integer.parseInt(lableIndex.getText().toString()));
+            clearMapping();
+            paneMapping.setVisible(false);
+        } catch (Exception e) {
+        }
+
+    }
   
     
 }

@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,18 +28,28 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Productmappping.findAll", query = "SELECT p FROM Productmappping p")
     , @NamedQuery(name = "Productmappping.findByProductMappingId", query = "SELECT p FROM Productmappping p WHERE p.productMappingId = :productMappingId")
     , @NamedQuery(name = "Productmappping.findByProductmainId", query = "SELECT p FROM Productmappping p WHERE p.productmainId = :productmainId")
-    , @NamedQuery(name = "Productmappping.findBySubProductId", query = "SELECT p FROM Productmappping p WHERE p.subProductId = :subProductId")})
+    , @NamedQuery(name = "Productmappping.findBySubProductId1", query = "SELECT p FROM Productmappping p WHERE p.subProductId1 = :subProductId1")
+    , @NamedQuery(name = "Productmappping.findBySubProduct2", query = "SELECT p FROM Productmappping p WHERE p.subProduct2 = :subProduct2")
+    , @NamedQuery(name = "Productmappping.findBySubProduct3", query = "SELECT p FROM Productmappping p WHERE p.subProduct3 = :subProduct3")
+    , @NamedQuery(name = "Productmappping.findBySubProduct4", query = "SELECT p FROM Productmappping p WHERE p.subProduct4 = :subProduct4")})
 public class Productmappping implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "productMappingId")
     private Integer productMappingId;
     @Column(name = "productmainId")
     private Integer productmainId;
-    @Column(name = "subProductId")
-    private Integer subProductId;
+    @Column(name = "subProductId_1")
+    private Integer subProductId1;
+    @Column(name = "subProduct_2")
+    private Integer subProduct2;
+    @Column(name = "subProduct_3")
+    private Integer subProduct3;
+    @Column(name = "subProduct_4")
+    private Integer subProduct4;
 
     public Productmappping() {
     }
@@ -62,12 +74,36 @@ public class Productmappping implements Serializable {
         this.productmainId = productmainId;
     }
 
-    public Integer getSubProductId() {
-        return subProductId;
+    public Integer getSubProductId1() {
+        return subProductId1;
     }
 
-    public void setSubProductId(Integer subProductId) {
-        this.subProductId = subProductId;
+    public void setSubProductId1(Integer subProductId1) {
+        this.subProductId1 = subProductId1;
+    }
+
+    public Integer getSubProduct2() {
+        return subProduct2;
+    }
+
+    public void setSubProduct2(Integer subProduct2) {
+        this.subProduct2 = subProduct2;
+    }
+
+    public Integer getSubProduct3() {
+        return subProduct3;
+    }
+
+    public void setSubProduct3(Integer subProduct3) {
+        this.subProduct3 = subProduct3;
+    }
+
+    public Integer getSubProduct4() {
+        return subProduct4;
+    }
+
+    public void setSubProduct4(Integer subProduct4) {
+        this.subProduct4 = subProduct4;
     }
 
     @Override

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
@@ -39,7 +40,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <TextField fx:id="etProductName" alignment="CENTER" layoutX="906.0" layoutY="82.0" onKeyPressed="#etProductNameKeyClick" onMouseClicked="#etProductNameMouseClick" opacity="0.9" prefHeight="32.0" prefWidth="235.0" promptText="اسم الصنف" styleClass="textFeild1">
+            <TextField fx:id="etProductName" alignment="CENTER" layoutX="906.0" layoutY="82.0" opacity="0.9" prefHeight="32.0" prefWidth="235.0" promptText="اسم الصنف" styleClass="textFeild1">
                <font>
                   <Font size="20.0" />
                </font>
@@ -63,23 +64,8 @@
                   <Font size="20.0" />
                </font>
             </TextField>
-            <Label layoutX="1168.0" layoutY="150.0" styleClass="textSearch" text="الملحق" />
             <Separator layoutX="137.0" layoutY="138.0" prefHeight="5.0" prefWidth="1087.0" />
-            <Label layoutX="855.0" layoutY="152.0" styleClass="textSearch" text="الكمية" />
-            <TextField fx:id="et_sub_quantity" alignment="CENTER" layoutX="725.0" layoutY="148.0" prefHeight="37.0" prefWidth="118.0" styleClass="text5">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </TextField>
-            <Label fx:id="txt_subProduct" alignment="CENTER" layoutX="908.0" layoutY="147.0" onMouseClicked="#sub_product" prefHeight="37.0" prefWidth="243.0" styleClass="text5">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Label>
-            <JFXButton layoutX="603.0" layoutY="147.0" onAction="#btnAddSubProductClick" prefHeight="31.0" prefWidth="102.0" styleClass="Button4" text="اضافة">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
+            <JFXButton layoutX="989.0" layoutY="148.0" onAction="#subProductsClick" prefHeight="37.0" prefWidth="167.0" styleClass="text5" text="الملحقات" />
          </children></AnchorPane>
       <AnchorPane layoutY="556.0" prefHeight="72.0" prefWidth="1229.0" styleClass="Four_back" stylesheets="@../res/application2.css" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
@@ -136,5 +122,29 @@
       <Label layoutX="77.0" layoutY="379.0" styleClass="textSearch" text="نوع البيع" />
       <JFXComboBox fx:id="compo_product_Type" layoutX="8.0" layoutY="306.0" onAction="#compo_product_Type_click" prefHeight="58.0" prefWidth="218.0" promptText="تصنيف المنتج" styleClass="combobox_user" />
       <Label layoutX="62.0" layoutY="271.0" prefHeight="26.0" prefWidth="102.0" styleClass="textSearch" text="تصنيف المنتج" />
+      <AnchorPane fx:id="anchorSubCategory" layoutX="810.0" layoutY="196.0" prefHeight="298.0" prefWidth="403.0" styleClass="text5" visible="false">
+         <children>
+            <ImageView fitHeight="26.0" fitWidth="30.0" layoutX="6.0" layoutY="5.0" onMouseClicked="#closeMaping" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/close2.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="subCategory1" alignment="CENTER" layoutX="134.0" layoutY="44.0" prefHeight="31.0" prefWidth="263.0" styleClass="text_normal" text="Label" />
+            <TextField fx:id="etSubQuantity1" layoutX="55.0" layoutY="44.0" prefHeight="32.0" prefWidth="71.0" />
+            <JFXButton layoutX="113.0" layoutY="246.0" onAction="#addSub1Click" prefHeight="40.0" prefWidth="167.0" styleClass="Button4" text="اضافة" />
+            <Label fx:id="subCategory2" alignment="CENTER" layoutX="135.0" layoutY="94.0" prefHeight="31.0" prefWidth="263.0" styleClass="text_normal" text="Label" />
+            <TextField fx:id="etSubQuantity2" layoutX="53.0" layoutY="94.0" prefHeight="32.0" prefWidth="74.0" />
+            <Label fx:id="subCategory3" alignment="CENTER" layoutX="128.0" layoutY="143.0" prefHeight="31.0" prefWidth="270.0" styleClass="text_normal" text="Label" />
+            <TextField fx:id="etSubQuantity3" layoutX="53.0" layoutY="143.0" prefHeight="32.0" prefWidth="74.0" />
+            <Label fx:id="subCategory4" alignment="CENTER" layoutX="135.0" layoutY="191.0" prefHeight="31.0" prefWidth="263.0" styleClass="text_normal" text="Label" />
+            <TextField fx:id="etSubQuantity4" layoutX="53.0" layoutY="191.0" prefHeight="32.0" prefWidth="74.0" />
+            <Label alignment="CENTER" layoutX="229.0" layoutY="10.0" prefHeight="15.0" prefWidth="102.0" styleClass="text_normal" text="الاسم" />
+            <Label alignment="CENTER" layoutX="46.0" layoutY="8.0" prefHeight="25.0" prefWidth="39.0" styleClass="text_normal" text="الكمية" />
+            <JFXCheckBox fx:id="check1" layoutX="8.0" layoutY="50.0" onAction="#check1click" prefHeight="20.0" prefWidth="26.0" text="1" textFill="WHITE" unCheckedColor="#ffa100" />
+            <JFXCheckBox fx:id="check2" layoutX="8.0" layoutY="100.0" onAction="#check2click" prefHeight="20.0" prefWidth="26.0" text="2" textFill="WHITE" unCheckedColor="#ffc100" />
+            <JFXCheckBox fx:id="check3" layoutX="8.0" layoutY="149.0" onAction="#check3Click" prefHeight="20.0" prefWidth="26.0" text="3" textFill="WHITE" unCheckedColor="#ffae00" />
+            <JFXCheckBox fx:id="check4" layoutX="8.0" layoutY="197.0" onAction="#check4Click" prefHeight="20.0" prefWidth="26.0" text="4" textFill="WHITE" unCheckedColor="#ff9900" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
