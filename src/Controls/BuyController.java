@@ -18,6 +18,9 @@ import helper.UsefulCalculas;
 import helper.UsefulCalculasNumberProduct;
 import java.io.IOException;
 import java.net.URL;
+import static java.nio.file.Files.lines;
+import static java.nio.file.Files.lines;
+import static java.nio.file.Files.lines;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +30,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -195,14 +199,13 @@ public class BuyController implements Initializable {
                         Float.parseFloat(et_remaining.getText().toString()),
                         "notes",
                         Float.parseFloat(etDiscount.getText().toString()));
-
                 //ubdate stock
                 if (compo_productType.equals("منتجات بكجم")) {
                     UpdateStock();
                 } else if (compo_productType.equals("منتجات بالوحدة")) {
                     UpdateNumberStock();
                 }
-
+                
                 FxDialogs.showInformation("نجاح العملية", "تم توريد الطلب بنجاح");
             }
         } catch (Exception e) {
@@ -1047,11 +1050,23 @@ public class BuyController implements Initializable {
      *
      * @return all product name
      */
-    public ArrayList<String> getAllProductNumberName() {
+    public ArrayList<String> getAllProductNumberName(String start) {
         ArrayList<String> result = new ArrayList<String>();
         for (Productsnumber o : productNumbersDAO.getAllProductsnumber()) {
-            result.add(o.getProductnumberName());
+           result.add(o.getProductnumberName());
         }
+        return result;
+    }
+     /**
+     *
+     * @return all product name
+     */
+    public List<String> getAllProductrName(String start) {
+        ArrayList<String> result = new ArrayList<String>();
+        for (Products o : productDAO.getAllProducts()) {
+           result.add(o.getProductName());
+        }
+
         return result;
     }
 
@@ -1062,6 +1077,7 @@ public class BuyController implements Initializable {
     public ArrayList<String> getAllCustomerName() {
         ArrayList<String> result = new ArrayList<String>();
         for (Customers o : customerDAO.getAllCustomer()) {
+            
             result.add(o.getCustomerName());
         }
         return result;
@@ -1199,13 +1215,14 @@ public class BuyController implements Initializable {
 
     @FXML
     private void compo_product_Type_click(ActionEvent event) {
-
+       
         String knownUsFrom = compo_product_Type.getSelectionModel().getSelectedItem().toString();
         if (knownUsFrom.equals("منتجات بكجم")) {
-            TextFields.bindAutoCompletion(etProductName, productDAO.getProductsName());
+            
+            TextFields.bindAutoCompletion(etProductName , getAllProductrName(etProductName.getText().toString()));
             categoryId = 1;
         } else {
-            TextFields.bindAutoCompletion(etProductName, getAllProductNumberName());
+            TextFields.bindAutoCompletion(etProductName , getAllProductNumberName(etProductName.getText().toString()));
             categoryId = 2;
         }
 
@@ -1285,5 +1302,6 @@ public class BuyController implements Initializable {
     private void check4Click(ActionEvent event) {
         hm.put("4", 4);
     }
-
+    
+    
 }//end the meracle class

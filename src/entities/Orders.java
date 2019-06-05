@@ -6,6 +6,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -37,6 +39,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Orders.findByOrderDate", query = "SELECT o FROM Orders o WHERE o.orderDate = :orderDate")})
 public class Orders implements Serializable {
 
+    @Column(name = "time")
+    @Temporal(TemporalType.TIME)
+    private Date time;
     @Column(name = "categoryId")
     private Integer categoryId;
 
@@ -156,6 +161,14 @@ public class Orders implements Serializable {
 
     public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
     }
     
 }

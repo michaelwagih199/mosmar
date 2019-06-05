@@ -16,6 +16,7 @@ import helper.FxDialogs;
 import helper.Helper;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Time;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -102,6 +103,11 @@ public class AcountsCenterController implements Initializable {
     @FXML
     private TableColumn<Custom_OrderDetails, String> colProductType;
     @FXML
+    private TableColumn<custom_orders, Date> col_orderTime;
+    
+     @FXML
+    private TableColumn<Custom_OrderDetails, Integer> col_ID_orderDetails;
+    @FXML
     private Label lableOrderDetailId;
     @FXML
     private Pane pane_addPaid;
@@ -142,6 +148,10 @@ public class AcountsCenterController implements Initializable {
     private Label txtAccountsPayable;
     @FXML
     private Label txtAccountsRevenue;
+    @FXML
+    private Label orderType;
+   
+
 
 
     @Override
@@ -180,6 +190,7 @@ public class AcountsCenterController implements Initializable {
         orderEndDate.setConverter(converter);
         orderEndDate.setPromptText(pattern.toLowerCase());
         addButtonDeleteToTable();
+        addRebuy();
     }
 
     @FXML
@@ -198,12 +209,14 @@ public class AcountsCenterController implements Initializable {
         col_discount.setCellValueFactory(new PropertyValueFactory<>("orderDiscount"));
         col_orderType.setCellValueFactory(new PropertyValueFactory<>("orderType"));
         colProductType.setCellValueFactory(new PropertyValueFactory<>("productType"));
+        col_orderTime.setCellValueFactory(new PropertyValueFactory<>("time"));
         formateDate();
         // row.addAll(orderDAO.getOrderByDate());
         orderTable.setItems(row);
     }
 
     public void loadorderDetailTabData() throws ParseException {
+        col_ID_orderDetails.setCellValueFactory(new PropertyValueFactory<>("id"));
         col_productName_orderDetails.setCellValueFactory(new PropertyValueFactory<>("ProductName"));
         col_price_orderDetail.setCellValueFactory(new PropertyValueFactory<>("price"));
         col_quantity_orderDetail.setCellValueFactory(new PropertyValueFactory<>("quantity"));
@@ -245,6 +258,23 @@ public class AcountsCenterController implements Initializable {
             };
             return cell;
         });
+        
+          col_orderTime.setCellFactory(column -> {
+            TableCell<custom_orders, Date> cell = new TableCell<custom_orders, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+            return cell;
+        });
 
     }
 
@@ -266,6 +296,7 @@ public class AcountsCenterController implements Initializable {
             float orderDiscount = (float) orderDAO.getOrderByDate(startDate, endDate).get(i)[6];
             int paymentId = (int) orderDAO.getOrderByDate(startDate, endDate).get(i)[7];
             int categoryId = (int) orderDAO.getOrderByDate(startDate, endDate).get(i)[8];
+            Date time = (Date) orderDAO.getOrderByDate(startDate, endDate).get(i)[9];
             
             if (paymentId == 1) {
                 paymentType = "اجل";
@@ -288,7 +319,8 @@ public class AcountsCenterController implements Initializable {
                     totslCost,
                     paid,
                     remaining,
-                    orderDiscount));
+                    orderDiscount,
+                    time));
         }
 
     }
@@ -319,6 +351,7 @@ public class AcountsCenterController implements Initializable {
                 custom_orders list = orderTable.getSelectionModel().getSelectedItem();
                     paneOrderDetail.setVisible(true);
                     lableOrderDetailId.setText(String.valueOf(list.getOrderId()));
+                    orderType.setText(list.getProductType());
                     if (list.getProductType().equals("وزن")) {
                         yaraborderTe(list.getOrderId());
                     }else if (list.getProductType().equals("قطعة")) {
@@ -339,8 +372,9 @@ public class AcountsCenterController implements Initializable {
             float price = (float) orderDetailDAO.getOrderDetailByOrderId(orderId).get(i)[1];
             float quantity = (float) orderDetailDAO.getOrderDetailByOrderId(orderId).get(i)[2];
             float total = (float) orderDetailDAO.getOrderDetailByOrderId(orderId).get(i)[3];
+            int id = (int) orderDetailDAO.getOrderDetailByOrderId(orderId).get(i)[4];
             //paid,remaining,orderDiscount;;
-            orderDetailrow.add(new Custom_OrderDetails(ProductName, price, quantity, total));
+            orderDetailrow.add(new Custom_OrderDetails(id,ProductName, price, quantity, total));
         }
 
     }
@@ -352,8 +386,9 @@ public class AcountsCenterController implements Initializable {
             float price = (float) orderDetailDAO.getOrderDetailByOrderIdNumber(orderId).get(i)[1];
             float quantity = (float) orderDetailDAO.getOrderDetailByOrderIdNumber(orderId).get(i)[2];
             float total = (float) orderDetailDAO.getOrderDetailByOrderIdNumber(orderId).get(i)[3];
+            int id = (int) orderDetailDAO.getOrderDetailByOrderIdNumber(orderId).get(i)[4];
             //paid,remaining,orderDiscount;;
-            orderDetailrow.add(new Custom_OrderDetails(ProductName, price, quantity, total));
+            orderDetailrow.add(new Custom_OrderDetails(id,ProductName, price, quantity, total));
         }
 
     }
@@ -529,4 +564,56 @@ public class AcountsCenterController implements Initializable {
         tableExpense.getColumns().add(colBtn);
     }
 
+    
+        //delete row
+    private void addRebuy() {
+        TableColumn<Custom_OrderDetails, Void> colBtn = new TableColumn();
+
+        Callback<TableColumn<Custom_OrderDetails, Void>, TableCell<Custom_OrderDetails, Void>> cellFactory;
+        cellFactory = new Callback<TableColumn<Custom_OrderDetails, Void>, TableCell<Custom_OrderDetails, Void>>() {
+            @Override
+            public TableCell<Custom_OrderDetails, Void> call(final TableColumn<Custom_OrderDetails, Void> param) {
+                final TableCell<Custom_OrderDetails, Void> cell = new TableCell<Custom_OrderDetails, Void>() {
+
+                    private final Button btn = new Button("مرتجع");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+
+                            if (FxDialogs.showConfirm("مرتجع المنتج", "هل تريد ترجيع المنتج?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {                   
+                                Custom_OrderDetails data = getTableView().getItems().get(getIndex());
+                                try {
+                                    
+
+                                  
+
+                                } catch (Exception ex) {
+                                    Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            btn.getStyleClass().add("button_Small");
+                            setGraphic(btn);
+
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+        tableOrderDetails.getColumns().add(colBtn);
+    }
+
+    
 }

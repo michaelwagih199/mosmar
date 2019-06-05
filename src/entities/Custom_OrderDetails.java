@@ -1,13 +1,23 @@
 package entities;
 public class Custom_OrderDetails {
+    int id;
     private String ProductName;
     private float price,quantity,total;
 
-    public Custom_OrderDetails(String ProductName, float price, float quantity, float total) {
+    public Custom_OrderDetails(int id, String ProductName, float price, float quantity, float total) {
+        this.id = id;
         this.ProductName = ProductName;
         this.price = price;
         this.quantity = quantity;
         this.total = total;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getProductName() {
@@ -41,6 +51,7 @@ public class Custom_OrderDetails {
     public void setTotal(float total) {
         this.total = total;
     }
-    
+
+   
     
 }

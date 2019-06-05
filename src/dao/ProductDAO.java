@@ -2,6 +2,7 @@ package dao;
 
 import entities.Products;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -10,6 +11,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import jpaConntroller.ProductsJpaController;
 import jpaConntroller.exceptions.NonexistentEntityException;
 
@@ -133,7 +137,7 @@ public class ProductDAO {
         try {
             String sql = "SELECT SUM(p.unitsWeightInStock * p.perchusePrice) as Result FROM Products p";
             Query query = eman.createQuery(sql);
-           
+          
             result = (Double) query.getSingleResult();
 
         } finally {
@@ -143,15 +147,15 @@ public class ProductDAO {
         return result;
     }
     
-     public List<String> getProductsName() {
+     public List<String> getProductsName(String productName) {
         List<String> cars = new ArrayList<String>();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
-
         try {
-
-            String sql = "SELECT p.productName FROM Products p";
-            Query query = eman.createQuery(sql);          
+            //Query q = em.createQuery("Select O from Organization O where O.orgName LIKE '%:orgName%'");
+            String sql = "SELECT p.productName FROM Products p WHERE p.productName LIKE '%:productName%'";
+            Query query = eman.createQuery(sql);
+            query.setParameter("productName", productName);
             cars = query.getResultList();
         } finally {
 
@@ -161,5 +165,9 @@ public class ProductDAO {
 
         return cars;
     }
+     
+
+     
+     
 
 }

@@ -26,6 +26,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -179,7 +180,7 @@ public class StockController implements Initializable {
         loadTabData();
         addButtonDeleteToTable();
         addButtonUbdateToTable();
-       // updateStatusColor();
+        updateStatusColor();
         addProductListItems();
         addButtonProductMapppingToTable();
         compoCategory.getItems().addAll("منتجات بكجم");
@@ -565,15 +566,39 @@ public class StockController implements Initializable {
                     @Override
                     protected void updateItem(Float item, boolean empty) {
                         super.updateItem(item, empty);
-
                         if (!empty) {
-                            Products p = new Products();
+                         Products p  = getTableView().getItems().get(getIndex());
+                         setText(String.valueOf(item));
+                         setAlignment(Pos.CENTER);
+                         if (p.getUnitsWeightInStock() <= p.getAllertWeight()) {
+                            setStyle("-fx-text-fill: red; -fx-font-weight:bold;");
+                        }else
+                             setStyle("-fx-text-fill: green; -fx-font-weight:bold;");;
 
-                            if (p.getAllertWeight()<5) {
-                                 setStyle("-fx-background-color: #06FF00");
-                            } else {
-                               setStyle("-fx-background-color: #720000");
-                            }
+                        } else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+        
+         col_unitInStockNumber.setCellFactory(new Callback<TableColumn<Productsnumber, Float>, TableCell<Productsnumber, Float>>() {
+            @Override
+            public TableCell<Productsnumber, Float> call(TableColumn<Productsnumber, Float> param) {
+                return new TableCell<Productsnumber, Float>() {
+
+                    @Override
+                    protected void updateItem(Float item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!empty) {
+                         Productsnumber p  = getTableView().getItems().get(getIndex());
+                         setText(String.valueOf(item));
+                         setAlignment(Pos.CENTER);
+                         if (p.getUnitsInStock() <= p.getAllertNumber()) {
+                            setStyle("-fx-text-fill: red; -fx-font-weight:bold;");
+                        }else
+                             setStyle("-fx-text-fill: green; -fx-font-weight:bold;");;
 
                         } else {
                             setText(null);

@@ -1,6 +1,7 @@
 
 package entities;
 
+import java.sql.Time;
 import java.util.Date;
 
 public class custom_orders {
@@ -9,8 +10,9 @@ public class custom_orders {
     private String customerName,orderType,productType;
    
     private float totslCost,paid,remaining,orderDiscount;
+    Date time ;
 
-    public custom_orders(int orderId, Date orderDate, String customerName, String orderType, String productType, float totslCost, float paid, float remaining, float orderDiscount) {
+    public custom_orders(int orderId, Date orderDate, String customerName, String orderType, String productType, float totslCost, float paid, float remaining, float orderDiscount, Date time) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.customerName = customerName;
@@ -20,6 +22,7 @@ public class custom_orders {
         this.paid = paid;
         this.remaining = remaining;
         this.orderDiscount = orderDiscount;
+        this.time = time;
     }
 
     public int getOrderId() {
@@ -94,5 +97,16 @@ public class custom_orders {
         this.orderDiscount = orderDiscount;
     }
 
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+    
+    
+
+   
     
 }

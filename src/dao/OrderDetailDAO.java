@@ -73,7 +73,7 @@ public class OrderDetailDAO {
         EntityManager eman = emf.createEntityManager();
         try {
             // select b.fname, b.lname from Users b JOIN Groups c where c.groupName = :groupName
-            String sql = " SELECT p.productName , o.price,o.quantity,o.total  FROM OrderDetail o JOIN Products p on o.productId = p.productid WHERE o.orderId = :orderId";
+            String sql = " SELECT p.productName , o.price,o.quantity,o.total,o.orderDetailId FROM OrderDetail o JOIN Products p on o.productId = p.productid WHERE o.orderId = :orderId";
             Query query = eman.createQuery(sql);
             query.setParameter("orderId", orderId);
             results = query.getResultList();
@@ -91,7 +91,7 @@ public class OrderDetailDAO {
         EntityManager eman = emf.createEntityManager();
         try {
             // select b.fname, b.lname from Users b JOIN Groups c where c.groupName = :groupName
-            String sql = "SELECT p.productnumberName,o.price,o.quantity,o.total FROM OrderDetail o JOIN Productsnumber p on o.productId = p.productnumberid WHERE o.orderId = :orderId";
+            String sql = "SELECT p.productnumberName,o.price,o.quantity,o.total,o.orderDetailId FROM OrderDetail o JOIN Productsnumber p on o.productId = p.productnumberid WHERE o.orderId = :orderId";
             Query query = eman.createQuery(sql);
             query.setParameter("orderId", orderId);
             results = query.getResultList();

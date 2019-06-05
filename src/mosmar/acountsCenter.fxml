@@ -20,14 +20,14 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane id="AnchorPane" prefHeight="673.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.AcountsCenterController">
+<AnchorPane id="AnchorPane" prefHeight="686.0" prefWidth="1062.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.AcountsCenterController">
    <children>
       <Pane layoutX="117.0" layoutY="8.0" prefHeight="50.0" prefWidth="770.0" styleClass="grey_back">
          <children>
             <Label alignment="CENTER" layoutX="40.0" layoutY="7.0" prefHeight="38.0" prefWidth="644.0" styleClass="textHeder2" text="مركز الحسابات" />
          </children>
       </Pane>
-      <Pane layoutY="-4.0" prefHeight="172.0" prefWidth="999.0">
+      <Pane layoutY="-4.0" prefHeight="172.0" prefWidth="1036.0">
          <children>
             <JFXButton layoutX="18.0" layoutY="83.0" onAction="#btnProfitClick" prefHeight="77.0" prefWidth="232.0" styleClass="mainButton" text="عرض الارباح والمصاريف" />
             <DatePicker fx:id="orderDate" layoutX="592.0" layoutY="114.0" prefHeight="29.0" prefWidth="192.0" />
@@ -47,23 +47,24 @@
             <Label layoutX="537.0" layoutY="115.0" prefHeight="26.0" prefWidth="29.0" styleClass="text_Black" text="إلى" />
          </children>
       </Pane>
-      <TabPane layoutX="6.0" layoutY="174.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="512.0" prefWidth="991.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="1.0" layoutY="174.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="512.0" prefWidth="1057.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab onSelectionChanged="#TapordersClick" text="تفاصيل طلبات ">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="orderTable" layoutX="4.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#orderTable_click" prefHeight="473.0" prefWidth="983.0" styleClass="table">
+                        <TableView fx:id="orderTable" layoutX="3.0" layoutY="4.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#orderTable_click" prefHeight="477.0" prefWidth="1059.0" styleClass="table">
                           <columns>
-                            <TableColumn fx:id="col_orderId" prefWidth="109.0" text="رقم الطلب" />
-                            <TableColumn fx:id="col_orderDate" prefWidth="92.0" text="تاريخ الطلب" />
-                              <TableColumn fx:id="col_customerName" prefWidth="84.0" text="اسم العميل" />
-                              <TableColumn fx:id="col_totalCost" prefWidth="121.0" text="اجمالى التكلفة" />
-                              <TableColumn fx:id="col_paid" prefWidth="89.0" text="المدفوع" />
-                              <TableColumn fx:id="col_remainning" prefWidth="101.0" text="المتبقى" />
-                              <TableColumn fx:id="col_discount" prefWidth="95.0" text="الخصم" />
-                              <TableColumn fx:id="col_orderType" prefWidth="95.0" text="نوع الطلب" />
-                              <TableColumn fx:id="colProductType" prefWidth="95.0" text="نوع المنتج" />
+                            <TableColumn fx:id="col_orderId" prefWidth="41.0" text="م" />
+                              <TableColumn fx:id="col_customerName" prefWidth="155.0" text="اسم العميل" />
+                            <TableColumn fx:id="col_orderDate" prefWidth="131.0" text="تاريخ الطلب" />
+                              <TableColumn fx:id="col_orderTime" prefWidth="98.0" text="الوقت" />
+                              <TableColumn fx:id="col_totalCost" prefWidth="111.0" text="سعر الطلب" />
+                              <TableColumn fx:id="col_paid" prefWidth="145.0" text="المدفوع" />
+                              <TableColumn fx:id="col_remainning" prefWidth="81.0" text="المتبقى" />
+                              <TableColumn fx:id="col_discount" prefWidth="107.0" text="الخصم" />
+                              <TableColumn fx:id="col_orderType" prefWidth="93.0" text="نوع الطلب" />
+                              <TableColumn fx:id="colProductType" prefWidth="92.0" text="نوع المنتج" />
                           </columns>
                         </TableView>
                         <Pane fx:id="paneOrderDetail" layoutX="18.0" layoutY="47.0" prefHeight="353.0" prefWidth="951.0" styleClass="grey_wite_back" visible="false">
@@ -78,16 +79,18 @@
                               </ImageView>
                               <TableView fx:id="tableOrderDetails" layoutX="8.0" layoutY="48.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="293.0" prefWidth="937.0" styleClass="table">
                                 <columns>
-                                  <TableColumn fx:id="col_productName_orderDetails" prefWidth="117.0" text="اسم المنتج" />
-                                  <TableColumn fx:id="col_price_orderDetail" prefWidth="96.0" text="السعر " />
-                                    <TableColumn fx:id="col_quantity_orderDetail" prefWidth="98.0" text="الكمية" />
-                                    <TableColumn fx:id="colAllCostOrderDetail" prefWidth="129.0" text="الأجمالى" />
+                                    <TableColumn fx:id="col_ID_orderDetails" prefWidth="45.0" text="م" />
+                                  <TableColumn fx:id="col_productName_orderDetails" prefWidth="157.0" text="اسم المنتج" />
+                                  <TableColumn fx:id="col_price_orderDetail" prefWidth="155.0" text="السعر " />
+                                    <TableColumn fx:id="col_quantity_orderDetail" prefWidth="115.0" text="الكمية" />
+                                    <TableColumn fx:id="colAllCostOrderDetail" prefWidth="115.0" text="الأجمالى" />
                                 </columns>
                               </TableView>
                               <Label layoutX="416.0" layoutY="4.0" prefHeight="31.0" prefWidth="137.0" styleClass="textHeder" text="تفاصيل الطلب" />
                               <Separator layoutX="2.0" layoutY="34.0" prefHeight="8.0" prefWidth="947.0" />
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9a9a9a" height="26.0" layoutX="842.0" layoutY="7.0" stroke="#59575700" strokeType="INSIDE" strokeWidth="0.0" width="93.0" />
                               <Label fx:id="lableOrderDetailId" alignment="CENTER" layoutX="846.0" layoutY="9.0" prefHeight="20.0" prefWidth="87.0" text="0" />
+                              <Label fx:id="orderType" alignment="CENTER" layoutX="68.0" layoutY="10.0" prefHeight="20.0" prefWidth="103.0" text="0" />
                            </children>
                         </Pane>
                      </children>

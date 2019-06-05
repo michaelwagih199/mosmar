@@ -8,6 +8,8 @@ import entities.OrderDetail;
 import entities.OrderPayment;
 import entities.Orders;
 import entities.Products;
+import static java.time.LocalDate.now;
+import java.util.Calendar;
 import java.util.Date;
 
 public class SubmitBuy_helper {
@@ -19,7 +21,12 @@ public class SubmitBuy_helper {
     
     public void insert_order(int customerId, int paymentId,int categoryId, String orderType,String uuid) {
         // insert data to order
-        
+        // 1) create a java calendar instance
+        Calendar calendar = Calendar.getInstance();
+
+      java.util.Date now = calendar.getTime();
+   java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
+
         try {
             Orders order = new Orders();
             order.setCustomerId(customerId);
@@ -29,6 +36,7 @@ public class SubmitBuy_helper {
             order.setUuid(uuid);
             order.setCategoryId(categoryId);
             //order.setSuppliersId(supliersId);
+            order.setTime(currentTimestamp);
             orderDAO.addOrders(order);
             
         } catch (Exception e) {
