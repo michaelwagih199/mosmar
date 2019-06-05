@@ -14,6 +14,7 @@
     <class>entities.CustomersPayment</class>
     <class>entities.Suppliers</class>
     <class>entities.Supplierspayment</class>
+    <class>entities.SuppliersBills</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mosmar?characterEncoding=UTF-8"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

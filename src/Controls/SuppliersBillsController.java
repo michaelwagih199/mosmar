@@ -25,7 +25,7 @@ import javafx.scene.layout.Pane;
  *
  * @author OM EL NOUR
  */
-public class SuppliersBills implements Initializable {
+public class SuppliersBillsController implements Initializable {
 
     @FXML
     private TableView<?> table;
@@ -46,17 +46,15 @@ public class SuppliersBills implements Initializable {
     @FXML
     private JFXButton btn_add;
     @FXML
-    private JFXTextField etSuppliersId;
+    private Pane PanebilsDetails;
     @FXML
-    private JFXTextField etTotalBils;
+    private JFXTextField etProduct;
     @FXML
-    private JFXTextField etPaidBils;
+    private JFXTextField etQuantity;
     @FXML
-    private JFXTextField etRemainig;
+    private JFXTextField etPrice;
     @FXML
-    private DatePicker bilsDate;
-    @FXML
-    private JFXTextArea etNotes;
+    private JFXComboBox<?> comboCategory;
     @FXML
     private TableView<?> tableProducts;
     @FXML
@@ -72,15 +70,19 @@ public class SuppliersBills implements Initializable {
     @FXML
     private TableColumn<?, ?> colProducttype;
     @FXML
-    private JFXTextField etProduct;
-    @FXML
-    private JFXTextField etQuantity;
-    @FXML
-    private JFXTextField etPrice;
-    @FXML
-    private JFXComboBox<?> comboCategory;
-    @FXML
     private Pane paneAddBils;
+    @FXML
+    private JFXTextField etSuppliersId;
+    @FXML
+    private JFXTextField etTotalBils;
+    @FXML
+    private JFXTextField etPaidBils;
+    @FXML
+    private JFXTextField etRemainig;
+    @FXML
+    private DatePicker bilsDate;
+    @FXML
+    private JFXTextArea etNotes;
 
     /**
      * Initializes the controller class.
@@ -91,6 +93,10 @@ public class SuppliersBills implements Initializable {
     }    
 
     @FXML
+    private void tableClick(MouseEvent event) {
+    }
+
+    @FXML
     private void btn_addclick(ActionEvent event) {
     }
 
@@ -99,12 +105,11 @@ public class SuppliersBills implements Initializable {
     }
 
     @FXML
-    private void btnClosePurchaseBils(MouseEvent event) {
-        paneAddBils.setVisible(false);
+    private void addProductClick(ActionEvent event) {
     }
 
     @FXML
-    private void addProductClick(ActionEvent event) {
+    private void btnClosePurchaseBils(MouseEvent event) {
     }
 
     @FXML

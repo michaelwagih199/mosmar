@@ -14,15 +14,16 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1101.0" styleClass="grey_back_noShadow" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.SuppliersBills">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1101.0" styleClass="grey_back_noShadow" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.SuppliersBillsController">
    <children>
-      <Pane layoutX="351.0" layoutY="6.0" prefHeight="52.0" prefWidth="300.0" styleClass="grey_wite_back">
+      <Pane layoutX="392.0" layoutY="5.0" prefHeight="52.0" prefWidth="300.0" styleClass="grey_wite_back">
          <children>
             <Label alignment="CENTER" layoutX="19.0" layoutY="7.0" prefHeight="38.0" prefWidth="262.0" styleClass="textHeder2" text="فواتير الشراء" />
          </children>
       </Pane>
-      <TableView fx:id="table" layoutX="4.0" layoutY="64.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="469.0" prefWidth="1094.0">
+      <TableView fx:id="table" layoutX="4.0" layoutY="64.0" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#tableClick" prefHeight="469.0" prefWidth="1094.0">
         <columns>
             <TableColumn fx:id="col_all_quantity" prefWidth="284.33329248428345" text="ملاحظات" />
           <TableColumn fx:id="col_paid" prefWidth="196.66668701171875" text="المدفوع" />
@@ -33,7 +34,7 @@
             <TableColumn fx:id="col_date1" minWidth="0.0" prefWidth="62.666748046875" text="م" />
         </columns>
       </TableView>
-      <JFXButton fx:id="btn_add" layoutX="369.0" layoutY="538.0" onAction="#btn_addclick" prefHeight="53.0" prefWidth="309.0" styleClass="button_Normal" text="اضافة شحنة" />
+      <JFXButton fx:id="btn_add" layoutX="410.0" layoutY="537.0" onAction="#btn_addclick" prefHeight="53.0" prefWidth="309.0" styleClass="button_Normal" text="اضافة شحنة" />
       <ImageView fitHeight="46.0" fitWidth="59.0" layoutX="14.0" layoutY="12.0" onMouseClicked="#home_Click" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../res/left-arrow%20copy.png" />
@@ -42,7 +43,48 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Pane fx:id="paneAddBils" layoutX="2.0" layoutY="22.0" prefHeight="553.0" prefWidth="1094.0" styleClass="grey_wite_back">
+      <Pane fx:id="PanebilsDetails" layoutX="14.0" layoutY="82.0" prefHeight="397.0" prefWidth="1072.0" styleClass="grey_wite_back" visible="false">
+         <children>
+            <JFXTextField fx:id="etProduct" layoutX="704.0" layoutY="59.0" prefHeight="36.0" prefWidth="242.0" styleClass="textFeild" />
+            <Label layoutX="979.0" layoutY="63.0" prefHeight="27.0" prefWidth="57.0" styleClass="text_Black" text="الصنف" />
+            <Label layoutX="646.0" layoutY="64.0" prefHeight="27.0" prefWidth="47.0" styleClass="text_Black" text="الكمية" />
+            <JFXTextField fx:id="etQuantity" layoutX="525.0" layoutY="60.0" prefHeight="36.0" prefWidth="108.0" styleClass="textFeild" />
+            <Label layoutX="475.0" layoutY="64.0" prefHeight="27.0" prefWidth="46.0" styleClass="text_Black" text="السعر" />
+            <JFXTextField fx:id="etPrice" layoutX="339.0" layoutY="59.0" prefHeight="36.0" prefWidth="131.0" styleClass="textFeild" />
+            <JFXComboBox fx:id="comboCategory" layoutX="37.0" layoutY="60.0" prefHeight="36.0" prefWidth="203.0" styleClass="combobox" />
+            <Label layoutX="246.0" layoutY="66.0" prefHeight="27.0" prefWidth="88.0" styleClass="text_Black" text="نوع الصنف" />
+            <TableView fx:id="tableProducts" layoutX="9.0" layoutY="157.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="185.0" prefWidth="1053.0">
+               <columns>
+                  <TableColumn fx:id="col_productId" prefWidth="43.0" text="م" />
+                  <TableColumn fx:id="col_productName" prefWidth="143.0" text="الصنف" />
+                  <TableColumn fx:id="colproductQuantity" prefWidth="141.0" text="الكمية" />
+                  <TableColumn fx:id="colPrice" prefWidth="141.0" text="السعر" />
+                  <TableColumn fx:id="coltotal" prefWidth="157.0" text="الاجمالى" />
+                  <TableColumn fx:id="colProducttype" prefWidth="152.0" text="نوع المنتج" />
+               </columns>
+            </TableView>
+            <JFXButton layoutX="405.0" layoutY="108.0" onAction="#addProductClick" prefHeight="36.0" prefWidth="225.0" styleClass="text5" text="اضافة الصنف" />
+            <JFXButton layoutX="423.0" layoutY="346.0" onAction="#addProductClick" prefHeight="36.0" prefWidth="225.0" styleClass="text5" text="حفظ التفاصيل" />
+            <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="9.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/close2.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="978.0" layoutY="7.0" prefHeight="27.0" prefWidth="88.0" text="رقم الفاتورة">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="844.0" layoutY="9.0" prefHeight="28.0" prefWidth="131.0" styleClass="text5" text="0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Separator layoutX="3.0" layoutY="39.0" prefHeight="3.0" prefWidth="1060.0" />
+            <Label alignment="CENTER" layoutX="339.0" layoutY="7.0" prefHeight="17.0" prefWidth="358.0" styleClass="text_normal" text="تفاصيل الشحنة" />
+         </children>
+      </Pane>
+      <Pane fx:id="paneAddBils" layoutX="2.0" layoutY="22.0" prefHeight="239.0" prefWidth="1094.0" styleClass="grey_wite_back" visible="false">
          <children>
             <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="9.0" layoutY="6.0" onMouseClicked="#btnClosePurchaseBils" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -64,30 +106,16 @@
             <Separator layoutX="12.0" layoutY="177.0" prefHeight="2.0" prefWidth="1060.0" />
             <JFXTextArea fx:id="etNotes" layoutX="18.0" layoutY="109.0" prefHeight="52.0" prefWidth="975.0" styleClass="textFeild" />
             <Label layoutX="1006.0" layoutY="122.0" prefHeight="27.0" prefWidth="71.0" styleClass="text_Black" text="ملاحظات" />
-            <TableView fx:id="tableProducts" layoutX="19.0" layoutY="297.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="200.0" prefWidth="1060.0">
-              <columns>
-                <TableColumn fx:id="col_productId" prefWidth="43.0" text="م" />
-                <TableColumn fx:id="col_productName" prefWidth="143.0" text="الصنف" />
-                  <TableColumn fx:id="colproductQuantity" prefWidth="141.0" text="الكمية" />
-                  <TableColumn fx:id="colPrice" prefWidth="141.0" text="السعر" />
-                  <TableColumn fx:id="coltotal" prefWidth="157.0" text="الاجمالى" />
-                  <TableColumn fx:id="colProducttype" prefWidth="157.0" text="نوع المنتج" />
-              </columns>
-            </TableView>
-            <JFXTextField fx:id="etProduct" layoutX="715.0" layoutY="193.0" prefHeight="36.0" prefWidth="242.0" styleClass="textFeild" />
-            <Label layoutX="990.0" layoutY="197.0" prefHeight="27.0" prefWidth="57.0" styleClass="text_Black" text="الصنف" />
-            <Label layoutX="657.0" layoutY="198.0" prefHeight="27.0" prefWidth="47.0" styleClass="text_Black" text="الكمية" />
-            <JFXTextField fx:id="etQuantity" layoutX="536.0" layoutY="194.0" prefHeight="36.0" prefWidth="108.0" styleClass="textFeild" />
-            <Label layoutX="486.0" layoutY="198.0" prefHeight="27.0" prefWidth="46.0" styleClass="text_Black" text="السعر" />
-            <JFXTextField fx:id="etPrice" layoutX="350.0" layoutY="193.0" prefHeight="36.0" prefWidth="131.0" styleClass="textFeild" />
-            <JFXComboBox fx:id="comboCategory" layoutX="48.0" layoutY="194.0" prefHeight="36.0" prefWidth="203.0" styleClass="combobox" />
-            <Label layoutX="257.0" layoutY="200.0" prefHeight="27.0" prefWidth="88.0" styleClass="text_Black" text="نوع الصنف" />
-            <JFXButton layoutX="458.0" layoutY="245.0" onAction="#addProductClick" prefHeight="40.0" prefWidth="225.0" styleClass="text5" text="اضافة الصنف" />
-            <JFXButton layoutX="466.0" layoutY="503.0" onAction="#btnSaveBilsClick" prefHeight="40.0" prefWidth="225.0" styleClass="text5" text="حفظ الفاتورة" />
+            <JFXButton layoutX="434.0" layoutY="187.0" onAction="#btnSaveBilsClick" prefHeight="40.0" prefWidth="225.0" styleClass="text5" text="حفظ الفاتورة" />
          </children>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Pane>
+      <Label layoutX="893.0" layoutY="538.0" prefHeight="29.0" prefWidth="203.0" text="اضغط ضغطتين لاضافة تفاصيل الشحنة ." textFill="WHITE">
+         <font>
+            <Font name="ACS  Akeek Extra Bold" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
