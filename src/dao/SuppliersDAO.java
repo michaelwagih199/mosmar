@@ -47,7 +47,12 @@ public class SuppliersDAO {
         return row;
     }
 
-    public int getcCustomerId(String supplierName) {
+    public Suppliers getSuppliersById(int orderId) {
+        return suppliersJpaController.findSuppliers(orderId);
+    }
+
+
+    public int getSupplierId(String supplierName) {
         List<Integer> cars = new ArrayList<Integer>();
         int result = 0;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
