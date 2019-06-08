@@ -21,7 +21,7 @@
     -fx-border-radius: 20;
 }
 .button_Small {
-    -fx-font-size: 14pt;
+    -fx-font-size: 11pt;
     -fx-text-fill: white;
     -fx-background-color: #F67522;
     -fx-font-family: "Arial";
@@ -152,7 +152,7 @@
 
 .table{
     -fx-font-family: "Arial";
-    -fx-font-size: 12pt;
+    -fx-font-size: 11pt;
 }
   .textSearch {
     -fx-font-family: "Arial";

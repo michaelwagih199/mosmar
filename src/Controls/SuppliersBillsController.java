@@ -4,8 +4,14 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import dao.BillsDetailsDAO;
+import dao.ProductDAO;
+import dao.ProductNumbersDAO;
 import dao.SuppliersBillsDAO;
 import dao.SuppliersDAO;
+import entities.BillsDetails;
+import entities.Products;
+import entities.Productsnumber;
 import entities.Suppliers;
 import entities.SuppliersBills;
 import entities.custom_orders;
@@ -26,6 +32,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,7 +48,6 @@ import org.controlsfx.control.textfield.TextFields;
 
 public class SuppliersBillsController implements Initializable {
 
-   
     @FXML
     private JFXButton btn_add;
     @FXML
@@ -53,21 +59,21 @@ public class SuppliersBillsController implements Initializable {
     @FXML
     private JFXTextField etPrice;
     @FXML
-    private JFXComboBox<?> comboCategory;
+    private JFXComboBox<String> comboCategory;
     @FXML
-    private TableView<?> tableProducts;
+    private TableView<BillsDetails> tableProducts;
     @FXML
-    private TableColumn<?, ?> col_productId;
+    private TableColumn<BillsDetails, Integer> col_productId;
     @FXML
-    private TableColumn<?, ?> col_productName;
+    private TableColumn<BillsDetails, Integer> col_productName;
     @FXML
-    private TableColumn<?, ?> colproductQuantity;
+    private TableColumn<BillsDetails, Float> colproductQuantity;
     @FXML
-    private TableColumn<?, ?> colPrice;
+    private TableColumn<BillsDetails, Float> colPrice;
     @FXML
-    private TableColumn<?, ?> coltotal;
+    private TableColumn<BillsDetails, Float> coltotal;
     @FXML
-    private TableColumn<?, ?> colProducttype;
+    private TableColumn<BillsDetails, Integer> colProducttype;
     @FXML
     private Pane paneAddBils;
     @FXML
@@ -87,12 +93,17 @@ public class SuppliersBillsController implements Initializable {
     Helper helper = new Helper();
     SuppliersDAO suppliersDAO = new SuppliersDAO();
     SuppliersBillsDAO suppliersBillsDAO = new SuppliersBillsDAO();
+    ProductDAO productDAO = new ProductDAO();
+    ProductNumbersDAO productNumbersDAO = new ProductNumbersDAO();
+    BillsDetailsDAO billsDetailsDAO = new BillsDetailsDAO();
+    int categoryId = 0;
+
     @FXML
     private TableView<SuppliersBills> table;
     @FXML
     private TableColumn<SuppliersBills, String> colNotes;
     @FXML
-    private TableColumn<SuppliersBills,Float> col_paidBils;
+    private TableColumn<SuppliersBills, Float> col_paidBils;
     @FXML
     private TableColumn<SuppliersBills, Float> col_remainingBils;
     @FXML
@@ -103,6 +114,8 @@ public class SuppliersBillsController implements Initializable {
     private TableColumn<SuppliersBills, Date> col_dateBils;
     @FXML
     private TableColumn<SuppliersBills, Integer> colBilsId;
+    @FXML
+    private Label labelBillsId;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -110,12 +123,18 @@ public class SuppliersBillsController implements Initializable {
         loadTabBillsData();
         formatDate();
         ubdateSuppliers();
+       
+        loadTabProductData();
+        comboCategory.getItems().addAll("منتجات بكجم");
+        comboCategory.getItems().addAll("منتجات بالوحدة");
     }
 
     @FXML
     private void tableClick(MouseEvent event) {
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             if (event.getClickCount() == 2) {
+                SuppliersBills index = table.getSelectionModel().getSelectedItem();
+                labelBillsId.setText(index.getSuppliersBilsId().toString());
                 PanebilsDetails.setVisible(true);
             }
         }
@@ -134,6 +153,23 @@ public class SuppliersBillsController implements Initializable {
 
     @FXML
     private void addProductClick(ActionEvent event) {
+        try {
+            
+            BillsDetails billsDetails = new BillsDetails();
+            billsDetails.setCategoryId(categoryId);
+            billsDetails.setPrice(Float.parseFloat(etPrice.getText().toString()));
+            billsDetails.setQuantity(Float.parseFloat(etQuantity.getText().toString()));
+            billsDetails.setSuppliersBilsId(Integer.parseInt(labelBillsId.getText().toString()));
+            billsDetails.setTotal(Float.parseFloat(etPrice.getText().toString())
+                    * Float.parseFloat(etQuantity.getText().toString()));
+            billsDetails.setProductId(getProductId());
+            billsDetailsDAO.addBillsDetails(billsDetails);
+        } catch (Exception e) {
+
+        }
+        loadTabProductData();
+       
+
     }
 
     @FXML
@@ -214,7 +250,7 @@ public class SuppliersBillsController implements Initializable {
     }
 
     public void formatDate() {
-         col_dateBils.setCellFactory(column -> {
+        col_dateBils.setCellFactory(column -> {
             TableCell<SuppliersBills, Date> cell = new TableCell<SuppliersBills, Date>() {
                 private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -232,7 +268,7 @@ public class SuppliersBillsController implements Initializable {
         });
     }
 
-    public void loadTabBillsData() {       
+    public void loadTabBillsData() {
         col_dateBils.setCellValueFactory(new PropertyValueFactory<>("bilsDate"));
         col_paidBils.setCellValueFactory(new PropertyValueFactory<>("bilsPaid"));
         col_remainingBils.setCellValueFactory(new PropertyValueFactory<>("bilsRemaining"));
@@ -240,10 +276,21 @@ public class SuppliersBillsController implements Initializable {
         //col_suppliersName.setCellValueFactory(new PropertyValueFactory<>("suppliersId"));
         colNotes.setCellValueFactory(new PropertyValueFactory<>("notes"));
         colBilsId.setCellValueFactory(new PropertyValueFactory<>("SuppliersBilsId"));
+         ubdateProduct();
         table.setItems(suppliersBillsDAO.getSuppliersBills());
-        
+
     }
-    
+
+    public void loadTabProductData() {
+        col_productId.setCellValueFactory(new PropertyValueFactory<>("productId"));
+        col_productName.setCellValueFactory(new PropertyValueFactory<>("productId"));
+        colproductQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        coltotal.setCellValueFactory(new PropertyValueFactory<>("total"));
+      
+        tableProducts.setItems(billsDetailsDAO.getSuppliersBills());
+    }
+
     public void ubdateSuppliers() {
         col_suppliersName.setCellFactory(new Callback<TableColumn<SuppliersBills, Integer>, TableCell<SuppliersBills, Integer>>() {
             @Override
@@ -254,11 +301,11 @@ public class SuppliersBillsController implements Initializable {
                     protected void updateItem(Integer item, boolean empty) {
                         super.updateItem(item, empty);
                         if (!empty) {
-                           
+
                             SuppliersBills index = getTableView().getItems().get(getIndex());
                             String name = suppliersDAO.getSuppliersById(index.getSuppliersId()).getSupplierName();
                             setText(name);
-                          
+
                         } else {
                             setText(null);
                         }
@@ -266,6 +313,110 @@ public class SuppliersBillsController implements Initializable {
                 };
             }
         });
+    }
+
+    /**
+     *
+     * updateProduct
+     */
+    public void ubdateProduct() {
+
+        col_productName.setCellFactory(new Callback<TableColumn<BillsDetails, Integer>, TableCell<BillsDetails, Integer>>() {
+            @Override
+            public TableCell<BillsDetails, Integer> call(TableColumn<BillsDetails, Integer> param) {
+                return new TableCell<BillsDetails, Integer>() {
+
+                    @Override
+                    protected void updateItem(Integer item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!empty) {
+
+                            BillsDetails index = getTableView().getItems().get(getIndex());
+                            String name = "m";
+                            if (index.getCategoryId() == 1) {
+                                name = productDAO.getProductById(index.getProductId()).getProductName();
+                            } else if (index.getCategoryId() == 2) {
+                                name = productNumbersDAO.getProductsnumberById(index.getProductId()).getProductnumberName();
+                            }
+                            setText(name);
+                        } else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+
+        colProducttype.setCellFactory(new Callback<TableColumn<BillsDetails, Integer>, TableCell<BillsDetails, Integer>>() {
+            @Override
+            public TableCell<BillsDetails, Integer> call(TableColumn<BillsDetails, Integer> param) {
+                return new TableCell<BillsDetails, Integer>() {
+
+                    @Override
+                    protected void updateItem(Integer item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!empty) {
+
+                            BillsDetails index = getTableView().getItems().get(getIndex());
+                            String name = "m";
+                            if (index.getCategoryId() == 1) {
+                                name = "وزن";
+                            } else if (index.getCategoryId() == 2) {
+                                name = "قطعة";
+                            }
+                            setText(name);
+
+                        } else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+
+    }
+
+    public List<String> getAllProductrName(String start) {
+        ArrayList<String> result = new ArrayList<String>();
+        for (Products o : productDAO.getAllProducts()) {
+            result.add(o.getProductName());
+        }
+
+        return result;
+    }
+
+    public ArrayList<String> getAllProductNumberName(String start) {
+        ArrayList<String> result = new ArrayList<String>();
+        for (Productsnumber o : productNumbersDAO.getAllProductsnumber()) {
+            result.add(o.getProductnumberName());
+        }
+        return result;
+    }
+
+    @FXML
+    private void comboCategoryClick(ActionEvent event) {
+        String knownUsFrom = comboCategory.getSelectionModel().getSelectedItem().toString();
+        if (knownUsFrom.equals("منتجات بكجم")) {
+            TextFields.bindAutoCompletion(etProduct, getAllProductrName(etProduct.getText().toString()));
+            categoryId = 1;
+        } else {
+            TextFields.bindAutoCompletion(etProduct, getAllProductNumberName(etProduct.getText().toString()));
+            categoryId = 2;
+        }
+    }
+
+    
+    private int getProductId() {
+        int productId=0;
+        if (categoryId == 1) {
+          productId = productDAO.getProductId(etProduct.getText().toString()).get(0).getProductid();
+            
+        }else if (categoryId ==2 ) {
+            productId = productNumbersDAO.getProducNumbertId(etProduct.getText().toString()).get(0).getProductnumberid();
+        }
+        
+        return productId;
+
     }
 
 }
