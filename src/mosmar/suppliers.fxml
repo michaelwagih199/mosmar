@@ -153,6 +153,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
+            <Label alignment="TOP_LEFT" layoutX="285.0" layoutY="71.0" prefHeight="26.0" prefWidth="86.0" styleClass="text_Black" text="اجمالى " />
          </children>
       </AnchorPane>
    </children>

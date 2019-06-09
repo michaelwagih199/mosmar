@@ -51,7 +51,7 @@ import javafx.util.Callback;
 import org.controlsfx.control.textfield.TextFields;
 
 public class BuyController implements Initializable {
-
+    
     @FXML
     private TextField etBuyType;
     @FXML
@@ -1066,7 +1066,6 @@ public class BuyController implements Initializable {
         for (Products o : productDAO.getAllProducts()) {
            result.add(o.getProductName());
         }
-
         return result;
     }
 
@@ -1230,6 +1229,7 @@ public class BuyController implements Initializable {
 
     @FXML
     private void addSub1Click(ActionEvent event) {
+        
         if (etBuyType.getText().toString().equals("قطاعى")) {
             addSubProductforPartion();
             anchorSubCategory.setVisible(false);
@@ -1241,14 +1241,14 @@ public class BuyController implements Initializable {
         } else if (etBuyType.getText().toString().equals("جملة الجملة")) {
             addSubProductforGomla_Gomla();
               anchorSubCategory.setVisible(false);
-
         }
-
+        
     }
 
     @FXML
     private void subProductsClick(ActionEvent event) {
         try {
+            
             cleaMapping();
             hm.clear();
             anchorSubCategory.setVisible(true);
@@ -1257,18 +1257,23 @@ public class BuyController implements Initializable {
             subCategory2.setText(productMappingDAO.getSubProduct2(items.get(0).getProductid()));
             subCategory3.setText(productMappingDAO.getSubProduct3(items.get(0).getProductid()));
             subCategory4.setText(productMappingDAO.getSubProduct4(items.get(0).getProductid()));
+            
         } catch (Exception e) {
+            
         }
 
     }
 
     @FXML
     private void closeMaping(MouseEvent event) {
+        
         anchorSubCategory.setVisible(false);
+        
     }
     
     
     public void cleaMapping(){
+        
         subCategory1.setText("");
         subCategory2.setText("");
         subCategory3.setText("");
@@ -1281,6 +1286,7 @@ public class BuyController implements Initializable {
         check2.setSelected(false);
         check3.setSelected(false);
         check4.setSelected(false);
+        
     }
 
     @FXML

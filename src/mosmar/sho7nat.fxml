@@ -48,7 +48,7 @@
             <Font name="ACS  Akeek Extra Bold" size="14.0" />
          </font>
       </Label>
-      <Pane fx:id="PanebilsDetails" layoutX="14.0" layoutY="82.0" prefHeight="397.0" prefWidth="1072.0" styleClass="grey_wite_back">
+      <Pane fx:id="PanebilsDetails" layoutX="14.0" layoutY="82.0" prefHeight="397.0" prefWidth="1072.0" styleClass="grey_wite_back" visible="false">
          <children>
             <JFXTextField fx:id="etProduct" alignment="CENTER" layoutX="423.0" layoutY="60.0" prefHeight="36.0" prefWidth="262.0" styleClass="textFeild" />
             <Label layoutX="697.0" layoutY="66.0" prefHeight="27.0" prefWidth="57.0" styleClass="text_Black" text="الصنف" />
@@ -69,7 +69,6 @@
                </columns>
             </TableView>
             <JFXButton layoutX="405.0" layoutY="108.0" onAction="#addProductClick" prefHeight="36.0" prefWidth="225.0" styleClass="text5" text="اضافة الصنف" />
-            <JFXButton layoutX="405.0" layoutY="345.0" onAction="#addProductClick" prefHeight="36.0" prefWidth="225.0" styleClass="text5" text="حفظ التفاصيل" />
             <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="9.0" layoutY="8.0" onMouseClicked="#PanebilsDetailsClose" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../res/close2.png" />

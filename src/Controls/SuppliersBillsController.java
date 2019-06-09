@@ -97,7 +97,7 @@ public class SuppliersBillsController implements Initializable {
     ProductNumbersDAO productNumbersDAO = new ProductNumbersDAO();
     BillsDetailsDAO billsDetailsDAO = new BillsDetailsDAO();
     int categoryId = 0;
-
+    int billsId = 0;
     @FXML
     private TableView<SuppliersBills> table;
     @FXML
@@ -123,10 +123,10 @@ public class SuppliersBillsController implements Initializable {
         loadTabBillsData();
         formatDate();
         ubdateSuppliers();
-       
-        loadTabProductData();
+        //loadTabProductData();
         comboCategory.getItems().addAll("منتجات بكجم");
         comboCategory.getItems().addAll("منتجات بالوحدة");
+        //System.out.println(billsDetailsDAO.getBillsDetailsId(8));
     }
 
     @FXML
@@ -136,6 +136,8 @@ public class SuppliersBillsController implements Initializable {
                 SuppliersBills index = table.getSelectionModel().getSelectedItem();
                 labelBillsId.setText(index.getSuppliersBilsId().toString());
                 PanebilsDetails.setVisible(true);
+                billsId = index.getSuppliersBilsId();
+                loadTabProductData();
             }
         }
     }
@@ -154,7 +156,7 @@ public class SuppliersBillsController implements Initializable {
     @FXML
     private void addProductClick(ActionEvent event) {
         try {
-            
+
             BillsDetails billsDetails = new BillsDetails();
             billsDetails.setCategoryId(categoryId);
             billsDetails.setPrice(Float.parseFloat(etPrice.getText().toString()));
@@ -164,11 +166,14 @@ public class SuppliersBillsController implements Initializable {
                     * Float.parseFloat(etQuantity.getText().toString()));
             billsDetails.setProductId(getProductId());
             billsDetailsDAO.addBillsDetails(billsDetails);
+            
+            updateStockDetails();
+            
         } catch (Exception e) {
 
         }
         loadTabProductData();
-       
+        clearTextBillsDetails();  
 
     }
 
@@ -205,9 +210,37 @@ public class SuppliersBillsController implements Initializable {
         PanebilsDetails.setVisible(false);
     }
 
+    @FXML
+    private void userTypingPaid(MouseEvent event) {
+        try {
+            String answer = FxDialogs.showTextInput("اكتب القيمة المدفوعة", "جنية", "0");
+            etPaidBils.setText(answer);
+            Float remaining = Float.parseFloat(etTotalBils.getText().toString())
+                    - Float.parseFloat(answer);
+            etRemainig.setText(String.valueOf(remaining));
+        } catch (Exception e) {
+        }
+
+    }
+
+    @FXML
+    private void comboCategoryClick(ActionEvent event) {
+        String knownUsFrom = comboCategory.getSelectionModel().getSelectedItem().toString();
+        if (knownUsFrom.equals("منتجات بكجم")) {
+            TextFields.bindAutoCompletion(etProduct, getAllProductrName(etProduct.getText().toString()));
+            categoryId = 1;
+        } else {
+            TextFields.bindAutoCompletion(etProduct, getAllProductNumberName(etProduct.getText().toString()));
+            categoryId = 2;
+        }
+    }
+
+   
+    
     /**
      * helper method
      */
+    
     public List<String> getSupplierName(String start) {
         ArrayList<String> result = new ArrayList<String>();
         for (Suppliers o : suppliersDAO.getAllSuppliers()) {
@@ -226,9 +259,6 @@ public class SuppliersBillsController implements Initializable {
         return uuid.toString();
     }
 
-    /**
-     *
-     */
     public void clearTextBills() {
         etPaidBils.clear();
         etRemainig.clear();
@@ -236,18 +266,12 @@ public class SuppliersBillsController implements Initializable {
         etSuppliersId.clear();
     }
 
-    @FXML
-    private void userTypingPaid(MouseEvent event) {
-        try {
-            String answer = FxDialogs.showTextInput("اكتب القيمة المدفوعة", "جنية", "0");
-            etPaidBils.setText(answer);
-            Float remaining = Float.parseFloat(etTotalBils.getText().toString())
-                    - Float.parseFloat(answer);
-            etRemainig.setText(String.valueOf(remaining));
-        } catch (Exception e) {
-        }
-
+    public void clearTextBillsDetails() {
+        etProduct.clear();
+        etQuantity.clear();
+        etPrice.clear();       
     }
+
 
     public void formatDate() {
         col_dateBils.setCellFactory(column -> {
@@ -276,7 +300,7 @@ public class SuppliersBillsController implements Initializable {
         //col_suppliersName.setCellValueFactory(new PropertyValueFactory<>("suppliersId"));
         colNotes.setCellValueFactory(new PropertyValueFactory<>("notes"));
         colBilsId.setCellValueFactory(new PropertyValueFactory<>("SuppliersBilsId"));
-         ubdateProduct();
+        ubdateProduct();
         table.setItems(suppliersBillsDAO.getSuppliersBills());
 
     }
@@ -287,8 +311,8 @@ public class SuppliersBillsController implements Initializable {
         colproductQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         coltotal.setCellValueFactory(new PropertyValueFactory<>("total"));
-      
-        tableProducts.setItems(billsDetailsDAO.getSuppliersBills());
+
+        tableProducts.setItems(billsDetailsDAO.getBillsDetailsId(billsId));
     }
 
     public void ubdateSuppliers() {
@@ -393,30 +417,45 @@ public class SuppliersBillsController implements Initializable {
         return result;
     }
 
-    @FXML
-    private void comboCategoryClick(ActionEvent event) {
-        String knownUsFrom = comboCategory.getSelectionModel().getSelectedItem().toString();
-        if (knownUsFrom.equals("منتجات بكجم")) {
-            TextFields.bindAutoCompletion(etProduct, getAllProductrName(etProduct.getText().toString()));
-            categoryId = 1;
-        } else {
-            TextFields.bindAutoCompletion(etProduct, getAllProductNumberName(etProduct.getText().toString()));
-            categoryId = 2;
-        }
-    }
-
-    
     private int getProductId() {
-        int productId=0;
+        int productId = 0;
         if (categoryId == 1) {
-          productId = productDAO.getProductId(etProduct.getText().toString()).get(0).getProductid();
-            
-        }else if (categoryId ==2 ) {
+            productId = productDAO.getProductId(etProduct.getText().toString()).get(0).getProductid();
+
+        } else if (categoryId == 2) {
             productId = productNumbersDAO.getProducNumbertId(etProduct.getText().toString()).get(0).getProductnumberid();
         }
-        
+
         return productId;
 
     }
+    
+    
+     private void updateStockDetails() {
+        String knownUsFrom = comboCategory.getSelectionModel().getSelectedItem().toString();
+            if (knownUsFrom.equals("منتجات بكجم")) {
+                List<BillsDetails> items = billsDetailsDAO.getBillsDetailsId(billsId);
+                for (BillsDetails item : items) {
+                    int productid = item.getProductId();
+                    float quantityofBils = item.getQuantity();
+                    float numberUnit = productDAO.getProductById(productid).getUnitsWeightInStock();
+                    float newQuantity = quantityofBils + numberUnit;
+                    productDAO.updateWeight(newQuantity, productid);
+                }
+            }else if (knownUsFrom.equals("منتجات بالوحدة")) {
+                List<BillsDetails> items = billsDetailsDAO.getBillsDetailsId(billsId);
+                for (BillsDetails item : items) {
+                    int productid = item.getProductId();
+                    float quantityofBils = item.getQuantity();
+                    float numberUnit = productNumbersDAO.getProductsnumberById(productid).getUnitsInStock();
+                    float newQuantity = quantityofBils + numberUnit;
+                    productNumbersDAO.updateStock(newQuantity, productid);
+                }
+                    
+            }
+       
+        
+    }
+
 
 }

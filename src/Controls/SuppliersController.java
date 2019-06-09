@@ -34,6 +34,7 @@ import javafx.util.StringConverter;
 
 
 public class SuppliersController implements Initializable {
+    
     Helper helper = new Helper();
     private final SuppliersDAO suppliersDAO = new SuppliersDAO();
     
@@ -118,11 +119,13 @@ public class SuppliersController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         loadTabData();
         addButtonDeleteToTable();
         addButtonModfyToTable();
         addButtonAccountsToTable();
         formatDate();
+ 
     }    
 
     @FXML
@@ -163,6 +166,7 @@ public class SuppliersController implements Initializable {
 
     @FXML
     private void ClosePaidAnchor(MouseEvent event) {
+        anchorPaid.setVisible(false);
     }
 
     @FXML
@@ -337,13 +341,16 @@ public class SuppliersController implements Initializable {
                     private final Button btn = new Button("الحساب");
                     {                      
                         btn.setOnAction((ActionEvent event) -> {
+                            
                             Suppliers data = getTableView().getItems().get(getIndex());
                             txtCustomersPayment.setText("0");
                             lablRemainingCost.setText("0");                          
                             anchorPaid.setVisible(true);
-//                            customerAccountsCalc(data.getCustomerName(), data.getCustomerId());
-//                            txtCustomerId.setText(data.getCustomerId().toString());
-//                            loadtablePaymentData(data.getCustomerId());
+                            
+//                          customerAccountsCalc(data.getCustomerName(), data.getCustomerId());
+//                          txtCustomerId.setText(data.getCustomerId().toString());
+//                          loadtablePaymentData(data.getCustomerId());
+
                         });
                     }
                     @Override
@@ -352,9 +359,8 @@ public class SuppliersController implements Initializable {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                           // btn.getStyleClass().add("button_Small");
+                            //btn.getStyleClass().add("button_Small");
                             setGraphic(btn);
-
                         }
                     }
                 };

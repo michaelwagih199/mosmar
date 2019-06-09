@@ -54,7 +54,7 @@ public class BillsDetailsDAO {
     }
    
    
-     public ObservableList<BillsDetails> getOrdersFromOrderId(int suppliersBilsId) {
+     public ObservableList<BillsDetails> getBillsDetailsId(int suppliersBilsId) {
         List<BillsDetails> cars = new ArrayList<BillsDetails>();
         ObservableList<BillsDetails> row = FXCollections.observableArrayList();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
