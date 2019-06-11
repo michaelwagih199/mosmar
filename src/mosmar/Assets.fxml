@@ -50,9 +50,9 @@
       <TableView fx:id="tablAssets" layoutX="5.0" layoutY="54.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="372.0" prefWidth="987.0">
         <columns>
             <TableColumn fx:id="colId" prefWidth="48.3333740234375" text="م" />
-          <TableColumn fx:id="colAssetsName" prefWidth="268.66668701171875" text="اسم الأصل" />
-          <TableColumn fx:id="colValue" minWidth="0.0" prefWidth="234.333251953125" text="قيمة الأصل" />
-            <TableColumn fx:id="colNotes" minWidth="0.0" prefWidth="439.66668701171875" text="ملاحظات" />
+          <TableColumn fx:id="colAssetsName" prefWidth="298.0" text="اسم الأصل" />
+          <TableColumn fx:id="colValue" minWidth="0.0" prefWidth="184.0" text="قيمة الأصل" />
+            <TableColumn fx:id="colNotes" minWidth="0.0" prefWidth="360.0" text="ملاحظات" />
         </columns>
       </TableView>
       <Pane layoutX="4.0" layoutY="431.0" prefHeight="56.0" prefWidth="988.0" styleClass="grey_back_noShadow">
@@ -61,9 +61,9 @@
             <Label fx:id="lableTotalAssets" alignment="CENTER" layoutX="320.0" layoutY="3.0" prefHeight="49.0" prefWidth="350.0" styleClass="text5" text="0" />
          </children>
       </Pane>
-      <Pane fx:id="addPane" layoutX="305.0" layoutY="48.0" prefHeight="439.0" prefWidth="401.0" styleClass="grey_wite_back">
+      <Pane fx:id="addPane" layoutX="305.0" layoutY="48.0" prefHeight="439.0" prefWidth="401.0" styleClass="grey_wite_back" visible="false">
          <children>
-            <ImageView fitHeight="35.0" fitWidth="37.0" layoutX="6.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="35.0" fitWidth="37.0" layoutX="6.0" layoutY="5.0" onMouseClicked="#closeAddClick" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../res/close2.png" />
                </image>

@@ -6,6 +6,10 @@ import dao.AssetsDAO;
 import dao.ProductDAO;
 import dao.ProductNumbersDAO;
 import entities.Assets;
+import entities.Customers;
+import helper.FxDialogs;
+import helper.Helper;
+import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -15,12 +19,15 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 
 public class AssetsController implements Initializable {
 
@@ -39,6 +46,7 @@ public class AssetsController implements Initializable {
     private final ProductDAO productDAO = new ProductDAO();
     ProductNumbersDAO productNumbersDAO = new ProductNumbersDAO();
     AssetsDAO assetsDAO = new AssetsDAO();
+    Helper helper = new Helper();
 
     @FXML
     private TableView<Assets> tablAssets;
@@ -59,6 +67,7 @@ public class AssetsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         loadoAssetsTabData();
         calcCapital();
+        addButtonDeleteToTable();
     }
 
     @FXML
@@ -67,7 +76,15 @@ public class AssetsController implements Initializable {
     }
 
     @FXML
-    private void homeClick(MouseEvent event) {
+    private void homeClick(MouseEvent event) throws IOException {
+        helper.start("/mosmar/main.fxml", "الصفحة الرئيسية");
+        helper.closePane(addPane);
+    }
+
+    @FXML
+    private void closeAddClick(MouseEvent event) {
+        addPane.setVisible(false);
+        clearAdd();
     }
 
     @FXML
@@ -113,5 +130,54 @@ public class AssetsController implements Initializable {
         etAssetName.clear();
         AssetValue.clear();
         assetnotes.clear();
+    }
+
+    //delete row
+    private void addButtonDeleteToTable() {
+        TableColumn<Assets, Void> colBtn = new TableColumn();
+
+        Callback<TableColumn<Assets, Void>, TableCell<Assets, Void>> cellFactory;
+        cellFactory = new Callback<TableColumn<Assets, Void>, TableCell<Assets, Void>>() {
+            @Override
+            public TableCell<Assets, Void> call(final TableColumn<Assets, Void> param) {
+                final TableCell<Assets, Void> cell = new TableCell<Assets, Void>() {
+
+                    private final Button btn = new Button("مسح");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+
+                            if (FxDialogs.showConfirm("مسح المنتج", "هل تريد مسح المنتج?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
+                                Assets data = getTableView().getItems().get(getIndex());
+                                try {
+                                    assetsDAO.removAssets(data.getAssetsId());
+                                    loadoAssetsTabData();
+                                    calcCapital();
+                                } catch (Exception ex) {
+                                    Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            btn.getStyleClass().add("button_Small");
+                            setGraphic(btn);
+
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+        tablAssets.getColumns().add(colBtn);
     }
 }
