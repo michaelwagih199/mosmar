@@ -49,4 +49,20 @@ public class AssetsDAO {
         return assetsJpaController.findAssets(Id);
     }
 
+    public Double getAssetsValueCapital() {
+        Double result;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+            String sql = "SELECT SUM(a.assetsValue)from Assets a";
+            Query query = eman.createQuery(sql);
+            result = (Double) query.getSingleResult();
+
+        } finally {
+            eman.close();
+            emf.close();
+        }
+        return result;
+    }
+
 }

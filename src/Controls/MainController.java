@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controls;
 
 import com.jfoenix.controls.JFXButton;
@@ -42,21 +38,21 @@ public class MainController implements Initializable {
     @FXML
     private void btnBuyClick(ActionEvent event) throws Exception {
 
-        helper.start("/mosmar/buy.fxml", "صفحة البيع");
+        helper.start("/mosmar/buy.fxml", "البيع");
         helper.close(btn_buy);
     }
 
 
     @FXML
     private void btnAccountsClick(ActionEvent event) throws IOException{
-         helper.start("/mosmar/acountsCenter.fxml", "المخزن");
+         helper.start("/mosmar/acountsCenter.fxml", "الحسابات");
          helper.close(btn_buy);
     }
 
     @FXML
     private void btnBurshesClick(ActionEvent event) throws IOException {
         
-        helper.start("/mosmar/suppliers.fxml", "المخزن");
+        helper.start("/mosmar/suppliers.fxml", "الموردين");
         helper.close(btn_buy);
         
     }
@@ -76,6 +72,12 @@ public class MainController implements Initializable {
     @FXML
     private void btn_customersClick(ActionEvent event) throws IOException {
         helper.start("/mosmar/customers.fxml", "حساب العملاء");
+        helper.close(btn_buy);
+    }
+
+    @FXML
+    private void assetsClick(ActionEvent event) throws IOException {
+        helper.start("/mosmar/Assets.fxml", "الاصول");
         helper.close(btn_buy);
     }
 
