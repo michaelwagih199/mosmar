@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controls;
 
 import com.jfoenix.controls.JFXTextArea;
@@ -20,11 +16,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 
-/**
- * FXML Controller class
- *
- * @author OM EL NOUR
- */
+
+
 public class AssetsController implements Initializable {
 
     @FXML
@@ -54,17 +47,13 @@ public class AssetsController implements Initializable {
     private TableColumn<?, ?> colValue;
     @FXML
     private TableColumn<?, ?> colNotes;
-    /**
-     * Initializes the controller class.
-     */
+   
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }   
-    
-    
-    
-    
+
     
     /**
      * helper methods
