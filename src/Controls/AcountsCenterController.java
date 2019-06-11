@@ -6,6 +6,8 @@ import dao.ExpensessDAO;
 import dao.OrderDAO;
 import dao.OrderDetailDAO;
 import dao.OrderPaymentDAO;
+import dao.ProductDAO;
+import dao.ProductNumbersDAO;
 import entities.Custom_OrderDetails;
 import entities.Customers;
 import entities.Expenses;
@@ -82,6 +84,8 @@ public class AcountsCenterController implements Initializable {
     CalculasHelper calculasHelper = new CalculasHelper();
     OrderPaymentDAO orderPaymentDAO = new OrderPaymentDAO();
     ExpensessDAO expensessDAO = new ExpensessDAO();
+    ProductDAO productDAO = new ProductDAO();
+    ProductNumbersDAO productNumbersDAO = new ProductNumbersDAO();
 
     @FXML
     private DatePicker orderDate;
@@ -527,7 +531,7 @@ public class AcountsCenterController implements Initializable {
                                 
                                 Expenses data = getTableView().getItems().get(getIndex());
                                 try {
-
+                                    
                                     java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
                                     java.sql.Date orderEndDatee = java.sql.Date.valueOf(orderEndDate.getValue());
                                     expensessDAO.removexpenses(data.getExpensesId());
@@ -535,7 +539,7 @@ public class AcountsCenterController implements Initializable {
                                     txt_sales.setText("");
                                     txt_treasury.setText("");
                                     profitCalulas();
-
+                                    
                                 } catch (Exception ex) {
                                     Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -582,15 +586,38 @@ public class AcountsCenterController implements Initializable {
 
                             if (FxDialogs.showConfirm("مرتجع المنتج", "هل تريد ترجيع المنتج?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {                   
                                 Custom_OrderDetails data = getTableView().getItems().get(getIndex());
+                               
+                                
                                 try {
+                                    // 1 delete from orderDetails 2- delete from orderPayment 3- update value in stock
+                                    // 4 insert to table retrival
                                     
+                                    //remove from order details
+                                    orderDetailDAO.removeOrders(data.getId());
+                                    
+                                    //update stock 
+                                    if (orderType.getText().toString().equals("وزن")) {
+                                        int productid = productDAO.getProductId(data.getProductName().toString()).get(0).getProductid();
+                                        float quantityofBils = data.getQuantity();
+                                        float numberUnit = productDAO.getProductById(productid).getUnitsWeightInStock();
+                                        float newQuantity = quantityofBils + numberUnit;
+                                        productDAO.updateWeight(newQuantity, productid);
+                                       
+                                    } else if (orderType.getText().toString().equals("قطعة")) {
+                                        int productid = productNumbersDAO.getProducNumbertId(data.getProductName().toString()).get(0).getProductnumberid();
+                                        float quantityofBils = data.getQuantity();
+                                        float numberUnit = productNumbersDAO.getProductsnumberById(productid).getUnitsInStock();
+                                        float newQuantity = quantityofBils + numberUnit;
+                                        productNumbersDAO.updateStock(newQuantity, productid);
+                                    }
 
                                   
-
                                 } catch (Exception ex) {
-                                    Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
+                                    Logger.getLogger(AcountsCenterController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
-
+                                tableOrderDetails.getItems().clear();
+                             paneOrderDetail.setVisible(false);
+                           
                             }
                         });
                     }
