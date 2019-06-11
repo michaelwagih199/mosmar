@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Supplierspayment.findAll", query = "SELECT s FROM Supplierspayment s")
     , @NamedQuery(name = "Supplierspayment.findBySuppliersPaymentId", query = "SELECT s FROM Supplierspayment s WHERE s.suppliersPaymentId = :suppliersPaymentId")
     , @NamedQuery(name = "Supplierspayment.findBySuppliersId", query = "SELECT s FROM Supplierspayment s WHERE s.suppliersId = :suppliersId")
-    , @NamedQuery(name = "Supplierspayment.findByPaymentDate", query = "SELECT s FROM Supplierspayment s WHERE s.paymentDate = :paymentDate")})
+    , @NamedQuery(name = "Supplierspayment.findByPaymentDate", query = "SELECT s FROM Supplierspayment s WHERE s.paymentDate = :paymentDate")
+    , @NamedQuery(name = "Supplierspayment.findByPaymentValue", query = "SELECT s FROM Supplierspayment s WHERE s.paymentValue = :paymentValue")})
 public class Supplierspayment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,6 +47,9 @@ public class Supplierspayment implements Serializable {
     @Lob
     @Column(name = "notes")
     private String notes;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "paymentValue")
+    private Float paymentValue;
 
     public Supplierspayment() {
     }
@@ -84,6 +88,14 @@ public class Supplierspayment implements Serializable {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Float getPaymentValue() {
+        return paymentValue;
+    }
+
+    public void setPaymentValue(Float paymentValue) {
+        this.paymentValue = paymentValue;
     }
 
     @Override

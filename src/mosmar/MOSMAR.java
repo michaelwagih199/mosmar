@@ -13,7 +13,7 @@ public class MOSMAR extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("sho7nat.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("suppliers.fxml"));
         
         Scene scene = new Scene(root);    
         

@@ -148,11 +148,9 @@ public class StockController implements Initializable {
     private JFXButton btn_edit_product;
     @FXML
     private JFXButton btn_edit_product_number;
-    @FXML
     private Label capitalWeight;
   
     DecimalFormat df = new DecimalFormat("#.###");
-    @FXML
     private Label capitalUnits;
     @FXML
     private Label subId1;
@@ -185,7 +183,7 @@ public class StockController implements Initializable {
         addButtonProductMapppingToTable();
         compoCategory.getItems().addAll("منتجات بكجم");
         compoCategory.getItems().addAll("منتجات بالوحدة");       
-        calcCapital();
+     
         
     
         
@@ -769,15 +767,7 @@ public class StockController implements Initializable {
    /**
     * helper methods
     */
-    public void calcCapital(){
-        try {
-            capitalWeight.setText(df.format(productDAO.getUnitsCapital()));
-            capitalUnits.setText(df.format(productNumbersDAO.getUnitsCapital()));
-            
-        } catch (Exception e) {
-        }
-    }
-    
+  
     
     public void clearMapping() {       
         subId1.setText("");

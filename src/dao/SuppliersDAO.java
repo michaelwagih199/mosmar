@@ -1,6 +1,7 @@
 package dao;
 
 import entities.Customers;
+import entities.CustomersPayment;
 import entities.Products;
 import entities.Suppliers;
 import java.util.ArrayList;
@@ -72,5 +73,9 @@ public class SuppliersDAO {
         }
         return result;
     }
+    
+    
+    
+
 
 }

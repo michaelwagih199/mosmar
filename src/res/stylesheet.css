@@ -209,7 +209,8 @@
     -fx-background-radius: 3,2,1;
     -fx-padding: 3 30 3 30;
     -fx-text-fill: black;
-    -fx-font-size: 12px;
+    -fx-font-size: 30px;
+    -fx-font-family: "Arial";
 }
 #windows8:hover {
     -fx-background-color:
@@ -220,8 +221,8 @@
     -fx-background-radius: 5,5,4;
     -fx-padding: 7 30 7 30;
     -fx-text-fill: #242d35;
-    -fx-font-family: "Helvetica";
-    -fx-font-size: 12px;
+    -fx-font-family: "Arial";
+    -fx-font-size: 30px;
     -fx-text-fill: white;
 }
 

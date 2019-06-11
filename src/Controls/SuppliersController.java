@@ -1,18 +1,25 @@
-
 package Controls;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import dao.SuppliersDAO;
+import dao.SuppliersPaymentDAO;
 import entities.Customers;
+import entities.CustomersPayment;
 import entities.Suppliers;
+import entities.Supplierspayment;
+import helper.CustumersCalculas;
 import helper.FxDialogs;
 import helper.Helper;
+import helper.SuppliersCalculas;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,12 +39,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
-
 public class SuppliersController implements Initializable {
-    
+
     Helper helper = new Helper();
+
     private final SuppliersDAO suppliersDAO = new SuppliersDAO();
-    
+    DecimalFormat df = new DecimalFormat("#.###");
+    SuppliersCalculas suppliersCalculas = new SuppliersCalculas();
+    SuppliersPaymentDAO suppliersPaymentDAO = new SuppliersPaymentDAO();
+
     @FXML
     private ImageView purchase;
     @FXML
@@ -56,7 +66,7 @@ public class SuppliersController implements Initializable {
     private TableColumn<Suppliers, String> col_notes;
     @FXML
     private AnchorPane anchorAdd;
- 
+
     @FXML
     private JFXTextField etSuppliersPhone;
     @FXML
@@ -88,13 +98,13 @@ public class SuppliersController implements Initializable {
     @FXML
     private JFXButton btnAddCost;
     @FXML
-    private TableView<?> tablePayment;
+    private TableView<Supplierspayment> tablePayment;
     @FXML
-    private TableColumn<?, ?> colDatePaid;
+    private TableColumn<Supplierspayment, Date> colDatePaid;
     @FXML
-    private TableColumn<?, ?> colpaidValuePaid;
+    private TableColumn<Supplierspayment, Float> colpaidValuePaid;
     @FXML
-    private TableColumn<?, ?> colNotesPaid;
+    private TableColumn<Supplierspayment, String> colNotesPaid;
     @FXML
     private JFXButton btnCustomersDetails;
     @FXML
@@ -115,22 +125,21 @@ public class SuppliersController implements Initializable {
     private Label txtCustomersPayment;
     @FXML
     private JFXTextField etSuppliersName;
-   
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         loadTabData();
         addButtonDeleteToTable();
         addButtonModfyToTable();
         addButtonAccountsToTable();
         formatDate();
- 
-    }    
+
+    }
 
     @FXML
     private void add_click(MouseEvent event) {
-         anchorAdd.setVisible(true);
+        anchorAdd.setVisible(true);
     }
 
     @FXML
@@ -138,7 +147,6 @@ public class SuppliersController implements Initializable {
         helper.start("/mosmar/main.fxml", "الصفحة الرئيسية");
         helper.close(btn_save);
     }
-
 
     @FXML
     private void btn_save_click(ActionEvent event) {
@@ -157,11 +165,10 @@ public class SuppliersController implements Initializable {
         }
         loadTabData();
     }
-     
 
     @FXML
     private void closeAdd_click(MouseEvent event) {
-         anchorAdd.setVisible(false);
+        anchorAdd.setVisible(false);
     }
 
     @FXML
@@ -171,6 +178,25 @@ public class SuppliersController implements Initializable {
 
     @FXML
     private void addCostClick(ActionEvent event) {
+        try {
+
+            java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(dateBicerPaidDate.getValue());
+            if (Float.parseFloat(etPaidValue.getText().toString()) > Float.parseFloat(lablRemainingCost.getText().toString())) {
+
+            } else {
+                SuppPaymentAdd(Integer.parseInt(txtCustomerId.getText().toString()), gettedDatePickerDate,
+                        Float.parseFloat(etPaidValue.getText().toString()), etComment.getText().toString());
+            }
+
+            loadtablePaymentData(Integer.parseInt(txtCustomerId.getText().toString()));
+            customerAccountsCalc(labelClientName.getText().toString(),
+                    Integer.parseInt(txtCustomerId.getText().toString()));
+
+            etPaidValue.clear();
+            etComment.clear();
+        } catch (Exception e) {
+        }
+
     }
 
     @FXML
@@ -183,14 +209,13 @@ public class SuppliersController implements Initializable {
 
     @FXML
     private void purchaseClick(MouseEvent event) throws IOException {
-         helper.start("/mosmar/sho7nat.fxml", "المخزن");
-         helper.closeI(purchase);
+        helper.start("/mosmar/sho7nat.fxml", "المخزن");
+        helper.closeI(purchase);
     }
-    
+
     /**
-     * function for help 
+     * function for help
      */
-    
     public void loadTabData() {
         col_id.setCellValueFactory(new PropertyValueFactory<>("supplierid"));
         col_ClientName.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
@@ -208,10 +233,9 @@ public class SuppliersController implements Initializable {
         etSuppliersCompany.clear();
         etNotes.clear();
     }
-    
-     public void formatDate(){
-           String pattern = "yyyy-MM-dd";
 
+    public void formatDate() {
+        String pattern = "yyyy-MM-dd";
         StringConverter converter = new StringConverter<LocalDate>() {
             DateTimeFormatter dateFormatter
                     = DateTimeFormatter.ofPattern(pattern);
@@ -237,14 +261,12 @@ public class SuppliersController implements Initializable {
         dateBicerPaidDate.setConverter(converter);
         dateBicerPaidDate.setPromptText(pattern.toLowerCase());
     }
-    
-    
-    /***
+
+    /**
+     * *
      * FUNCTION FOR BUTTON TO TABLES
      */
-
-    
-        //delete row
+    //delete row
     private void addButtonDeleteToTable() {
         TableColumn<Suppliers, Void> colBtn = new TableColumn();
 
@@ -292,7 +314,6 @@ public class SuppliersController implements Initializable {
         table.getColumns().add(colBtn);
     }
 
-
     private void addButtonModfyToTable() {
         TableColumn<Suppliers, Void> colBtn = new TableColumn();
 
@@ -339,20 +360,22 @@ public class SuppliersController implements Initializable {
             public TableCell<Suppliers, Void> call(final TableColumn<Suppliers, Void> param) {
                 final TableCell<Suppliers, Void> cell = new TableCell<Suppliers, Void>() {
                     private final Button btn = new Button("الحساب");
-                    {                      
+
+                    {
                         btn.setOnAction((ActionEvent event) -> {
-                            
+
                             Suppliers data = getTableView().getItems().get(getIndex());
                             txtCustomersPayment.setText("0");
-                            lablRemainingCost.setText("0");                          
+                            lablRemainingCost.setText("0");
                             anchorPaid.setVisible(true);
-                            
-//                          customerAccountsCalc(data.getCustomerName(), data.getCustomerId());
-//                          txtCustomerId.setText(data.getCustomerId().toString());
-//                          loadtablePaymentData(data.getCustomerId());
+
+                            customerAccountsCalc(data.getSupplierName(), data.getSupplierid());
+                            txtCustomerId.setText(data.getSupplierid().toString());
+                            loadtablePaymentData(data.getSupplierid());
 
                         });
                     }
+
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -371,8 +394,63 @@ public class SuppliersController implements Initializable {
         colBtn.setCellFactory(cellFactory);
         table.getColumns().add(colBtn);
     }
-    
-    
-    
-    
+
+    // helper methods
+    public void customerAccountsCalc(String customerName, int customerId) {
+        try {
+            labelClientName.setText(customerName);
+            etTotalCost.setText(df.format(suppliersCalculas.getCustomersRemaining(customerId).get(0)));
+            lablRemainingCost.setText(etTotalCost.getText().toString());
+            txtCustomersPayment.setText(df.format(suppliersCalculas.getSuppliersPayment(customerId).get(0)));
+            float RemainingCost = Float.parseFloat(etTotalCost.getText().toString()) - Float.parseFloat(txtCustomersPayment.getText().toString());
+            lablRemainingCost.setText(df.format(RemainingCost));
+            
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    public void loadtablePaymentData(int supplierId) {
+        colDatePaid.setCellValueFactory(new PropertyValueFactory<>("paymentDate"));
+        colpaidValuePaid.setCellValueFactory(new PropertyValueFactory<>("paymentValue"));
+        colNotesPaid.setCellValueFactory(new PropertyValueFactory<>("notes"));
+        //updateStatusColor();
+        formateDate();
+        tablePayment.setItems(suppliersPaymentDAO.getSupplierspayments(supplierId));
+    }
+
+    public void formateDate() {
+        colDatePaid.setCellValueFactory(new PropertyValueFactory<Supplierspayment, Date>("paymentDate"));
+        colDatePaid.setCellFactory(column -> {
+            TableCell<Supplierspayment, Date> cell = new TableCell<Supplierspayment, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        this.setText(format.format(item));
+                    }
+                }
+            };
+            return cell;
+        });
+    }
+
+    public void SuppPaymentAdd(int customerId, Date paymentDate, float paidVaue, String notes) {
+        try {
+            Supplierspayment supplierspayment = new Supplierspayment();
+            supplierspayment.setSuppliersId(customerId);
+            supplierspayment.setPaymentDate(paymentDate);
+            supplierspayment.setPaymentValue(paidVaue);
+            supplierspayment.setNotes(notes);
+            suppliersPaymentDAO.addSupplierspayment(supplierspayment);
+        } catch (Exception ex) {
+            Logger.getLogger(CustomersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

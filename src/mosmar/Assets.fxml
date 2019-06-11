@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" styleClass="main_back" stylesheets="@../res/application.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="Controls.AssetsController">
+   <children>
+      <Pane layoutX="-1.0" layoutY="1.0" prefHeight="46.0" prefWidth="1000.0" styleClass="grey_back_noShadow">
+         <children>
+            <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="951.0" onMouseClicked="#addClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/add.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="6.0" onMouseClicked="#homeClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/002-home.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="363.0" layoutY="-3.0" prefHeight="49.0" prefWidth="301.0" styleClass="textHeder2" text="الاصول" />
+         </children>
+      </Pane>
+      <Separator layoutX="3.0" layoutY="491.0" prefHeight="0.0" prefWidth="993.0" />
+      <Pane layoutX="-1.0" layoutY="544.0" prefHeight="54.0" prefWidth="999.0" styleClass="grey_back_noShadow">
+         <children>
+            <Label alignment="CENTER" layoutX="833.0" layoutY="1.0" prefHeight="49.0" prefWidth="141.0" styleClass="textHeder2" text="منتجات كجم" />
+            <Label fx:id="capitalWeight" alignment="CENTER" layoutX="549.0" layoutY="4.0" prefHeight="47.0" prefWidth="263.0" styleClass="text5" text="0" />
+            <Label alignment="CENTER" layoutX="250.0" layoutY="3.0" prefHeight="49.0" prefWidth="198.0" styleClass="textHeder2" text=" للمنتجات الوحدة" />
+            <Label fx:id="capitalUnits" alignment="CENTER" layoutX="6.0" layoutY="2.0" prefHeight="47.0" prefWidth="235.0" styleClass="text5" text="0" />
+         </children>
+      </Pane>
+      <Label alignment="CENTER" layoutX="372.0" layoutY="494.0" prefHeight="41.0" prefWidth="301.0" styleClass="textHeder2" text="اصول البضاعة" />
+      <TableView fx:id="tablAssets" layoutX="5.0" layoutY="54.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="372.0" prefWidth="987.0">
+        <columns>
+            <TableColumn fx:id="colId" prefWidth="48.3333740234375" text="م" />
+          <TableColumn fx:id="colAssetsName" prefWidth="268.66668701171875" text="اسم الأصل" />
+          <TableColumn fx:id="colValue" minWidth="0.0" prefWidth="234.333251953125" text="قيمة الأصل" />
+            <TableColumn fx:id="colNotes" minWidth="0.0" prefWidth="439.66668701171875" text="ملاحظات" />
+        </columns>
+      </TableView>
+      <Pane layoutX="4.0" layoutY="431.0" prefHeight="56.0" prefWidth="988.0" styleClass="grey_back_noShadow">
+         <children>
+            <Label alignment="CENTER" layoutX="713.0" layoutY="-1.0" prefHeight="49.0" prefWidth="260.0" styleClass="textHeder2" text="اجمالى الاصول الثابتة" />
+            <Label fx:id="lableTotalAssets" alignment="CENTER" layoutX="320.0" layoutY="3.0" prefHeight="49.0" prefWidth="350.0" styleClass="text5" text="0" />
+         </children>
+      </Pane>
+      <Pane layoutX="305.0" layoutY="48.0" prefHeight="439.0" prefWidth="401.0" styleClass="grey_wite_back" visible="false">
+         <children>
+            <ImageView fitHeight="35.0" fitWidth="37.0" layoutX="6.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/close2.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <JFXTextArea fx:id="etAssetName" layoutX="16.0" layoutY="96.0" prefHeight="62.0" prefWidth="363.0" styleClass="textFeild" />
+            <Label alignment="CENTER" layoutX="53.0" layoutY="46.0" prefHeight="47.0" prefWidth="301.0" styleClass="text_Black" text="اسم الاصل" />
+            <Label alignment="CENTER" layoutX="57.0" layoutY="162.0" prefHeight="35.0" prefWidth="301.0" styleClass="text_Black" text="قيمة الصنف" />
+            <JFXTextField fx:id="AssetValue" layoutX="20.0" layoutY="197.0" prefHeight="42.0" prefWidth="361.0" styleClass="textFeild" />
+            <Label alignment="CENTER" layoutX="53.0" layoutY="247.0" prefHeight="35.0" prefWidth="301.0" styleClass="text_Black" text="ملاحظات" />
+            <JFXTextArea fx:id="assetValue" layoutX="19.0" layoutY="279.0" prefHeight="62.0" prefWidth="363.0" styleClass="textFeild" />
+            <JFXButton layoutX="100.0" layoutY="368.0" onAction="#saveAssetClick" prefHeight="47.0" prefWidth="208.0" styleClass="button_Normal" text="حفظ" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
