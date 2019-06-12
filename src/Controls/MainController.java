@@ -2,14 +2,22 @@
 package Controls;
 
 import com.jfoenix.controls.JFXButton;
+import helper.BackupdbtosqlHelper;
 
 import helper.Helper;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
+import javax.swing.JFileChooser;
 
 
 public class MainController implements Initializable {
@@ -58,7 +66,9 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void btnRecallClick(ActionEvent event) {
+    private void btnRecallClick(ActionEvent event) throws IOException {
+        helper.start("/mosmar/retrieval.fxml", "المخزن");
+        helper.close(btn_buy);
     }
 
     @FXML
@@ -80,5 +90,8 @@ public class MainController implements Initializable {
         helper.start("/mosmar/Assets.fxml", "الاصول");
         helper.close(btn_buy);
     }
+
+    
+    
 
 }

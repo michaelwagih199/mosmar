@@ -1,27 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" styleClass="pattern_background" stylesheets="@../res/application.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="Controls.RetrievalController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1029.0" styleClass="main_back" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.RetrievalController">
    <children>
-      <ImageView fitHeight="47.0" fitWidth="46.0" layoutX="6.0" layoutY="4.0" onMouseClicked="#homeClick" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../res/002-home.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <Pane layoutX="369.0" layoutY="3.0" prefHeight="52.0" prefWidth="334.0" styleClass="grey_wite_back">
+      <Pane layoutX="-2.0" layoutY="1.0" prefHeight="64.0" prefWidth="1029.0" styleClass="grey_back_noShadow">
          <children>
-            <Label alignment="CENTER" layoutX="17.0" layoutY="5.0" prefHeight="38.0" prefWidth="301.0" styleClass="textHeder2" text="المرتجع" />
+            <Pane layoutX="398.0" layoutY="6.0" prefHeight="52.0" prefWidth="300.0" styleClass="grey_wite_back">
+               <children>
+                  <Label alignment="CENTER" layoutX="14.0" layoutY="7.0" prefHeight="33.0" prefWidth="262.0" styleClass="textHeder2" text=" فاتورة مرتجعات" />
+               </children>
+            </Pane>
+            <ImageView fitHeight="56.0" fitWidth="61.0" layoutX="8.0" layoutY="3.0" onMouseClicked="#homeClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/002-home.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
          </children>
       </Pane>
+      <Separator layoutX="6.0" layoutY="208.0" prefHeight="6.0" prefWidth="1018.0" />
+      <JFXComboBox fx:id="compo_product_Type" layoutX="783.0" layoutY="106.0" onAction="#compo_product_Type_click" prefHeight="28.0" prefWidth="218.0" promptText="تصنيف المنتج" styleClass="combobox" />
+      <Label layoutX="835.0" layoutY="71.0" prefHeight="27.0" prefWidth="115.0" styleClass="text_normal" text="تصنيف المنتج" />
+      <TextField fx:id="etProductName" alignment="CENTER" layoutX="479.0" layoutY="106.0" opacity="0.9" prefHeight="33.0" prefWidth="258.0" promptText="اسم الصنف" styleClass="textFeild">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="551.0" layoutY="72.0" styleClass="text_normal" text="اسم الصنف" />
+      <TextField fx:id="etClientName" alignment="CENTER" layoutX="185.0" layoutY="106.0" prefHeight="33.0" prefWidth="257.0" promptText="اسم العميل" styleClass="textFeild">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="266.0" layoutY="73.0" styleClass="text_normal" text="اسم العميل " />
+      <Label layoutX="58.0" layoutY="72.0" styleClass="text_normal" text="المصروف" />
+      <TextField fx:id="etValue" alignment="CENTER" layoutX="19.0" layoutY="106.0" opacity="0.9" prefHeight="36.0" prefWidth="148.0" promptText="0" styleClass="textFeild" text="0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <JFXButton layoutX="429.0" layoutY="159.0" onAction="#addProduct" prefHeight="43.0" prefWidth="172.0" styleClass="text5" text="إضافة" />
+      <TableView fx:id="retrivalTable" layoutX="8.0" layoutY="217.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="375.0" prefWidth="1014.0" styleClass="table">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="45.0" text="م" />
+          <TableColumn fx:id="colDate" prefWidth="134.3333740234375" text="التاريخ" />
+            <TableColumn fx:id="colTime" prefWidth="136.6666259765625" text="وقت" />
+            <TableColumn fx:id="colProduct" prefWidth="223.0" text="الصنف" />
+            <TableColumn fx:id="colValue" prefWidth="115.0" text="القيمة" />
+            <TableColumn fx:id="colClient" prefWidth="197.0" text="اسم العميل" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

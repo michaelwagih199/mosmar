@@ -46,6 +46,27 @@ public class OrderPaymentDAO {
     }
     
     
+     public void updateStock(float unitsInStock, int productId) {
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+            eman.getTransaction().begin();
+            //"SELECT p FROM Productsnumber p WHERE p.unitsInStock = :unitsInStock"
+            String sql = "update Productsnumber set unitsInStock = :unitsInStock WHERE productnumberid = :productnumberid";
+            Query query = eman.createQuery(sql);
+            query.setParameter("unitsInStock", unitsInStock);
+            query.setParameter("productnumberid", productId);
+            query.executeUpdate();
+            eman.getTransaction().commit();
+
+        } finally {
+            eman.close();
+            emf.close();
+        }
+
+    }
+    
 
 
 }

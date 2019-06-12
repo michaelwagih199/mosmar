@@ -2,7 +2,7 @@
     -fx-background-image:url('../res/f.jpg');
 }
 .main_back{
-    -fx-background-color: #FDFFFC;    
+    -fx-background-color: #F0F0F0;    
 }
 
 .pattern_background {
@@ -177,7 +177,7 @@
 
 .combobox {
     -fx-font-family: "Arial";
-     -fx-background-color: #959595;
+     -fx-background-color: #00C8FF;
     -fx-font-size: 14pt;
     -fx-prompt-text-fill: #333335;
 }

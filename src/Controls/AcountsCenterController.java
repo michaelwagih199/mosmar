@@ -610,6 +610,7 @@ public class AcountsCenterController implements Initializable {
                                         float newQuantity = quantityofBils + numberUnit;
                                         productNumbersDAO.updateStock(newQuantity, productid);
                                     }
+                                    //update 
 
                                   
                                 } catch (Exception ex) {
