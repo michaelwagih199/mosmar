@@ -46,8 +46,5 @@ public class ExpensessDAO {
     public Expenses getExpensesById(int Id) {
         return expensesJpaController.findExpenses(Id);
     }
-    
-    
-
 
 }
