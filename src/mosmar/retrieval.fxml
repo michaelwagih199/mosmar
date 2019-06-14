@@ -50,7 +50,7 @@
             <TableColumn fx:id="colClient" prefWidth="159.0" text="اسم العميل" />
         </columns>
       </TableView>
-      <Pane fx:id="paneAddBillsR" layoutX="22.0" layoutY="26.0" prefHeight="564.0" prefWidth="977.0" styleClass="grey_wite_back" visible="false">
+      <Pane fx:id="paneAddBillsR" layoutX="22.0" layoutY="26.0" prefHeight="564.0" prefWidth="977.0" styleClass="grey_wite_back">
          <children>
             <JFXComboBox fx:id="compo_product_Type" layoutX="697.0" layoutY="101.0" onAction="#compo_product_Type_click" prefHeight="36.0" prefWidth="245.0" promptText="تصنيف المنتج" styleClass="combobox" />
             <Label layoutX="758.0" layoutY="63.0" prefHeight="27.0" prefWidth="115.0" styleClass="text_normal" text="تصنيف المنتج" />
@@ -59,7 +59,7 @@
                   <Font size="20.0" />
                </font>
             </TextField>
-            <JFXButton layoutX="404.0" layoutY="157.0" onAction="#addProductClick" prefHeight="43.0" prefWidth="172.0" styleClass="text5" text="إضافة" />
+            <JFXButton layoutX="422.0" layoutY="150.0" onAction="#addProductClick" prefHeight="43.0" prefWidth="172.0" styleClass="text5" text="إضافة" />
             <Label layoutX="471.0" layoutY="64.0" styleClass="text_normal" text="اسم الصنف" />
             <TextField fx:id="etValue" alignment="CENTER" layoutX="14.0" layoutY="101.0" opacity="0.9" prefHeight="36.0" prefWidth="159.0" promptText="0" styleClass="textFeild" text="0">
                <font>
@@ -83,10 +83,10 @@
             <Label alignment="CENTER" layoutX="377.0" layoutY="12.0" prefHeight="33.0" prefWidth="262.0" styleClass="textHeder2" text=" فاتورة مرتجعات" />
             <TableView fx:id="tableBilsdetail" layoutX="12.0" layoutY="208.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="235.0" prefWidth="957.0">
               <columns>
-                <TableColumn fx:id="colId" prefWidth="47.0" text="م" />
-                <TableColumn fx:id="colProductName" prefWidth="358.0" text="اسم الصنف" />
-                  <TableColumn fx:id="colQuantity" prefWidth="107.33328247070312" text="الكمية" />
-                  <TableColumn fx:id="colValue" prefWidth="125.666748046875" text="المصروف" />
+                <TableColumn fx:id="colId_Details" prefWidth="47.0" text="م" />
+                <TableColumn fx:id="colProductName_details" prefWidth="358.0" text="اسم الصنف" />
+                  <TableColumn fx:id="colQuantity_details" prefWidth="107.33328247070312" text="الكمية" />
+                  <TableColumn fx:id="colValue_details" prefWidth="125.666748046875" text="المصروف" />
               </columns>
             </TableView>
             <JFXButton layoutX="413.0" layoutY="508.0" onAction="#saveBillsClick" prefHeight="43.0" prefWidth="172.0" styleClass="text5" text="حفظ" />

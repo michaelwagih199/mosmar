@@ -10,7 +10,10 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -36,21 +39,25 @@ public class Retrievals implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "retrievalId")
     private Integer retrievalId;
     @Column(name = "retrievalDate")
     @Temporal(TemporalType.DATE)
-    private Date retrievalDate = new Date();
+    private Date retrievalDate;
     @Column(name = "retrievalTime")
     @Temporal(TemporalType.TIME)
-    private Date retrievalTime ;
+    private Date retrievalTime;
     @Basic(optional = false)
     @Column(name = "customer_id")
     private int customerId;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "billsValue")
     private Float billsValue;
+    @Lob
+    @Column(name = "UUID")
+    private String uuid;
 
     public Retrievals() {
     }
@@ -102,6 +109,14 @@ public class Retrievals implements Serializable {
 
     public void setBillsValue(Float billsValue) {
         this.billsValue = billsValue;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     @Override

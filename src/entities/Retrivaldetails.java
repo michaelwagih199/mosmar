@@ -29,7 +29,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Retrivaldetails.findByRetrivalDetailsId", query = "SELECT r FROM Retrivaldetails r WHERE r.retrivalDetailsId = :retrivalDetailsId")
     , @NamedQuery(name = "Retrivaldetails.findByProductID", query = "SELECT r FROM Retrivaldetails r WHERE r.productID = :productID")
     , @NamedQuery(name = "Retrivaldetails.findByExpenseValue", query = "SELECT r FROM Retrivaldetails r WHERE r.expenseValue = :expenseValue")
-    , @NamedQuery(name = "Retrivaldetails.findByQuantity", query = "SELECT r FROM Retrivaldetails r WHERE r.quantity = :quantity")})
+    , @NamedQuery(name = "Retrivaldetails.findByQuantity", query = "SELECT r FROM Retrivaldetails r WHERE r.quantity = :quantity")
+    , @NamedQuery(name = "Retrivaldetails.findByRetrivalsId", query = "SELECT r FROM Retrivaldetails r WHERE r.retrivalsId = :retrivalsId")
+    , @NamedQuery(name = "Retrivaldetails.findByProductCategoryId", query = "SELECT r FROM Retrivaldetails r WHERE r.productCategoryId = :productCategoryId")})
 public class Retrivaldetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,6 +47,10 @@ public class Retrivaldetails implements Serializable {
     private Float expenseValue;
     @Column(name = "quantity")
     private Float quantity;
+    @Column(name = "retrivalsId")
+    private Integer retrivalsId;
+    @Column(name = "ProductCategoryId")
+    private Integer productCategoryId;
 
     public Retrivaldetails() {
     }
@@ -83,6 +89,22 @@ public class Retrivaldetails implements Serializable {
 
     public void setQuantity(Float quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getRetrivalsId() {
+        return retrivalsId;
+    }
+
+    public void setRetrivalsId(Integer retrivalsId) {
+        this.retrivalsId = retrivalsId;
+    }
+
+    public Integer getProductCategoryId() {
+        return productCategoryId;
+    }
+
+    public void setProductCategoryId(Integer productCategoryId) {
+        this.productCategoryId = productCategoryId;
     }
 
     @Override
