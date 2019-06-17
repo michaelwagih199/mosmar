@@ -41,7 +41,7 @@
             </ImageView>
          </children>
       </Pane>
-      <TableView fx:id="retrivalTable" layoutX="8.0" layoutY="77.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#retrivalTableClick" prefHeight="516.0" prefWidth="1014.0" styleClass="table">
+      <TableView fx:id="retrivalTable" layoutX="8.0" layoutY="70.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#retrivalTableClick" prefHeight="491.0" prefWidth="1014.0" styleClass="table">
         <columns>
           <TableColumn fx:id="colId" prefWidth="48.0" text="م" />
           <TableColumn fx:id="colDate" prefWidth="146.0" text="التاريخ" />
@@ -50,7 +50,7 @@
             <TableColumn fx:id="colClient" prefWidth="159.0" text="اسم العميل" />
         </columns>
       </TableView>
-      <Pane fx:id="paneAddBillsR" layoutX="22.0" layoutY="26.0" prefHeight="564.0" prefWidth="977.0" styleClass="grey_wite_back">
+      <Pane fx:id="paneAddBillsR" layoutX="22.0" layoutY="26.0" prefHeight="564.0" prefWidth="977.0" styleClass="grey_wite_back" visible="false">
          <children>
             <JFXComboBox fx:id="compo_product_Type" layoutX="697.0" layoutY="101.0" onAction="#compo_product_Type_click" prefHeight="36.0" prefWidth="245.0" promptText="تصنيف المنتج" styleClass="combobox" />
             <Label layoutX="758.0" layoutY="63.0" prefHeight="27.0" prefWidth="115.0" styleClass="text_normal" text="تصنيف المنتج" />
@@ -102,5 +102,7 @@
             </ImageView>
          </children>
       </Pane>
+      <Label alignment="CENTER" layoutX="747.0" layoutY="569.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="27.0" prefWidth="152.0" styleClass="text_normal" text="اجمالى الفواتير" />
+      <Label fx:id="totalValues" alignment="CENTER" layoutX="474.0" layoutY="562.0" prefHeight="36.0" prefWidth="245.0" styleClass="text5" text="0" />
    </children>
 </AnchorPane>

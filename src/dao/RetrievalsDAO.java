@@ -1,4 +1,3 @@
-
 package dao;
 
 import entities.Expenses;
@@ -48,6 +47,45 @@ public class RetrievalsDAO {
 
     public Retrievals getRetrievalsById(int Id) {
         return retrievalsJpaController.findRetrievals(Id);
+    }
+
+    public int getLastOrderId(String UUID) {
+        List<Integer> cars = new ArrayList<Integer>();
+        int result = 0;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+
+        try {
+            //SELECT o FROM Orders o WHERE o.customerId = :customerId
+            String sql = "SELECT r.retrievalId FROM Retrievals r WHERE r.uuid = :uuid";
+            Query query = eman.createQuery(sql);
+            query.setParameter("uuid", UUID);
+            cars = query.getResultList();
+            result = cars.get(0);
+        } finally {
+
+            eman.close();
+            emf.close();
+        }
+        return result;
+    }
+
+    public Double getTotalRetrive() {
+        Double result;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+            //SELECT sum(r.billsValue)from retrievals r;
+            String sql = "SELECT SUM(r.billsValue)from retrievals r";
+            Query query = eman.createQuery(sql);
+          
+            result = (Double) query.getSingleResult();
+
+        } finally {
+            eman.close();
+            emf.close();
+        }
+        return result;
     }
 
 }

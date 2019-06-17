@@ -23,6 +23,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
@@ -131,7 +132,11 @@ public class Helper {
         return dtf.format(now);
 
     }
-    
-    
+
+    public String generateCode() {
+        // Creating a random UUID (Universally unique identifier).
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+    }
 
 }

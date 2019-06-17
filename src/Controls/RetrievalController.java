@@ -8,6 +8,7 @@ import dao.RetrievalsDAO;
 import dao.RetrivaldetailsDAO;
 import entities.BillsDetails;
 import entities.Customers;
+import entities.Expenses;
 import entities.Products;
 import entities.Productsnumber;
 import entities.Retrievals;
@@ -17,10 +18,12 @@ import helper.Helper;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -87,6 +90,8 @@ public class RetrievalController implements Initializable {
     CustomerDAO customerDAO = new CustomerDAO();
     ObservableList<Retrivaldetails> rowProduct = FXCollections.observableArrayList();
     float totalValue = 0;
+    @FXML
+    private Label totalValues;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -95,6 +100,7 @@ public class RetrievalController implements Initializable {
         loadoRetrivalTabData();
         loadoRetrivalDetailsTable();
         TextFields.bindAutoCompletion(etClientName, getAllCustomerName());
+        formateDate();
     }
     
     @FXML
@@ -132,33 +138,65 @@ public class RetrievalController implements Initializable {
     
     @FXML
     private void addProductClick(ActionEvent event) {
-        Retrivaldetails retrivaldetails = new Retrivaldetails();
-        int productId = 0;
-        String knownUsFrom = compo_product_Type.getSelectionModel().getSelectedItem().toString();
-        if (knownUsFrom.equals("منتجات بكجم")) {
-            retrivaldetails.setProductCategoryId(1);
-            productId = productDAO.getProductId(etProductName.getText().toString()).get(0).getProductid();
-        } else if (knownUsFrom.equals("منتجات بالوحدة")) {
-            retrivaldetails.setProductCategoryId(2);
-            productId = productNumbersDAO.getProducNumbertId(etProductName.getText().toString()).get(0).getProductnumberid();
+        
+        try {
+            Retrivaldetails retrivaldetails = new Retrivaldetails();
+            int productId = 0;
+            String knownUsFrom = compo_product_Type.getSelectionModel().getSelectedItem().toString();
+            if (knownUsFrom.equals("منتجات بكجم")) {
+                retrivaldetails.setProductCategoryId(1);
+                productId = productDAO.getProductId(etProductName.getText().toString()).get(0).getProductid();
+            } else if (knownUsFrom.equals("منتجات بالوحدة")) {
+                retrivaldetails.setProductCategoryId(2);
+                productId = productNumbersDAO.getProducNumbertId(etProductName.getText().toString()).get(0).getProductnumberid();
+            }
+
+            retrivaldetails.setExpenseValue(Float.parseFloat(etValue.getText().toString()));
+            retrivaldetails.setProductID(productId);
+            retrivaldetails.setQuantity(Float.parseFloat(etQuantity.getText().toString()));
+            rowProduct.addAll(retrivaldetails);
+            totalValue += Float.parseFloat(etValue.getText().toString());
+            txttotatalValue.setText(String.valueOf(totalValue));
+
+        } catch (Exception e) {
         }
         
-        retrivaldetails.setExpenseValue(Float.parseFloat(etValue.getText().toString()));        
-        retrivaldetails.setProductID(productId);
-        retrivaldetails.setQuantity(Float.parseFloat(etQuantity.getText().toString()));        
-        rowProduct.addAll(retrivaldetails);
-        totalValue += Float.parseFloat(etValue.getText().toString());
-        txttotatalValue.setText(String.valueOf(totalValue));
     }
-    
+
     @FXML
-    private void saveBillsClick(ActionEvent event) {
+    private void saveBillsClick(ActionEvent event) throws Exception {
         
+        try {
+            // 1 insert retrival then insert to retrivalDetails
+            String UUid = helper.generateCode();
+            Retrievals retrievals = new Retrievals();
+            retrievals.setCustomerId(customerDAO.getcCustomerId(etClientName.getText().toString()));
+            retrievals.setUuid(UUid);
+            retrievals.setBillsValue(Float.parseFloat(txttotatalValue.getText().toString()));
+            retrievalsDAO.addRetrievals(retrievals);
+
+            // insert retrival Detail
+            for (Retrivaldetails retrivaldetails : rowProduct) {
+                Retrivaldetails r = new Retrivaldetails();
+                r.setExpenseValue(retrivaldetails.getExpenseValue());
+                r.setProductCategoryId(retrivaldetails.getProductCategoryId());
+                r.setProductID(retrivaldetails.getProductID());
+                r.setQuantity(retrivaldetails.getQuantity());
+                r.setRetrivalsId(retrievalsDAO.getLastOrderId(UUid));
+                retrivaldetailsDAO.addRetrivaldetails(r);
+
+            }
+            
+        } catch (Exception e) {
+        }
+        clearData();
+        loadoRetrivalTabData();
     }
-    
+
     @FXML
     private void closeAddBillsPane(MouseEvent event) {
         paneAddBillsR.setVisible(false);
+        clearData();
     }
     
     public void loadoRetrivalTabData() {
@@ -257,5 +295,53 @@ public class RetrievalController implements Initializable {
         });
         
     }
+
+    public void formateDate() {
+        
+        colDate.setCellFactory(column -> {
+            TableCell<Retrievals, Date> cell = new TableCell<Retrievals, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+            return cell;
+        });
+        
+          colTime.setCellFactory(column -> {
+            TableCell<Retrievals, Date> cell = new TableCell<Retrievals, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+            return cell;
+        });
+
+    }
+    
+    public void clearData(){
+        etProductName.clear();
+        etQuantity.clear();
+        etValue.clear();
+        etClientName.clear();
+        txttotatalValue.setText("0");
+        tableBilsdetail.getItems().clear();
+    }
+    
     
 }

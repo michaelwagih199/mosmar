@@ -45,10 +45,10 @@ public class Retrievals implements Serializable {
     private Integer retrievalId;
     @Column(name = "retrievalDate")
     @Temporal(TemporalType.DATE)
-    private Date retrievalDate;
+    private Date retrievalDate = new Date();
     @Column(name = "retrievalTime")
     @Temporal(TemporalType.TIME)
-    private Date retrievalTime;
+    private Date retrievalTime = new Date();
     @Basic(optional = false)
     @Column(name = "customer_id")
     private int customerId;
