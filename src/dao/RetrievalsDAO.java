@@ -69,18 +69,19 @@ public class RetrievalsDAO {
         }
         return result;
     }
+    
 
     public Double getTotalRetrive() {
         Double result;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
         try {
+            
             //SELECT sum(r.billsValue)from retrievals r;
-            String sql = "SELECT SUM(r.billsValue)from retrievals r";
-            Query query = eman.createQuery(sql);
-          
+            String sql = "SELECT SUM(r.billsValue)from Retrievals r";
+            Query query = eman.createQuery(sql);          
             result = (Double) query.getSingleResult();
-
+            
         } finally {
             eman.close();
             emf.close();

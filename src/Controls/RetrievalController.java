@@ -92,6 +92,18 @@ public class RetrievalController implements Initializable {
     float totalValue = 0;
     @FXML
     private Label totalValues;
+    @FXML
+    private Pane paneDetailsShow;
+    @FXML
+    private TableView<?> tableBilsdetail1;
+    @FXML
+    private TableColumn<?, ?> colId_Details1;
+    @FXML
+    private TableColumn<?, ?> colProductName_details1;
+    @FXML
+    private TableColumn<?, ?> colQuantity_details1;
+    @FXML
+    private TableColumn<?, ?> colValue_details1;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -130,7 +142,7 @@ public class RetrievalController implements Initializable {
     private void retrivalTableClick(MouseEvent event) {
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             if (event.getClickCount() == 2) {
-                
+                paneDetailsShow.setVisible(true);
             }
         }
         
@@ -208,10 +220,10 @@ public class RetrievalController implements Initializable {
         colValue.setCellValueFactory(new PropertyValueFactory<>("billsValue"));
         retrivalTable.setItems(retrievalsDAO.getAllRetrievals());
         
+        totalValues.setText(df.format(retrievalsDAO.getTotalRetrive()));
     }
     
-    public void loadoRetrivalDetailsTable() {
-        
+    public void loadoRetrivalDetailsTable() {        
         colId_Details.setCellValueFactory(new PropertyValueFactory<>("retrivalDetailsId"));
         colProductName_details.setCellValueFactory(new PropertyValueFactory<>("productID"));
         colQuantity_details.setCellValueFactory(new PropertyValueFactory<>("quantity"));
@@ -341,6 +353,11 @@ public class RetrievalController implements Initializable {
         etClientName.clear();
         txttotatalValue.setText("0");
         tableBilsdetail.getItems().clear();
+    }
+
+    @FXML
+    private void closeDetailsPane(MouseEvent event) {
+        paneDetailsShow.setVisible(false);
     }
     
     
