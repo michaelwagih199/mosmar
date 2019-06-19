@@ -194,7 +194,7 @@ public class AcountsCenterController implements Initializable {
         orderEndDate.setConverter(converter);
         orderEndDate.setPromptText(pattern.toLowerCase());
         addButtonDeleteToTable();
-        addRebuy();
+       
     }
 
     @FXML
@@ -568,80 +568,4 @@ public class AcountsCenterController implements Initializable {
         tableExpense.getColumns().add(colBtn);
     }
 
-    
-        //delete row
-    private void addRebuy() {
-        TableColumn<Custom_OrderDetails, Void> colBtn = new TableColumn();
-
-        Callback<TableColumn<Custom_OrderDetails, Void>, TableCell<Custom_OrderDetails, Void>> cellFactory;
-        cellFactory = new Callback<TableColumn<Custom_OrderDetails, Void>, TableCell<Custom_OrderDetails, Void>>() {
-            @Override
-            public TableCell<Custom_OrderDetails, Void> call(final TableColumn<Custom_OrderDetails, Void> param) {
-                final TableCell<Custom_OrderDetails, Void> cell = new TableCell<Custom_OrderDetails, Void>() {
-
-                    private final Button btn = new Button("مرتجع");
-
-                    {
-                        btn.setOnAction((ActionEvent event) -> {
-
-                            if (FxDialogs.showConfirm("مرتجع المنتج", "هل تريد ترجيع المنتج?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {                   
-                                Custom_OrderDetails data = getTableView().getItems().get(getIndex());
-                               
-                                
-                                try {
-                                    // 1 delete from orderDetails 2- delete from orderPayment 3- update value in stock
-                                    // 4 insert to table retrival
-                                    
-                                    //remove from order details
-                                    orderDetailDAO.removeOrders(data.getId());
-                                    
-                                    //update stock 
-                                    if (orderType.getText().toString().equals("وزن")) {
-                                        int productid = productDAO.getProductId(data.getProductName().toString()).get(0).getProductid();
-                                        float quantityofBils = data.getQuantity();
-                                        float numberUnit = productDAO.getProductById(productid).getUnitsWeightInStock();
-                                        float newQuantity = quantityofBils + numberUnit;
-                                        productDAO.updateWeight(newQuantity, productid);
-                                       
-                                    } else if (orderType.getText().toString().equals("قطعة")) {
-                                        int productid = productNumbersDAO.getProducNumbertId(data.getProductName().toString()).get(0).getProductnumberid();
-                                        float quantityofBils = data.getQuantity();
-                                        float numberUnit = productNumbersDAO.getProductsnumberById(productid).getUnitsInStock();
-                                        float newQuantity = quantityofBils + numberUnit;
-                                        productNumbersDAO.updateStock(newQuantity, productid);
-                                    }
-                                    //update 
-
-                                  
-                                } catch (Exception ex) {
-                                    Logger.getLogger(AcountsCenterController.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                                tableOrderDetails.getItems().clear();
-                             paneOrderDetail.setVisible(false);
-                           
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            btn.getStyleClass().add("button_Small");
-                            setGraphic(btn);
-
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
-
-        colBtn.setCellFactory(cellFactory);
-        tableOrderDetails.getColumns().add(colBtn);
-    }
-
-    
 }

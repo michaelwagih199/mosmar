@@ -44,6 +44,9 @@ public class CustomerDAO {
         row.addAll(customersJpaController.findCustomersEntities());
         return row;
     }
+     public Customers getCustomersById(int Id) {
+        return customersJpaController.findCustomers(Id);
+    }
     
     
         public int getcCustomerId(String CustomerName) {

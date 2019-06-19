@@ -50,6 +50,8 @@
             <TableColumn fx:id="colClient" prefWidth="159.0" text="اسم العميل" />
         </columns>
       </TableView>
+      <Label alignment="CENTER" layoutX="747.0" layoutY="569.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="27.0" prefWidth="152.0" styleClass="text_normal" text="اجمالى الفواتير" />
+      <Label fx:id="totalValues" alignment="CENTER" layoutX="474.0" layoutY="562.0" prefHeight="36.0" prefWidth="245.0" styleClass="text5" text="0" />
       <Pane fx:id="paneAddBillsR" layoutX="22.0" layoutY="26.0" prefHeight="564.0" prefWidth="977.0" styleClass="grey_wite_back" visible="false">
          <children>
             <JFXComboBox fx:id="compo_product_Type" layoutX="697.0" layoutY="101.0" onAction="#compo_product_Type_click" prefHeight="36.0" prefWidth="245.0" promptText="تصنيف المنتج" styleClass="combobox" />
@@ -59,7 +61,7 @@
                   <Font size="20.0" />
                </font>
             </TextField>
-            <JFXButton layoutX="422.0" layoutY="150.0" onAction="#addProductClick" prefHeight="43.0" prefWidth="172.0" styleClass="text5" text="إضافة" />
+            <JFXButton fx:id="btnAdd" layoutX="422.0" layoutY="150.0" onAction="#addProductClick" prefHeight="43.0" prefWidth="172.0" styleClass="text5" text="إضافة" />
             <Label layoutX="471.0" layoutY="64.0" styleClass="text_normal" text="اسم الصنف" />
             <TextField fx:id="etValue" alignment="CENTER" layoutX="14.0" layoutY="101.0" opacity="0.9" prefHeight="36.0" prefWidth="159.0" promptText="0" styleClass="textFeild" text="0">
                <font>
@@ -89,7 +91,7 @@
                   <TableColumn fx:id="colValue_details" prefWidth="125.666748046875" text="المصروف" />
               </columns>
             </TableView>
-            <JFXButton layoutX="413.0" layoutY="508.0" onAction="#saveBillsClick" prefHeight="43.0" prefWidth="172.0" styleClass="text5" text="حفظ" />
+            <JFXButton fx:id="btnSave" layoutX="413.0" layoutY="508.0" onAction="#saveBillsClick" prefHeight="43.0" prefWidth="172.0" styleClass="text5" text="حفظ" />
             <Label fx:id="txttotatalValue" alignment="CENTER" layoutX="16.0" layoutY="450.0" prefHeight="39.0" prefWidth="197.0" styleClass="text5" text="0" />
             <Label layoutX="220.0" layoutY="457.0" styleClass="text_normal" text="اجمالى المصروف " />
             <ImageView fitHeight="39.0" fitWidth="33.0" layoutX="9.0" layoutY="7.0" onMouseClicked="#closeAddBillsPane" pickOnBounds="true" preserveRatio="true">
@@ -100,30 +102,6 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-         </children>
-      </Pane>
-      <Label alignment="CENTER" layoutX="747.0" layoutY="569.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="27.0" prefWidth="152.0" styleClass="text_normal" text="اجمالى الفواتير" />
-      <Label fx:id="totalValues" alignment="CENTER" layoutX="474.0" layoutY="562.0" prefHeight="36.0" prefWidth="245.0" styleClass="text5" text="0" />
-      <Pane fx:id="paneDetailsShow" layoutX="37.0" layoutY="170.0" prefHeight="317.0" prefWidth="957.0" styleClass="grey_wite_back" visible="false">
-         <children>
-            <ImageView fitHeight="27.0" fitWidth="33.0" layoutX="8.0" layoutY="5.0" onMouseClicked="#closeDetailsPane" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../res/close2.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <Label layoutX="480.0" layoutY="3.0" prefHeight="27.0" prefWidth="123.0" styleClass="text_normal" text="تفاصيل الفاتورة" />
-            <Separator layoutX="13.0" layoutY="33.0" prefHeight="5.0" prefWidth="931.0" />
-            <TableView fx:id="tableBilsdetail1" layoutX="10.0" layoutY="41.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="269.0" prefWidth="940.0">
-               <columns>
-                  <TableColumn fx:id="colId_Details1" prefWidth="47.0" text="م" />
-                  <TableColumn fx:id="colProductName_details1" prefWidth="358.0" text="اسم الصنف" />
-                  <TableColumn fx:id="colQuantity_details1" prefWidth="107.33328247070312" text="الكمية" />
-                  <TableColumn fx:id="colValue_details1" prefWidth="125.666748046875" text="المصروف" />
-               </columns>
-            </TableView>
          </children>
       </Pane>
    </children>

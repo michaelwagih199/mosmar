@@ -108,19 +108,19 @@ public class CustomersController implements Initializable {
 
     DecimalFormat df = new DecimalFormat("#.###");
     @FXML
-    private TableColumn<?, ?> colIdDate;
-    @FXML
-    private TableColumn<?, ?> colDateDetails;
-    @FXML
-    private TableColumn<?, ?> colDetailsDetails;
-    @FXML
-    private TableColumn<?, ?> colRemainingDetails;
-    @FXML
-    private TableColumn<?, ?> colDiscountDetails;
-    @FXML
     private Label txtCustomerId;
     @FXML
     private Label txtCustomersPayment;
+    @FXML
+    private TableColumn<?, ?> colIdCOrder;
+    @FXML
+    private TableColumn<?, ?> colDateCorder;
+    @FXML
+    private TableColumn<?, ?> colPaidCOrder;
+    @FXML
+    private TableColumn<?, ?> colRemainingCorder;
+    @FXML
+    private TableColumn<?, ?> colDiscountOrder;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -397,6 +397,7 @@ public class CustomersController implements Initializable {
             txtCustomersPayment.setText(df.format(custumersCalculas.getCustomersPayment(customerId).get(0)));
             float RemainingCost = Float.parseFloat(etTotalCost.getText().toString()) - Float.parseFloat(txtCustomersPayment.getText().toString());
             lablRemainingCost.setText(df.format(RemainingCost));
+            
         } catch (Exception e) {
         }
 

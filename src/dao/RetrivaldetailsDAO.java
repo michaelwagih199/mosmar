@@ -1,5 +1,6 @@
-
 package dao;
+
+import entities.BillsDetails;
 import entities.Expenses;
 import entities.OrderDetail;
 import entities.OrderPayment;
@@ -20,7 +21,7 @@ import jpaConntroller.RetrievalsJpaController;
 import jpaConntroller.RetrivaldetailsJpaController;
 
 public class RetrivaldetailsDAO {
-    
+
     private final RetrivaldetailsJpaController retrivaldetailsJpaController;
     private EntityManagerFactory emf;
 
@@ -51,5 +52,25 @@ public class RetrivaldetailsDAO {
         return retrivaldetailsJpaController.findRetrivaldetails(Id);
     }
 
-    
+    public ObservableList<Retrivaldetails> getRetrivaldetailsId(int retrivalsId) {
+        List<Retrivaldetails> cars = new ArrayList<Retrivaldetails>();
+        ObservableList<Retrivaldetails> row = FXCollections.observableArrayList();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+
+        try {
+            //SELECT o FROM Orders o WHERE o.customerId = :customerId
+            String sql = "SELECT r FROM Retrivaldetails r WHERE r.retrivalsId = :retrivalsId";
+            Query query = eman.createQuery(sql);
+            query.setParameter("retrivalsId", retrivalsId);
+            cars = query.getResultList();
+            row.addAll(cars);
+        } finally {
+
+            eman.close();
+            emf.close();
+        }
+        return row;
+    }
+
 }
