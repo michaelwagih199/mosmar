@@ -154,6 +154,8 @@ public class AcountsCenterController implements Initializable {
     private Label txtAccountsRevenue;
     @FXML
     private Label orderType;
+    @FXML
+    private Label txtRetrival;
    
 
 

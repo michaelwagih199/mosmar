@@ -63,7 +63,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="anchorPaid" layoutX="11.0" layoutY="13.0" prefHeight="604.0" prefWidth="987.0" styleClass="grey_wite_back" visible="false">
+      <AnchorPane fx:id="anchorPaid" layoutX="11.0" layoutY="13.0" prefHeight="604.0" prefWidth="987.0" styleClass="grey_wite_back">
          <children>
             <AnchorPane layoutX="12.0" layoutY="7.0" prefHeight="34.0" prefWidth="970.0" styleClass="grey_back_noShadow">
                <children>

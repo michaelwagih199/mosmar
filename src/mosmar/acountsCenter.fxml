@@ -102,8 +102,8 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Circle fill="DODGERBLUE" layoutX="440.0" layoutY="22.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Label alignment="CENTER" layoutX="599.0" layoutY="8.0" prefHeight="17.0" prefWidth="271.0" styleClass="textHeder" text="المبيعات" />
-                        <Separator layoutX="476.0" layoutY="139.0" prefHeight="6.0" prefWidth="506.0" />
+                        <Label alignment="CENTER" layoutX="480.0" layoutY="24.0" prefHeight="31.0" prefWidth="248.0" styleClass="textHeder" text="المبيعات" />
+                        <Separator layoutX="488.0" layoutY="132.0" prefHeight="6.0" prefWidth="506.0" />
                         <Label alignment="CENTER" layoutX="598.0" layoutY="151.0" prefHeight="17.0" prefWidth="271.0" styleClass="textHeder" text="الخزنة (الدرج )" />
                         <Label alignment="CENTER" layoutX="589.0" layoutY="257.0" prefHeight="17.0" prefWidth="271.0" styleClass="textHeder" text="صافى الربح " />
                         <Separator layoutX="480.0" layoutY="253.0" prefHeight="6.0" prefWidth="502.0" />
@@ -152,8 +152,8 @@
                         <Separator layoutX="474.0" layoutY="290.0" prefHeight="6.0" prefWidth="502.0" />
                         <Label alignment="CENTER" layoutX="762.0" layoutY="293.0" prefHeight="31.0" prefWidth="196.0" styleClass="textHeder" text="قبل المصاريف" />
                         <Label alignment="CENTER" layoutX="512.0" layoutY="295.0" prefHeight="31.0" prefWidth="196.0" styleClass="textHeder" text="بعد المصاريف" />
-                        <Label fx:id="txt_sales" alignment="CENTER" layoutX="599.0" layoutY="57.0" prefHeight="50.0" prefWidth="285.0" styleClass="text5" />
-                        <Label fx:id="txt_treasury" alignment="CENTER" layoutX="592.0" layoutY="193.0" prefHeight="50.0" prefWidth="285.0" styleClass="text5" />
+                        <Label fx:id="txt_sales" alignment="CENTER" layoutX="476.0" layoutY="60.0" prefHeight="50.0" prefWidth="265.0" styleClass="text5" text="0" />
+                        <Label fx:id="txt_treasury" alignment="CENTER" layoutX="592.0" layoutY="193.0" prefHeight="50.0" prefWidth="285.0" styleClass="text5" text="0" />
                         <Label fx:id="txt_net_profit_before_paid" alignment="CENTER" layoutX="753.0" layoutY="326.0" prefHeight="50.0" prefWidth="215.0" styleClass="text5" />
                         <Label fx:id="txt_net_profit_after_paid" alignment="CENTER" layoutX="492.0" layoutY="329.0" prefHeight="50.0" prefWidth="215.0" styleClass="text5" />
                         <Label fx:id="txtAllExpencess" alignment="CENTER" layoutX="11.0" layoutY="436.0" prefHeight="38.0" prefWidth="244.0" styleClass="text5" text="0" />
@@ -163,6 +163,8 @@
                         <Label fx:id="txtAccountsPayable" alignment="CENTER" layoutX="489.0" layoutY="430.0" prefHeight="46.0" prefWidth="216.0" styleClass="text5" />
                         <Label alignment="CENTER" layoutX="750.0" layoutY="396.0" prefHeight="31.0" prefWidth="232.0" styleClass="textHeder" text="Accounts Rec" />
                         <Label fx:id="txtAccountsRevenue" alignment="CENTER" layoutX="753.0" layoutY="432.0" prefHeight="46.0" prefWidth="216.0" styleClass="text5" />
+                        <Label alignment="CENTER" layoutX="780.0" layoutY="25.0" prefHeight="31.0" prefWidth="248.0" styleClass="textHeder" text="المرتجع" />
+                        <Label fx:id="txtRetrival" alignment="CENTER" layoutX="771.0" layoutY="61.0" prefHeight="50.0" prefWidth="265.0" styleClass="text5" text="0" />
                      </children></AnchorPane>
             </content>
           </Tab>

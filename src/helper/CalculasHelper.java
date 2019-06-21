@@ -126,5 +126,23 @@ public class CalculasHelper {
         }
         return cars;
     }
+    
+     public List<Float> getAccountsretrive(Date startDate, Date endDate) {
+        List<Float> cars = new ArrayList<Float>();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+            String sql = "SELECT SUM(r.billsValue) FROM Retrievals r WHERE r.retrievalDate BETWEEN :startDate AND :endDate";
+            Query query = eman.createQuery(sql);
+            query.setParameter("startDate", startDate);
+            query.setParameter("endDate", endDate);
+            cars = query.getResultList();
+
+        } finally {
+            eman.close();
+            emf.close();
+        }
+        return cars;
+    }
 
 }

@@ -383,22 +383,29 @@ public class CustomersController implements Initializable {
 
     @FXML
     private void btnCustomersDetailsClick(ActionEvent event) {
-       
+        
        anchorDetails.setVisible(true);
     }
     
     public void customerAccountsCalc(String customerName, int customerId) {
+   
         try {
+    
+            labelClientName.setText(customerName);             
             
-            labelClientName.setText(customerName);
-         
-            etTotalCost.setText(df.format(custumersCalculas.getCustomersRemaining(customerId).get(0)));
+            double customerRemaining =custumersCalculas.getCustomersRemaining(customerId);
+            double customerRetrival = custumersCalculas.getCustomersPaymentRetrive(customerId);
+            double remain  = customerRemaining - customerRetrival;
+           
+            
+            etTotalCost.setText(df.format(remain));
             lablRemainingCost.setText(etTotalCost.getText().toString());
-            txtCustomersPayment.setText(df.format(custumersCalculas.getCustomersPayment(customerId).get(0)));
+            txtCustomersPayment.setText(df.format(custumersCalculas.getCustomersPayment(customerId)));
             float RemainingCost = Float.parseFloat(etTotalCost.getText().toString()) - Float.parseFloat(txtCustomersPayment.getText().toString());
             lablRemainingCost.setText(df.format(RemainingCost));
-            
+
         } catch (Exception e) {
+       
         }
 
     }

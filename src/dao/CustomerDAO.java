@@ -44,12 +44,12 @@ public class CustomerDAO {
         row.addAll(customersJpaController.findCustomersEntities());
         return row;
     }
-     public Customers getCustomersById(int Id) {
+
+    public Customers getCustomersById(int Id) {
         return customersJpaController.findCustomers(Id);
     }
-    
-    
-        public int getcCustomerId(String CustomerName) {
+
+    public int getcCustomerId(String CustomerName) {
         List<Integer> cars = new ArrayList<Integer>();
         int result = 0;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
