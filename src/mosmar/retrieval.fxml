@@ -52,17 +52,17 @@
       </TableView>
       <Label alignment="CENTER" layoutX="747.0" layoutY="569.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="27.0" prefWidth="152.0" styleClass="text_normal" text="اجمالى الفواتير" />
       <Label fx:id="totalValues" alignment="CENTER" layoutX="474.0" layoutY="562.0" prefHeight="36.0" prefWidth="245.0" styleClass="text5" text="0" />
-      <Pane fx:id="paneAddBillsR" layoutX="22.0" layoutY="26.0" prefHeight="564.0" prefWidth="977.0" styleClass="grey_wite_back" visible="false">
+      <Pane fx:id="paneAddBillsR" layoutX="22.0" layoutY="26.0" prefHeight="564.0" prefWidth="977.0" styleClass="grey_wite_back">
          <children>
             <JFXComboBox fx:id="compo_product_Type" layoutX="697.0" layoutY="101.0" onAction="#compo_product_Type_click" prefHeight="36.0" prefWidth="245.0" promptText="تصنيف المنتج" styleClass="combobox" />
             <Label layoutX="758.0" layoutY="63.0" prefHeight="27.0" prefWidth="115.0" styleClass="text_normal" text="تصنيف المنتج" />
-            <TextField fx:id="etProductName" alignment="CENTER" layoutX="388.0" layoutY="102.0" opacity="0.9" prefHeight="36.0" prefWidth="274.0" promptText="اسم الصنف" styleClass="textFeild">
+            <TextField fx:id="etProductName" alignment="CENTER" layoutX="400.0" layoutY="102.0" opacity="0.9" prefHeight="36.0" prefWidth="262.0" promptText="اسم الصنف" styleClass="textFeild">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
             <JFXButton fx:id="btnAdd" layoutX="422.0" layoutY="150.0" onAction="#addProductClick" prefHeight="43.0" prefWidth="172.0" styleClass="text5" text="إضافة" />
-            <Label layoutX="471.0" layoutY="64.0" styleClass="text_normal" text="اسم الصنف" />
+            <Label layoutX="487.0" layoutY="63.0" styleClass="text_normal" text="اسم الصنف" />
             <TextField fx:id="etValue" alignment="CENTER" layoutX="14.0" layoutY="101.0" opacity="0.9" prefHeight="36.0" prefWidth="159.0" promptText="0" styleClass="textFeild" text="0">
                <font>
                   <Font size="20.0" />
@@ -102,6 +102,12 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
+            <JFXComboBox fx:id="compo_priceType" layoutX="721.0" layoutY="153.0" onAction="#compo_priceType_click" prefHeight="36.0" prefWidth="197.0" promptText="نوع البيع" styleClass="combobox" />
+            <Label fx:id="txtUnite" layoutX="362.0" layoutY="105.0" text="وحده">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

@@ -127,8 +127,9 @@ public class CalculasHelper {
         return cars;
     }
     
-     public List<Float> getAccountsretrive(Date startDate, Date endDate) {
-        List<Float> cars = new ArrayList<Float>();
+
+     public Double getAccountsretrive(Date startDate, Date endDate) {
+       Double  result;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
         try {
@@ -136,13 +137,13 @@ public class CalculasHelper {
             Query query = eman.createQuery(sql);
             query.setParameter("startDate", startDate);
             query.setParameter("endDate", endDate);
-            cars = query.getResultList();
+            result = (Double) query.getSingleResult();
 
         } finally {
             eman.close();
             emf.close();
         }
-        return cars;
+        return result;
     }
 
 }

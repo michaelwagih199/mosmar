@@ -501,11 +501,16 @@ public class AcountsCenterController implements Initializable {
             loadExpensesData(gettedDatePickerDate,lastDate);
             double sale = calculasHelper.getDaySales(gettedDatePickerDate,lastDate);
             txt_sales.setText(df.format(sale));
+            
+            //test retrivals
+            txtRetrival.setText(String.valueOf(calculasHelper.getAccountsretrive(gettedDatePickerDate, lastDate)));
+            
             txtAllExpencess.setText(df.format(calculasHelper.getDayExpenses(gettedDatePickerDate, lastDate).get(0)));           
-            float treasury = Float.parseFloat(txt_sales.getText().toString()) - Float.parseFloat(txtAllExpencess.getText().toString()) ;
+            float treasury = Float.parseFloat(txt_sales.getText().toString()) - 
+                    (Float.parseFloat(txtAllExpencess.getText().toString()) + Float.parseFloat(txtRetrival.getText().toString()));
             txt_treasury.setText(String.valueOf(treasury));           
             txtAccountsRevenue.setText(df.format(calculasHelper.getAccountsRevenue(gettedDatePickerDate, lastDate).get(0)));      
-            
+           
         } catch (Exception e) {
         }
             
