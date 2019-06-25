@@ -89,7 +89,6 @@ public class AcountsCenterController implements Initializable {
 
     @FXML
     private DatePicker orderDate;
-  
 
     Helper help = new Helper();
     @FXML
@@ -109,7 +108,7 @@ public class AcountsCenterController implements Initializable {
     @FXML
     private TableColumn<custom_orders, Date> col_orderTime;
     
-     @FXML
+    @FXML
     private TableColumn<Custom_OrderDetails, Integer> col_ID_orderDetails;
     @FXML
     private Label lableOrderDetailId;

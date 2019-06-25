@@ -63,14 +63,14 @@
             </TextField>
             <JFXButton fx:id="btnAdd" layoutX="422.0" layoutY="150.0" onAction="#addProductClick" prefHeight="43.0" prefWidth="172.0" styleClass="text5" text="إضافة" />
             <Label layoutX="487.0" layoutY="63.0" styleClass="text_normal" text="اسم الصنف" />
-            <TextField fx:id="etValue" alignment="CENTER" layoutX="14.0" layoutY="101.0" opacity="0.9" prefHeight="36.0" prefWidth="159.0" promptText="0" styleClass="textFeild" text="0">
+            <TextField fx:id="etValue" alignment="CENTER" layoutX="47.0" layoutY="101.0" opacity="0.9" prefHeight="36.0" prefWidth="143.0" promptText="0" styleClass="textFeild" text="0">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
-            <Label layoutX="13.0" layoutY="61.0" prefHeight="27.0" prefWidth="171.0" styleClass="text_normal" text="المصروف من الخزنة" />
-            <Label layoutX="257.0" layoutY="62.0" styleClass="text_normal" text="الكمية" />
-            <TextField fx:id="etQuantity" alignment="CENTER" layoutX="199.0" layoutY="100.0" opacity="0.9" prefHeight="36.0" prefWidth="143.0" promptText="0" styleClass="textFeild" text="0">
+            <Label layoutX="14.0" layoutY="61.0" prefHeight="27.0" prefWidth="172.0" styleClass="text_normal" text="المصروف من الخزنة" />
+            <Label layoutX="262.0" layoutY="62.0" styleClass="text_normal" text="الكمية" />
+            <TextField fx:id="etQuantity" alignment="CENTER" layoutX="204.0" layoutY="100.0" opacity="0.9" prefHeight="36.0" prefWidth="143.0" promptText="0" styleClass="textFeild" text="0">
                <font>
                   <Font size="20.0" />
                </font>
@@ -83,7 +83,7 @@
             </TextField>
             <Label layoutX="860.0" layoutY="457.0" styleClass="text_normal" text="اسم العميل " />
             <Label alignment="CENTER" layoutX="377.0" layoutY="12.0" prefHeight="33.0" prefWidth="262.0" styleClass="textHeder2" text=" فاتورة مرتجعات" />
-            <TableView fx:id="tableBilsdetail" layoutX="12.0" layoutY="208.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="235.0" prefWidth="957.0">
+            <TableView fx:id="tableBilsdetail" layoutX="12.0" layoutY="196.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="247.0" prefWidth="957.0">
               <columns>
                 <TableColumn fx:id="colId_Details" prefWidth="47.0" text="م" />
                 <TableColumn fx:id="colProductName_details" prefWidth="358.0" text="اسم الصنف" />
@@ -102,8 +102,13 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <JFXComboBox fx:id="compo_priceType" layoutX="721.0" layoutY="153.0" onAction="#compo_priceType_click" prefHeight="36.0" prefWidth="197.0" promptText="نوع البيع" styleClass="combobox" />
-            <Label fx:id="txtUnite" layoutX="362.0" layoutY="105.0" text="وحده">
+            <JFXComboBox fx:id="compo_priceType" layoutX="712.0" layoutY="154.0" onAction="#compo_priceType_click" prefHeight="36.0" prefWidth="215.0" promptText="نوع البيع" styleClass="combobox" visible="false" />
+            <Label fx:id="txtUnite" layoutX="364.0" layoutY="105.0" prefHeight="27.0" prefWidth="33.0" text="كجم">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="txtUnite1" layoutX="9.0" layoutY="105.0" prefHeight="27.0" prefWidth="33.0" text="جنية">
                <font>
                   <Font size="18.0" />
                </font>

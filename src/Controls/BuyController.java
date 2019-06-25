@@ -167,7 +167,7 @@ public class BuyController implements Initializable {
         System.out.println(usefullCalculas.getProductPartitionPriceforunit(27));
         System.out.println(usefullCalculas.allowOfunit(28));
         usefullCalculas.is_allow(100, 28);
-         */
+        */
     }
 
     @FXML
@@ -208,6 +208,7 @@ public class BuyController implements Initializable {
                 
                 FxDialogs.showInformation("نجاح العملية", "تم توريد الطلب بنجاح");
             }
+            
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
@@ -228,12 +229,20 @@ public class BuyController implements Initializable {
 
     public void UpdateStock() {
         // System.out.println(productDAO.getWeightInStock(28));
+         String knownUsFrom = compo_priceType.getSelectionModel().getSelectedItem().toString();
         for (custom_BuyTable o : row) {
             float unitWeight = productDAO.getProductById(o.getIdProduct()).getProductWeight();
             float allWeightInStock = productDAO.getProductById(o.getIdProduct()).getUnitsWeightInStock();
-            float weighofOrder = usefullCalculas.getwightofUnitsToUpdate(o.getQuantity(), unitWeight);
-            productDAO.updateWeight(allWeightInStock - weighofOrder, o.getIdProduct());
-            //  System.out.println(allWeightInStock + "\n" +weighofOrder+"\n"+o.getQuantity() );
+            float weighofOrder = 0;
+            if (knownUsFrom.equals("قطاعى")) {
+                 weighofOrder = usefullCalculas.getwightofUnitsToUpdate(o.getQuantity(), unitWeight,false);
+                 productDAO.updateWeight(allWeightInStock - weighofOrder, o.getIdProduct());
+            }else{
+//              weighofOrder = usefullCalculas.getwightofUnitsToUpdate(o.getQuantity(), unitWeight,true);
+                 productDAO.updateWeight(allWeightInStock - o.getQuantity(), o.getIdProduct());
+            }           
+           
+            System.out.println(allWeightInStock + "\n" +weighofOrder+"\n"+o.getQuantity()+"\n"+ unitWeight);
         }
     }
 
@@ -1161,6 +1170,7 @@ public class BuyController implements Initializable {
     }
 
     public void clearTT() {
+        
         txtTotal.setText("");
         et_remaining.setText("");
         etDiscount1.setText("");
@@ -1170,9 +1180,9 @@ public class BuyController implements Initializable {
 
     @FXML
     private void homeClick(MouseEvent event) throws IOException {
+        
         help.start("/mosmar/main.fxml", "الصفحة الرئيسية");
         help.closeC(compo_priceType);
-
     }
 
     @FXML

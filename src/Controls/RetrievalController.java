@@ -17,6 +17,7 @@ import entities.Retrivaldetails;
 import entities.custom_orders;
 import helper.FxDialogs;
 import helper.Helper;
+import helper.UsefulCalculas;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -93,6 +94,8 @@ public class RetrievalController implements Initializable {
     ProductNumbersDAO productNumbersDAO = new ProductNumbersDAO();
     Helper helper = new Helper();
     CustomerDAO customerDAO = new CustomerDAO();
+     UsefulCalculas usefullCalculas = new UsefulCalculas();
+     
     ObservableList<Retrivaldetails> rowProduct = FXCollections.observableArrayList();
     float totalValue = 0;
     @FXML
@@ -101,11 +104,20 @@ public class RetrievalController implements Initializable {
     private JFXButton btnAdd;
     @FXML
     private JFXButton btnSave;
+    @FXML
+    private JFXComboBox<String> compo_priceType;
+    @FXML
+    private Label txtUnite;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         compo_product_Type.getItems().addAll("منتجات بكجم");
         compo_product_Type.getItems().addAll("منتجات بالوحدة");
+
+        compo_priceType.getItems().addAll("قطاعى");
+        compo_priceType.getItems().addAll("جملة");
+        compo_priceType.getItems().addAll("جملة الجملة");
+        
         loadoRetrivalTabData();
         loadoRetrivalDetailsTable();
         TextFields.bindAutoCompletion(etClientName, getAllCustomerName());
@@ -125,8 +137,12 @@ public class RetrievalController implements Initializable {
         String knownUsFrom = compo_product_Type.getSelectionModel().getSelectedItem().toString();
         if (knownUsFrom.equals("منتجات بكجم")) {
             TextFields.bindAutoCompletion(etProductName, getAllProductrName(etProductName.getText().toString()));
+            compo_priceType.setVisible(true);
+            txtUnite.setText("كجم");
         } else {
             TextFields.bindAutoCompletion(etProductName, getAllProductNumberName(etProductName.getText().toString()));
+            compo_priceType.setVisible(false);
+            txtUnite.setText("وحدة");
         }
 
     }
@@ -192,7 +208,7 @@ public class RetrievalController implements Initializable {
             retrievals.setUuid(UUid);
             retrievals.setBillsValue(Float.parseFloat(txttotatalValue.getText().toString()));
             retrievalsDAO.addRetrievals(retrievals);
-
+            
             // insert retrival Detail
             for (Retrivaldetails retrivaldetails : rowProduct) {
                 Retrivaldetails r = new Retrivaldetails();
@@ -202,7 +218,24 @@ public class RetrievalController implements Initializable {
                 r.setQuantity(retrivaldetails.getQuantity());
                 r.setRetrivalsId(retrievalsDAO.getLastOrderId(UUid));
                 retrivaldetailsDAO.addRetrivaldetails(r);
+            }
+            
+            //update stock
+            for (Retrivaldetails o : rowProduct) {
+                if (o.getProductCategoryId().equals(2)) {
 
+                    float unitsInStock = productNumbersDAO.getProductsnumberById(o.getProductID()).getUnitsInStock();
+                    float quantityOfOrder = o.getQuantity();
+                    productNumbersDAO.updateStock(unitsInStock + quantityOfOrder, o.getProductID());
+                    
+                } else if (o.getProductCategoryId()==1) {
+                    
+                    float unitWeight = productDAO.getProductById(o.getProductID()).getProductWeight();
+                    float allWeightInStock = productDAO.getProductById(o.getProductID()).getUnitsWeightInStock();
+                    //float weighofOrder = usefullCalculas.getwightofUnitsToUpdate(o.getQuantity(), unitWeight);
+                   // productDAO.updateWeight(allWeightInStock + weighofOrder, o.getProductID());
+                    
+                }
             }
 
         } catch (Exception e) {
@@ -482,5 +515,18 @@ public class RetrievalController implements Initializable {
         colBtn.setCellFactory(cellFactory);
         retrivalTable.getColumns().add(colBtn);
     }
+
+    @FXML
+    private void compo_priceType_click(ActionEvent event) {
+          String knownUsFrom = compo_priceType.getSelectionModel().getSelectedItem().toString();
+        if (knownUsFrom.equals("قطاعى")) {
+            txtUnite.setText("وحدة");
+        } else {
+            txtUnite.setText("كجم");
+        }
+    }
+    
+   
+
 
 }
