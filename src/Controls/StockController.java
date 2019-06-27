@@ -18,6 +18,8 @@ import helper.UsefulCalculas;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,9 +37,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
+import org.controlsfx.control.textfield.TextFields;
 
 public class StockController implements Initializable {
 
@@ -171,6 +176,8 @@ public class StockController implements Initializable {
     private Label index;
     @FXML
     private Label lableIndex;
+    @FXML
+    private JFXTextField etSearch;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -183,9 +190,6 @@ public class StockController implements Initializable {
         addButtonProductMapppingToTable();
         compoCategory.getItems().addAll("منتجات بكجم");
         compoCategory.getItems().addAll("منتجات بالوحدة");       
-     
-        
-    
         
     }
 
@@ -206,15 +210,14 @@ public class StockController implements Initializable {
 
     @FXML
     private void close_anchor_add(MouseEvent event) {
-
         paneAddProduct.setVisible(false);
-
     }
 
     @FXML
     private void btn_add_product_click(ActionEvent event) {
         // insert data to products 
         try {
+            
             Products products = new Products();
             UsefulCalculas calc = new UsefulCalculas();
             products.setProductName(et_product_name.getText().toString());
@@ -284,13 +287,9 @@ public class StockController implements Initializable {
             @Override
             public TableCell<Productsnumber, Void> call(final TableColumn<Productsnumber, Void> param) {
                 final TableCell<Productsnumber, Void> cell = new TableCell<Productsnumber, Void>() {
-
                     private final Button btn = new Button("مسح");
-
                     {
-
                         btn.setOnAction((ActionEvent event) -> {
-
                             if (FxDialogs.showConfirm("مسح المنتج", "هل تريد مسح المنتج?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
                                 Productsnumber data = getTableView().getItems().get(getIndex());
                                 try {
@@ -299,7 +298,6 @@ public class StockController implements Initializable {
                                 } catch (Exception ex) {
                                     Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
-
                             }
                         });
                     }
@@ -498,7 +496,8 @@ public class StockController implements Initializable {
     }
 
     public void loadTabData() {
-
+       
+        
         col_product.setCellValueFactory(new PropertyValueFactory<>("productName"));
         col_weight.setCellValueFactory(new PropertyValueFactory<>("productWeight"));
         col_unitInStock.setCellValueFactory(new PropertyValueFactory<>("unitsWeightInStock"));
@@ -610,13 +609,15 @@ public class StockController implements Initializable {
 
     @FXML
     private void compoCategoryClick(ActionEvent event) {
-
         String knownUsFrom = compoCategory.getSelectionModel().getSelectedItem().toString();
         if (knownUsFrom.equals("منتجات بالوحدة")) {
             loadTabDataNumber();
             tableNumber.setVisible(true);
-        } else {
+            TextFields.bindAutoCompletion(etSearch , getAllProductNumberName(etSearch.getText().toString()));
+            
+        } else {            
             tableNumber.setVisible(false);
+            TextFields.bindAutoCompletion(etSearch , getAllProductrName(etSearch.getText().toString()));            
         }
     }
 
@@ -791,6 +792,73 @@ public class StockController implements Initializable {
         }
 
     }
+
+    @FXML
+    private void etSearchKeeyPressed(KeyEvent event) {
+         if(event.getCode() == KeyCode.ENTER)
+        {
+            //System.out.println("Controls.StockController.etSearchKeeyPressed()");
+            loadTabDataSearch();
+        }
+    }
+
+    @FXML
+    private void etSearchMousePressed(MouseEvent event) {
+        etSearch.clear();
+        loadTabData();
+        loadTabDataNumber();
+    }
   
+    
+     /**
+     *
+     * @return all product name
+     */
+    public ArrayList<String> getAllProductNumberName(String start) {
+        ArrayList<String> result = new ArrayList<String>();
+        for (Productsnumber o : productNumbersDAO.getAllProductsnumber()) {
+           result.add(o.getProductnumberName());
+        }
+        return result;
+    }
+     /**
+     *
+     * @return all product name
+     */
+    public List<String> getAllProductrName(String start) {
+        ArrayList<String> result = new ArrayList<String>();
+        for (Products o : productDAO.getAllProducts()) {
+           result.add(o.getProductName());
+        }
+        return result;
+    }
+    
+    
+    public void loadTabDataSearch() {
+        
+        col_product.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        col_weight.setCellValueFactory(new PropertyValueFactory<>("productWeight"));
+        col_unitInStock.setCellValueFactory(new PropertyValueFactory<>("unitsWeightInStock"));
+        col_gomel_gomla.setCellValueFactory(new PropertyValueFactory<>("gomelGomlaBuyPrice"));
+        col_purchase_price.setCellValueFactory(new PropertyValueFactory<>("perchusePrice"));
+        col_kata3y_price.setCellValueFactory(new PropertyValueFactory<>("partitionBuyPrice"));
+        col_gomla_price.setCellValueFactory(new PropertyValueFactory<>("gomlaBuyPrice"));
+        col_id.setCellValueFactory(new PropertyValueFactory<>("productid"));
+        table.setItems(productDAO.selectProductByName(etSearch.getText().toString()));
+    }
+
+    public void loadTabDataNumberSerach() {
+
+        col_productNumber.setCellValueFactory(new PropertyValueFactory<>("productnumberName"));
+        col_unitInStockNumber.setCellValueFactory(new PropertyValueFactory<>("unitsInStock"));
+        col_gomel_gomlaNumber.setCellValueFactory(new PropertyValueFactory<>("gomelGomlanumberBuyPrice"));
+        col_purchase_priceNumber.setCellValueFactory(new PropertyValueFactory<>("perchusenumberPrice"));
+        col_kata3y_priceNumber.setCellValueFactory(new PropertyValueFactory<>("partitionnumberBuyPrice"));
+        col_gomla_priceNumber.setCellValueFactory(new PropertyValueFactory<>("gomlaBuynumberPrice"));
+        col_idNumber.setCellValueFactory(new PropertyValueFactory<>("productnumberid"));
+        //updateStatusColor();
+        tableNumber.setItems(productNumbersDAO.getAllProductsnumber());
+
+    }
     
 }

@@ -15,21 +15,21 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="698.0" prefWidth="1124.0" styleClass="pattern_background" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.StockController">
+<AnchorPane id="AnchorPane" prefHeight="679.0" prefWidth="1124.0" styleClass="pattern_background" stylesheets="@../res/application.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controls.StockController">
    <children>
-      <TableView fx:id="table" layoutX="7.0" layoutY="80.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="610.0" prefWidth="1113.0" styleClass="table">
+      <TableView fx:id="table" layoutX="7.0" layoutY="117.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="558.0" prefWidth="1113.0" styleClass="table">
         <columns>
             <TableColumn fx:id="col_id" prefWidth="49.0" text="كود" />
           <TableColumn fx:id="col_product" prefWidth="99.66668701171875" text="الصنف" />
           <TableColumn fx:id="col_weight" prefWidth="147.66668701171875" text="وزن الوحده " />
             <TableColumn fx:id="col_unitInStock" prefWidth="97.33331298828125" text="الكمية الموجوده" />
-            <TableColumn fx:id="col_purchase_price" prefWidth="78.33331298828125" text="سعر الشراء" />
-            <TableColumn fx:id="col_gomla_price" prefWidth="134.33331298828125" text="سعر الجملة" />
+            <TableColumn fx:id="col_purchase_price" prefWidth="90.0" text="سعر الشراء" />
+            <TableColumn fx:id="col_gomla_price" prefWidth="124.0" text="سعر الجملة" />
             <TableColumn fx:id="col_kata3y_price" prefWidth="94.33331298828125" text="سعر القطاعى" />
             <TableColumn fx:id="col_gomel_gomla" prefWidth="101.333251953125" text="سعر جملة الجملة" />
         </columns>
       </TableView>
-      <TableView fx:id="tableNumber" layoutX="5.0" layoutY="82.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="589.0" prefWidth="1113.0" styleClass="table" visible="false">
+      <TableView fx:id="tableNumber" layoutX="5.0" layoutY="118.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="558.0" prefWidth="1113.0" styleClass="table" visible="false">
          <columns>
             <TableColumn fx:id="col_idNumber" prefWidth="77.6666259765625" text="كود" />
             <TableColumn fx:id="col_productNumber" prefWidth="106.3333740234375" text="الصنف" />
@@ -40,9 +40,9 @@
             <TableColumn fx:id="col_gomel_gomlaNumber" prefWidth="106.0" text="سعر جملة الجملة" />
          </columns>
       </TableView>
-      <Pane layoutX="382.0" layoutY="5.0" prefHeight="72.0" prefWidth="334.0" styleClass="grey_wite_back">
+      <Pane layoutX="382.0" layoutY="5.0" prefHeight="54.0" prefWidth="334.0" styleClass="grey_wite_back">
          <children>
-            <Label alignment="CENTER" layoutX="17.0" layoutY="5.0" prefHeight="49.0" prefWidth="301.0" styleClass="textHeder" text="المخزن" />
+            <Label alignment="CENTER" layoutX="17.0" layoutY="3.0" prefHeight="49.0" prefWidth="301.0" styleClass="textHeder2" text="المخزن" />
          </children>
       </Pane>
       <ImageView fitHeight="68.0" fitWidth="65.0" layoutX="11.0" layoutY="9.0" onMouseClicked="#homeClick" pickOnBounds="true" preserveRatio="true">
@@ -242,5 +242,11 @@
             <Label fx:id="lableIndex" alignment="CENTER" layoutX="494.0" layoutY="13.0" prefHeight="37.0" prefWidth="56.0" styleClass="textFeild2" text="0" />
          </children>
       </Pane>
+      <JFXTextField fx:id="etSearch" layoutX="283.0" layoutY="70.0" onKeyPressed="#etSearchKeeyPressed" onMouseClicked="#etSearchMousePressed" prefHeight="36.0" prefWidth="513.0" styleClass="textFeild" />
+      <ImageView fitHeight="36.0" fitWidth="39.0" layoutX="805.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../res/loupe.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

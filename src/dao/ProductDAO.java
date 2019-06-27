@@ -51,28 +51,25 @@ public class ProductDAO {
         return row;
     }
 
-    public void selectProduct() {
+    public ObservableList<Products> selectProductByName(String productName) {
+        List<Products> cars = new ArrayList<Products>();
+        ObservableList<Products> row = FXCollections.observableArrayList();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
 
         try {
-
-            String sql = "SELECT p FROM Products p";
-
+            //SELECT o FROM Orders o WHERE o.customerId = :customerId
+            String sql = "SELECT p FROM Products p WHERE p.productName = :productName";
             Query query = eman.createQuery(sql);
-            List<Products> cars = query.getResultList();
-
-//            for (Products product : cars) {
-//                System.out.print( product.getProductName());
-//                System.out.print( product.getGomelGomlaBuyPrice());
-//                System.out.println(product.getPerchusePrice());
-//            }
+            query.setParameter("productName", productName);
+            cars = query.getResultList();
+            row.addAll(cars);
         } finally {
 
             eman.close();
             emf.close();
         }
-        float cars;
+        return row;
 
     }
 

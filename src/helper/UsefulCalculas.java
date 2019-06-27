@@ -87,15 +87,10 @@ public class UsefulCalculas {
          return result;
     }
 
-    public float getwightofUnitsToUpdate(float number,float weight_of_unit,boolean isKG){       
+       
+    public float getwightofUnitsToUpdate(float number,float weight_of_unit){       
         float result=0;
-        if (isKG) {
-             result = ((number*1000) * weight_of_unit)/1000;
-        }
-        else {
-             result = number * weight_of_unit;
-        }      
+        result = (number * weight_of_unit)/1000;
         return result;            
     }
-    
 }

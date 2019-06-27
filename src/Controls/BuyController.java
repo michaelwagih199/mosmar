@@ -235,7 +235,7 @@ public class BuyController implements Initializable {
             float allWeightInStock = productDAO.getProductById(o.getIdProduct()).getUnitsWeightInStock();
             float weighofOrder = 0;
             if (knownUsFrom.equals("قطاعى")) {
-                 weighofOrder = usefullCalculas.getwightofUnitsToUpdate(o.getQuantity(), unitWeight,false);
+                 weighofOrder = usefullCalculas.getwightofUnitsToUpdate(o.getQuantity(), unitWeight);
                  productDAO.updateWeight(allWeightInStock - weighofOrder, o.getIdProduct());
             }else{
 //              weighofOrder = usefullCalculas.getwightofUnitsToUpdate(o.getQuantity(), unitWeight,true);

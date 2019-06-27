@@ -208,7 +208,7 @@ public class RetrievalController implements Initializable {
             retrievals.setUuid(UUid);
             retrievals.setBillsValue(Float.parseFloat(txttotatalValue.getText().toString()));
             retrievalsDAO.addRetrievals(retrievals);
-            
+
             // insert retrival Detail
             for (Retrivaldetails retrivaldetails : rowProduct) {
                 Retrivaldetails r = new Retrivaldetails();
@@ -219,7 +219,7 @@ public class RetrievalController implements Initializable {
                 r.setRetrivalsId(retrievalsDAO.getLastOrderId(UUid));
                 retrivaldetailsDAO.addRetrivaldetails(r);
             }
-            
+
             //update stock
             for (Retrivaldetails o : rowProduct) {
                 if (o.getProductCategoryId().equals(2)) {
@@ -227,14 +227,20 @@ public class RetrievalController implements Initializable {
                     float unitsInStock = productNumbersDAO.getProductsnumberById(o.getProductID()).getUnitsInStock();
                     float quantityOfOrder = o.getQuantity();
                     productNumbersDAO.updateStock(unitsInStock + quantityOfOrder, o.getProductID());
-                    
-                } else if (o.getProductCategoryId()==1) {
-                    
+
+                } else if (o.getProductCategoryId() == 1) {
                     float unitWeight = productDAO.getProductById(o.getProductID()).getProductWeight();
                     float allWeightInStock = productDAO.getProductById(o.getProductID()).getUnitsWeightInStock();
-                    //float weighofOrder = usefullCalculas.getwightofUnitsToUpdate(o.getQuantity(), unitWeight);
-                   // productDAO.updateWeight(allWeightInStock + weighofOrder, o.getProductID());
-                    
+                    float weighofOrder = 0;
+                    String knownUsFrom = compo_priceType.getSelectionModel().getSelectedItem().toString();
+                    if (knownUsFrom.equals("قطاعى")) {
+                        weighofOrder = usefullCalculas.getwightofUnitsToUpdate(o.getQuantity(), unitWeight);
+                        productDAO.updateWeight(allWeightInStock + weighofOrder, o.getProductID());
+                    } else {
+//              weighofOrder = usefullCalculas.getwightofUnitsToUpdate(o.getQuantity(), unitWeight,true);
+                        productDAO.updateWeight(allWeightInStock + o.getQuantity(), o.getProductID());
+                    }
+
                 }
             }
 
