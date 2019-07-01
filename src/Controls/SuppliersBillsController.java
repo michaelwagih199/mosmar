@@ -27,10 +27,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -455,6 +458,55 @@ public class SuppliersBillsController implements Initializable {
             }
        
         
+    }
+     
+     
+         //delete row
+    private void addButtonDeleteToTable() {
+        TableColumn<BillsDetails, Void> colBtn = new TableColumn();
+
+        Callback<TableColumn<BillsDetails, Void>, TableCell<BillsDetails, Void>> cellFactory;
+        cellFactory = new Callback<TableColumn<BillsDetails, Void>, TableCell<BillsDetails, Void>>() {
+            @Override
+            public TableCell<BillsDetails, Void> call(final TableColumn<BillsDetails, Void> param) {
+                final TableCell<BillsDetails, Void> cell = new TableCell<BillsDetails, Void>() {
+
+                    private final Button btn = new Button("مسح");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+
+                            if (FxDialogs.showConfirm("مسح المنتج", "هل تريد مسح المنتج?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
+                                BillsDetails data = getTableView().getItems().get(getIndex());
+                                try {
+                                    billsDetailsDAO.removeBillsDetails(data.getBilsDetailsId());
+                                    loadTabProductData();
+                                } catch (Exception ex) {
+                                    Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            btn.getStyleClass().add("button_Small");
+                            setGraphic(btn);
+
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+        tableProducts.getColumns().add(colBtn);
     }
 
 
