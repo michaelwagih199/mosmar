@@ -19,25 +19,25 @@
    <children>
       <TableView fx:id="table" layoutX="7.0" layoutY="117.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="558.0" prefWidth="1113.0" styleClass="table">
         <columns>
-            <TableColumn fx:id="col_id" prefWidth="49.0" text="كود" />
-          <TableColumn fx:id="col_product" prefWidth="99.66668701171875" text="الصنف" />
-          <TableColumn fx:id="col_weight" prefWidth="147.66668701171875" text="وزن الوحده " />
-            <TableColumn fx:id="col_unitInStock" prefWidth="97.33331298828125" text="الكمية الموجوده" />
-            <TableColumn fx:id="col_purchase_price" prefWidth="90.0" text="سعر الشراء" />
-            <TableColumn fx:id="col_gomla_price" prefWidth="124.0" text="سعر الجملة" />
-            <TableColumn fx:id="col_kata3y_price" prefWidth="94.33331298828125" text="سعر القطاعى" />
-            <TableColumn fx:id="col_gomel_gomla" prefWidth="101.333251953125" text="سعر جملة الجملة" />
+            <TableColumn fx:id="col_id" prefWidth="33.0" text="كود" />
+          <TableColumn fx:id="col_product" prefWidth="389.0" text="الصنف" />
+          <TableColumn fx:id="col_weight" prefWidth="82.0" text="وزن الوحده " />
+            <TableColumn fx:id="col_unitInStock" prefWidth="93.0" text="الكمية الموجوده" />
+            <TableColumn fx:id="col_purchase_price" prefWidth="68.0" text="سعر الشراء" />
+            <TableColumn fx:id="col_kata3y_price" prefWidth="86.0" text="سعر القطاعى" />
+            <TableColumn fx:id="col_gomla_price" prefWidth="85.0" text="سعر الجملة" />
+            <TableColumn fx:id="col_gomel_gomla" prefWidth="91.0" text="سعر جملة الجملة" />
         </columns>
       </TableView>
       <TableView fx:id="tableNumber" layoutX="5.0" layoutY="118.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="558.0" prefWidth="1113.0" styleClass="table" visible="false">
          <columns>
-            <TableColumn fx:id="col_idNumber" prefWidth="77.6666259765625" text="كود" />
-            <TableColumn fx:id="col_productNumber" prefWidth="106.3333740234375" text="الصنف" />
-            <TableColumn fx:id="col_unitInStockNumber" prefWidth="88.6666259765625" text="الكمية الموجوده" />
-            <TableColumn fx:id="col_purchase_priceNumber" prefWidth="103.0" text="سعر الشراء" />
-            <TableColumn fx:id="col_gomla_priceNumber" prefWidth="102.0" text="سعر الجملة" />
-            <TableColumn fx:id="col_kata3y_priceNumber" prefWidth="108.33331298828125" text="سعر القطاعى" />
-            <TableColumn fx:id="col_gomel_gomlaNumber" prefWidth="106.0" text="سعر جملة الجملة" />
+            <TableColumn fx:id="col_idNumber" prefWidth="36.0" text="كود" />
+            <TableColumn fx:id="col_productNumber" prefWidth="404.0" text="الصنف" />
+            <TableColumn fx:id="col_unitInStockNumber" prefWidth="85.0" text="الكمية الموجوده" />
+            <TableColumn fx:id="col_purchase_priceNumber" prefWidth="73.0" text="سعر الشراء" />
+            <TableColumn fx:id="col_kata3y_priceNumber" prefWidth="71.0" text="سعر القطاعى" />
+            <TableColumn fx:id="col_gomla_priceNumber" prefWidth="75.0" text="سعر الجملة" />
+            <TableColumn fx:id="col_gomel_gomlaNumber" prefWidth="89.0" text="سعر جملة الجملة" />
          </columns>
       </TableView>
       <Pane layoutX="382.0" layoutY="5.0" prefHeight="54.0" prefWidth="334.0" styleClass="grey_wite_back">
@@ -62,6 +62,26 @@
          </cursor>
       </ImageView>
       <JFXComboBox fx:id="compoCategory" layoutX="750.0" layoutY="18.0" onAction="#compoCategoryClick" prefHeight="36.0" prefWidth="293.0" promptText="نوع المنتج" styleClass="combobox" />
+      <Pane fx:id="pane_add_choice" layoutX="922.0" layoutY="69.0" prefHeight="126.0" prefWidth="197.0" styleClass="grey_back" visible="false">
+         <children>
+            <JFXButton layoutX="8.0" layoutY="40.0" onAction="#KG_product" prefHeight="36.0" prefWidth="182.0" styleClass="button_Small" text="منتجات بكجم" />
+            <JFXButton layoutX="9.0" layoutY="80.0" onAction="#UnitsProducts" prefHeight="36.0" prefWidth="181.0" styleClass="button_Small" text="منتجات بالوحدة" />
+            <ImageView fitHeight="27.0" fitWidth="29.0" layoutX="10.0" layoutY="6.0" onMouseClicked="#closeChoicePaneClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../res/close2.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </Pane>
+      <JFXTextField fx:id="etSearch" layoutX="283.0" layoutY="70.0" onKeyPressed="#etSearchKeeyPressed" onMouseClicked="#etSearchMousePressed" prefHeight="36.0" prefWidth="513.0" styleClass="textFeild" />
+      <ImageView fitHeight="36.0" fitWidth="39.0" layoutX="805.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../res/loupe.png" />
+         </image>
+      </ImageView>
       <Pane fx:id="paneAddProduct" layoutX="576.0" layoutY="21.0" prefHeight="646.0" prefWidth="496.0" styleClass="grey_wite_back" visible="false">
          <children>
             <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#close_anchor_add" pickOnBounds="true" preserveRatio="true">
@@ -150,25 +170,17 @@
             <JFXButton fx:id="btn_edit_product_number" layoutX="147.0" layoutY="506.0" onAction="#btn_edit_product_click_number" prefHeight="36.0" prefWidth="174.0" styleClass="button_Normal" text="تعديل" />
          </children>
       </Pane>
-      <Pane fx:id="pane_add_choice" layoutX="922.0" layoutY="69.0" prefHeight="126.0" prefWidth="197.0" styleClass="grey_back" visible="false">
-         <children>
-            <JFXButton layoutX="8.0" layoutY="40.0" onAction="#KG_product" prefHeight="36.0" prefWidth="182.0" styleClass="button_Small" text="منتجات بكجم" />
-            <JFXButton layoutX="9.0" layoutY="80.0" onAction="#UnitsProducts" prefHeight="36.0" prefWidth="181.0" styleClass="button_Small" text="منتجات بالوحدة" />
-            <ImageView fitHeight="27.0" fitWidth="29.0" layoutX="10.0" layoutY="6.0" onMouseClicked="#closeChoicePaneClick" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../res/close2.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-         </children>
-      </Pane>
       <Pane fx:id="paneMapping" layoutX="116.0" layoutY="85.0" prefHeight="550.0" prefWidth="864.0" styleClass="grey_back" visible="false">
          <children>
-            <Pane layoutX="556.0" layoutY="10.0" prefHeight="524.0" prefWidth="301.0" styleClass="main_back">
+            <Pane layoutX="556.0" layoutY="12.0" prefHeight="518.0" prefWidth="301.0" styleClass="main_back">
                <children>
-                  <ListView fx:id="listProducts" layoutX="7.0" layoutY="6.0" onMouseClicked="#selectItemList" prefHeight="514.0" prefWidth="285.0" />
+                  <ListView fx:id="listProducts" layoutX="7.0" layoutY="58.0" onMouseClicked="#selectItemList" prefHeight="462.0" prefWidth="285.0" />
+                  <JFXTextField fx:id="etSearchMapping" layoutX="7.0" layoutY="11.0" onKeyPressed="#etSearchMappingKeeyPressed" onMouseClicked="#etSearchMappingMousePressed" prefHeight="36.0" prefWidth="259.0" styleClass="textFeild" />
+                  <ImageView fitHeight="28.0" fitWidth="32.0" layoutX="268.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/loupe.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
             <ImageView fitHeight="27.0" fitWidth="32.0" layoutX="7.0" layoutY="6.0" onMouseClicked="#closeMapping" pickOnBounds="true" preserveRatio="true">
@@ -242,11 +254,5 @@
             <Label fx:id="lableIndex" alignment="CENTER" layoutX="494.0" layoutY="13.0" prefHeight="37.0" prefWidth="56.0" styleClass="textFeild2" text="0" />
          </children>
       </Pane>
-      <JFXTextField fx:id="etSearch" layoutX="283.0" layoutY="70.0" onKeyPressed="#etSearchKeeyPressed" onMouseClicked="#etSearchMousePressed" prefHeight="36.0" prefWidth="513.0" styleClass="textFeild" />
-      <ImageView fitHeight="36.0" fitWidth="39.0" layoutX="805.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../res/loupe.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

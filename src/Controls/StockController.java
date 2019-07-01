@@ -178,6 +178,8 @@ public class StockController implements Initializable {
     private Label lableIndex;
     @FXML
     private JFXTextField etSearch;
+    @FXML
+    private JFXTextField etSearchMapping;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -189,7 +191,8 @@ public class StockController implements Initializable {
         addProductListItems();
         addButtonProductMapppingToTable();
         compoCategory.getItems().addAll("منتجات بكجم");
-        compoCategory.getItems().addAll("منتجات بالوحدة");       
+        compoCategory.getItems().addAll("منتجات بالوحدة");   
+        TextFields.bindAutoCompletion(etSearchMapping , getAllProductrName(etSearch.getText().toString()));
         
     }
 
@@ -795,18 +798,29 @@ public class StockController implements Initializable {
 
     @FXML
     private void etSearchKeeyPressed(KeyEvent event) {
-         if(event.getCode() == KeyCode.ENTER)
-        {
-            //System.out.println("Controls.StockController.etSearchKeeyPressed()");
-            loadTabDataSearch();
+        if (event.getCode() == KeyCode.ENTER) {
+            try {
+                String knownUsFrom = compoCategory.getSelectionModel().getSelectedItem().toString();
+                if (knownUsFrom.equals("منتجات بالوحدة")) {
+                    loadTabDataNumberSerach();
+                     
+                }else{
+                    loadTabDataSearch();
+                }
+
+                }catch (Exception e) {
+            }
+             compoCategory.setValue("نوع المنتج");
+               
+            }
         }
-    }
 
     @FXML
     private void etSearchMousePressed(MouseEvent event) {
         etSearch.clear();
         loadTabData();
         loadTabDataNumber();
+       // compoCategory.setValue("نوع المنتج");
     }
   
     
@@ -857,8 +871,32 @@ public class StockController implements Initializable {
         col_gomla_priceNumber.setCellValueFactory(new PropertyValueFactory<>("gomlaBuynumberPrice"));
         col_idNumber.setCellValueFactory(new PropertyValueFactory<>("productnumberid"));
         //updateStatusColor();
-        tableNumber.setItems(productNumbersDAO.getAllProductsnumber());
+        ObservableList<Productsnumber> row = FXCollections.observableArrayList();
+        row.addAll(productNumbersDAO.getProducNumbertId(etSearch.getText().toString()));
+        tableNumber.setItems(row);
+    }
+
+    @FXML
+    private void etSearchMappingKeeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            try {
+                ObservableList<String> productNames = FXCollections.observableArrayList();
+                productNames.add(productDAO.selectProductByName(etSearchMapping.getText().toString()).get(0).getProductName());          
+                listProducts.setItems(productNames);
+
+            } catch (Exception e) {
+            }
+        }
 
     }
+
+    @FXML
+    private void etSearchMappingMousePressed(MouseEvent event) {
+        etSearchMapping.clear();
+        listProducts.getItems().clear();
+        //addProductListItems();
+    }
+
+   
     
 }
