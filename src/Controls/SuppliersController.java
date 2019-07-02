@@ -131,7 +131,7 @@ public class SuppliersController implements Initializable {
 
         loadTabData();
         addButtonDeleteToTable();
-        addButtonModfyToTable();
+        //addButtonModfyToTable();
         addButtonAccountsToTable();
         formatDate();
 
