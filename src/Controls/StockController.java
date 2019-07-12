@@ -193,7 +193,7 @@ public class StockController implements Initializable {
         compoCategory.getItems().addAll("منتجات بكجم");
         compoCategory.getItems().addAll("منتجات بالوحدة");   
         TextFields.bindAutoCompletion(etSearchMapping , getAllProductrName(etSearch.getText().toString()));
-        
+     
     }
 
     @FXML
@@ -804,13 +804,13 @@ public class StockController implements Initializable {
                 if (knownUsFrom.equals("منتجات بالوحدة")) {
                     loadTabDataNumberSerach();
                      
-                }else{
+                }else if (knownUsFrom.equals("منتجات بكجم")){
                     loadTabDataSearch();
                 }
 
                 }catch (Exception e) {
             }
-             compoCategory.setValue("نوع المنتج");
+             //compoCategory.setValue("نوع المنتج");
                
             }
         }

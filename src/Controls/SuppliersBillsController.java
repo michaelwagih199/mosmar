@@ -130,16 +130,22 @@ public class SuppliersBillsController implements Initializable {
         comboCategory.getItems().addAll("منتجات بكجم");
         comboCategory.getItems().addAll("منتجات بالوحدة");
         //System.out.println(billsDetailsDAO.getBillsDetailsId(8));
+        addButtonDeleteToTable();
     }
 
     @FXML
     private void tableClick(MouseEvent event) {
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             if (event.getClickCount() == 2) {
-                SuppliersBills index = table.getSelectionModel().getSelectedItem();
-                labelBillsId.setText(index.getSuppliersBilsId().toString());
-                PanebilsDetails.setVisible(true);
-                billsId = index.getSuppliersBilsId();
+                try {
+                    SuppliersBills index = table.getSelectionModel().getSelectedItem();
+                    labelBillsId.setText(index.getSuppliersBilsId().toString());
+                    PanebilsDetails.setVisible(true);
+                    billsId = index.getSuppliersBilsId();
+
+                } catch (Exception e) {
+                }
+
                 loadTabProductData();
             }
         }
@@ -169,14 +175,14 @@ public class SuppliersBillsController implements Initializable {
                     * Float.parseFloat(etQuantity.getText().toString()));
             billsDetails.setProductId(getProductId());
             billsDetailsDAO.addBillsDetails(billsDetails);
-            
+
             updateStockDetails();
-            
+
         } catch (Exception e) {
 
         }
         loadTabProductData();
-        clearTextBillsDetails();  
+        clearTextBillsDetails();
 
     }
 
@@ -238,12 +244,9 @@ public class SuppliersBillsController implements Initializable {
         }
     }
 
-   
-    
     /**
      * helper method
      */
-    
     public List<String> getSupplierName(String start) {
         ArrayList<String> result = new ArrayList<String>();
         for (Suppliers o : suppliersDAO.getAllSuppliers()) {
@@ -272,9 +275,8 @@ public class SuppliersBillsController implements Initializable {
     public void clearTextBillsDetails() {
         etProduct.clear();
         etQuantity.clear();
-        etPrice.clear();       
+        etPrice.clear();
     }
-
 
     public void formatDate() {
         col_dateBils.setCellFactory(column -> {
@@ -432,36 +434,33 @@ public class SuppliersBillsController implements Initializable {
         return productId;
 
     }
-    
-    
-     private void updateStockDetails() {
+
+    private void updateStockDetails() {
         String knownUsFrom = comboCategory.getSelectionModel().getSelectedItem().toString();
-            if (knownUsFrom.equals("منتجات بكجم")) {
-                List<BillsDetails> items = billsDetailsDAO.getBillsDetailsId(billsId);
-                for (BillsDetails item : items) {
-                    int productid = item.getProductId();
-                    float quantityofBils = item.getQuantity();
-                    float numberUnit = productDAO.getProductById(productid).getUnitsWeightInStock();
-                    float newQuantity = quantityofBils + numberUnit;
-                    productDAO.updateWeight(newQuantity, productid);
-                }
-            }else if (knownUsFrom.equals("منتجات بالوحدة")) {
-                List<BillsDetails> items = billsDetailsDAO.getBillsDetailsId(billsId);
-                for (BillsDetails item : items) {
-                    int productid = item.getProductId();
-                    float quantityofBils = item.getQuantity();
-                    float numberUnit = productNumbersDAO.getProductsnumberById(productid).getUnitsInStock();
-                    float newQuantity = quantityofBils + numberUnit;
-                    productNumbersDAO.updateStock(newQuantity, productid);
-                }
-                    
+        if (knownUsFrom.equals("منتجات بكجم")) {
+            List<BillsDetails> items = billsDetailsDAO.getBillsDetailsId(billsId);
+            for (BillsDetails item : items) {
+                int productid = item.getProductId();
+                float quantityofBils = item.getQuantity();
+                float numberUnit = productDAO.getProductById(productid).getUnitsWeightInStock();
+                float newQuantity = quantityofBils + numberUnit;
+                productDAO.updateWeight(newQuantity, productid);
             }
-       
-        
+        } else if (knownUsFrom.equals("منتجات بالوحدة")) {
+            List<BillsDetails> items = billsDetailsDAO.getBillsDetailsId(billsId);
+            for (BillsDetails item : items) {
+                int productid = item.getProductId();
+                float quantityofBils = item.getQuantity();
+                float numberUnit = productNumbersDAO.getProductsnumberById(productid).getUnitsInStock();
+                float newQuantity = quantityofBils + numberUnit;
+                productNumbersDAO.updateStock(newQuantity, productid);
+            }
+
+        }
+
     }
-     
-     
-         //delete row
+
+    //delete row
     private void addButtonDeleteToTable() {
         TableColumn<BillsDetails, Void> colBtn = new TableColumn();
 
@@ -480,6 +479,18 @@ public class SuppliersBillsController implements Initializable {
                                 BillsDetails data = getTableView().getItems().get(getIndex());
                                 try {
                                     billsDetailsDAO.removeBillsDetails(data.getBilsDetailsId());
+                                    // remove from stock
+                                    //1 number
+                                    if (data.getCategoryId().equals(2)) {
+                                        float unitsInStock = productNumbersDAO.getProductsnumberById(data.getProductId()).getUnitsInStock();
+                                        float quantityOfOrder = data.getQuantity();
+                                        productNumbersDAO.updateStock(unitsInStock - quantityOfOrder, data.getProductId());
+                                    } else if (data.getCategoryId().equals(1)) {
+                                        float unitWeight = productDAO.getProductById(data.getProductId()).getProductWeight();
+                                        float allWeightInStock = productDAO.getProductById(data.getProductId()).getUnitsWeightInStock();
+                                        float weighofOrder = 0;
+                                        productDAO.updateWeight(allWeightInStock - data.getQuantity(), data.getProductId());
+                                    }
                                     loadTabProductData();
                                 } catch (Exception ex) {
                                     Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
@@ -508,6 +519,5 @@ public class SuppliersBillsController implements Initializable {
         colBtn.setCellFactory(cellFactory);
         tableProducts.getColumns().add(colBtn);
     }
-
 
 }

@@ -113,7 +113,6 @@ public class RetrievalController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         compo_product_Type.getItems().addAll("منتجات بكجم");
         compo_product_Type.getItems().addAll("منتجات بالوحدة");
-
         compo_priceType.getItems().addAll("قطاعى");
         compo_priceType.getItems().addAll("جملة");
         compo_priceType.getItems().addAll("جملة الجملة");
@@ -208,7 +207,6 @@ public class RetrievalController implements Initializable {
             retrievals.setUuid(UUid);
             retrievals.setBillsValue(Float.parseFloat(txttotatalValue.getText().toString()));
             retrievalsDAO.addRetrievals(retrievals);
-
             // insert retrival Detail
             for (Retrivaldetails retrivaldetails : rowProduct) {
                 Retrivaldetails r = new Retrivaldetails();
@@ -219,7 +217,6 @@ public class RetrievalController implements Initializable {
                 r.setRetrivalsId(retrievalsDAO.getLastOrderId(UUid));
                 retrivaldetailsDAO.addRetrivaldetails(r);
             }
-
             //update stock
             for (Retrivaldetails o : rowProduct) {
                 if (o.getProductCategoryId().equals(2)) {

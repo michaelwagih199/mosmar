@@ -126,7 +126,7 @@ public class CustomersController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         loadTabData();
         addButtonDeleteToTable();
-        addButtonModfyToTable();
+        //addButtonModfyToTable();
         addButtonAccountsToTable();
         formatDate();
     }
@@ -388,24 +388,24 @@ public class CustomersController implements Initializable {
     }
     
     public void customerAccountsCalc(String customerName, int customerId) {
-   
         try {
-    
-            labelClientName.setText(customerName);             
-            
-            double customerRemaining =custumersCalculas.getCustomersRemaining(customerId);
-            double customerRetrival = custumersCalculas.getCustomersPaymentRetrive(customerId);
-            double remain  = customerRemaining - customerRetrival;
-           
-            
+            labelClientName.setText(customerName);
+            double customerRemaining = 0;
+            customerRemaining = custumersCalculas.getCustomersRemaining(customerId);
+            double customerRetrival = 0;
+            try {
+                customerRetrival = custumersCalculas.getCustomersPaymentRetrive(customerId);
+            } catch (Exception e) {
+            }
+
+            double remain = customerRemaining - customerRetrival;
             etTotalCost.setText(df.format(remain));
             lablRemainingCost.setText(etTotalCost.getText().toString());
+
             txtCustomersPayment.setText(df.format(custumersCalculas.getCustomersPayment(customerId)));
             float RemainingCost = Float.parseFloat(etTotalCost.getText().toString()) - Float.parseFloat(txtCustomersPayment.getText().toString());
             lablRemainingCost.setText(df.format(RemainingCost));
-
         } catch (Exception e) {
-       
         }
 
     }
