@@ -129,7 +129,7 @@ public class CalculasHelper {
     
 
      public Double getAccountsretrive(Date startDate, Date endDate) {
-       Double  result;
+        Double  result = 0.0;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
         try {
@@ -143,6 +143,7 @@ public class CalculasHelper {
             eman.close();
             emf.close();
         }
+           
         return result;
     }
 
