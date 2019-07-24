@@ -453,18 +453,21 @@ public class AcountsCenterController implements Initializable {
 
     @FXML
     private void netProfiteClick(Event event) throws ParseException {
-
         btnShow.setVisible(false);
         clearProfit();
-
     }
 
     public void clearProfit() {
+        
         tableExpense.getItems().clear();
-        txt_sales.setText("");
-        txt_treasury.setText("");
-        txt_net_profit_before_paid.setText("");
-        txt_net_profit_after_paid.setText("");
+        txt_sales.setText("0");
+        txt_treasury.setText("0");
+        txt_net_profit_before_paid.setText("0");
+        txt_net_profit_after_paid.setText("0");
+        txtAllExpencess.setText("0");
+        txtAccountsRevenue.setText("0");
+        txtAccountsPayable.setText("0");
+        
     }
 
     @FXML
@@ -485,31 +488,35 @@ public class AcountsCenterController implements Initializable {
      * @throws ParseException
      */
     public void profitCalulas() throws ParseException {
-        
-            tableExpense.getItems().clear();
-            java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
-            java.sql.Date lastDate = java.sql.Date.valueOf(orderEndDate.getValue());
-            //culculas methods
-            loadExpensesData(gettedDatePickerDate, lastDate);
-            double sale = calculasHelper.getDaySales(gettedDatePickerDate, lastDate);
-            txt_sales.setText(df.format(sale));
-            txtAccountsRevenue.setText(df.format(calculasHelper.getAccountsRevenue(gettedDatePickerDate, lastDate).get(0)));
-            //test retrivals
-            Double retrival = 0.0;
-            retrival = calculasHelper.getAccountsretrive(gettedDatePickerDate, lastDate);
-           // txtRetrival.setText(df.format(retrival));
-            Double expense = 0.0;
+
+        tableExpense.getItems().clear();
+        java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
+        java.sql.Date lastDate = java.sql.Date.valueOf(orderEndDate.getValue());
+        //culculas methods
+        loadExpensesData(gettedDatePickerDate, lastDate);
+        double sale = calculasHelper.getDaySales(gettedDatePickerDate, lastDate);
+        txt_sales.setText(df.format(sale));
+        txtAccountsRevenue.setText(df.format(calculasHelper.getAccountsRevenue(gettedDatePickerDate, lastDate).get(0)));
+        //test retrivals
+        Double retrival = 0.0;
+        retrival = calculasHelper.getAccountsretrive(gettedDatePickerDate, lastDate);
+        // txtRetrival.setText(df.format(retrival));
+        Double expense = 0.0;
+        if (calculasHelper.getDayExpenses(gettedDatePickerDate, lastDate) != null) {
             expense = calculasHelper.getDayExpenses(gettedDatePickerDate, lastDate);
             txtAllExpencess.setText(df.format(expense));
-            
-            float treasury = Float.parseFloat(txt_sales.getText().toString()) - 
-                    (Float.parseFloat(txtAllExpencess.getText().toString())
-                    + Float.parseFloat(txtRetrival.getText().toString()));
-            
-            System.out.println("lll"+treasury);
-            txt_treasury.setText(String.valueOf(treasury));
-           
-            //Float c = (Float)daySalesV- (Float)dayExpensesV;
+        }
+
+     
+
+        float treasury = Float.parseFloat(txt_sales.getText().toString())
+                - (Float.parseFloat(txtAllExpencess.getText().toString())
+                + Float.parseFloat(txtRetrival.getText().toString()));
+
+        System.out.println("lll" + treasury);
+        txt_treasury.setText(String.valueOf(treasury));
+
+        //Float c = (Float)daySalesV- (Float)dayExpensesV;
     }
 
     //delete row
