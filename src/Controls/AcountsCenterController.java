@@ -80,7 +80,7 @@ public class AcountsCenterController implements Initializable {
 
     OrderDAO orderDAO = new OrderDAO();
     OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
-   
+
     CalculasHelper calculasHelper = new CalculasHelper();
     OrderPaymentDAO orderPaymentDAO = new OrderPaymentDAO();
     ExpensessDAO expensessDAO = new ExpensessDAO();
@@ -107,7 +107,7 @@ public class AcountsCenterController implements Initializable {
     private TableColumn<Custom_OrderDetails, String> colProductType;
     @FXML
     private TableColumn<custom_orders, Date> col_orderTime;
-    
+
     @FXML
     private TableColumn<Custom_OrderDetails, Integer> col_ID_orderDetails;
     @FXML
@@ -155,9 +155,6 @@ public class AcountsCenterController implements Initializable {
     private Label orderType;
     @FXML
     private Label txtRetrival;
-   
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -195,7 +192,7 @@ public class AcountsCenterController implements Initializable {
         orderEndDate.setConverter(converter);
         orderEndDate.setPromptText(pattern.toLowerCase());
         addButtonDeleteToTable();
-       
+
     }
 
     @FXML
@@ -263,8 +260,8 @@ public class AcountsCenterController implements Initializable {
             };
             return cell;
         });
-        
-          col_orderTime.setCellFactory(column -> {
+
+        col_orderTime.setCellFactory(column -> {
             TableCell<custom_orders, Date> cell = new TableCell<custom_orders, Date>() {
                 private SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
 
@@ -286,7 +283,7 @@ public class AcountsCenterController implements Initializable {
     public void yarab(Date startDate, Date endDate) throws ParseException {
         String paymentType = null;
         String productType = null;
-                
+
         //formatting date in Java using SimpleDateFormat
         SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
         for (int i = 0; i < orderDAO.getOrderByDate(startDate, endDate).size(); i++) {
@@ -302,13 +299,13 @@ public class AcountsCenterController implements Initializable {
             int paymentId = (int) orderDAO.getOrderByDate(startDate, endDate).get(i)[7];
             int categoryId = (int) orderDAO.getOrderByDate(startDate, endDate).get(i)[8];
             Date time = (Date) orderDAO.getOrderByDate(startDate, endDate).get(i)[9];
-            
+
             if (paymentId == 1) {
                 paymentType = "اجل";
             } else if (paymentId == 2) {
                 paymentType = "نقدى";
             }
-            
+
             if (categoryId == 1) {
                 productType = "وزن";
             } else if (categoryId == 2) {
@@ -333,20 +330,18 @@ public class AcountsCenterController implements Initializable {
     @FXML
     private void btnShowClick(ActionEvent event) throws ParseException {
 
-      
-            orderTable.getItems().clear();
-          
-            java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
-            java.sql.Date orderEndDatee = java.sql.Date.valueOf(orderEndDate.getValue());
-         
-//            System.out.println(orderDAO.getOrderByDate(gettedDatePickerDate, orderEndDatee));
-            yarab(gettedDatePickerDate, orderEndDatee);
-            
-            loadTabData();
-            txt_sales.setText("");
-            loadExpensesData(gettedDatePickerDate, orderEndDatee);
+        orderTable.getItems().clear();
 
-       
+        java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
+        java.sql.Date orderEndDatee = java.sql.Date.valueOf(orderEndDate.getValue());
+
+//            System.out.println(orderDAO.getOrderByDate(gettedDatePickerDate, orderEndDatee));
+        yarab(gettedDatePickerDate, orderEndDatee);
+
+        loadTabData();
+        txt_sales.setText("");
+        loadExpensesData(gettedDatePickerDate, orderEndDatee);
+
     }
 
     @FXML
@@ -354,17 +349,16 @@ public class AcountsCenterController implements Initializable {
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             if (event.getClickCount() == 2) {
                 custom_orders list = orderTable.getSelectionModel().getSelectedItem();
-                    paneOrderDetail.setVisible(true);
-                    lableOrderDetailId.setText(String.valueOf(list.getOrderId()));
-                    orderType.setText(list.getProductType());
-                    if (list.getProductType().equals("وزن")) {
-                        yaraborderTe(list.getOrderId());
-                    }else if (list.getProductType().equals("قطعة")) {
-                        yaraborderTeN(list.getOrderId());
-                    }                 
-                   loadorderDetailTabData();
-                
-                
+                paneOrderDetail.setVisible(true);
+                lableOrderDetailId.setText(String.valueOf(list.getOrderId()));
+                orderType.setText(list.getProductType());
+                if (list.getProductType().equals("وزن")) {
+                    yaraborderTe(list.getOrderId());
+                } else if (list.getProductType().equals("قطعة")) {
+                    yaraborderTeN(list.getOrderId());
+                }
+                loadorderDetailTabData();
+
             }
         }
 
@@ -379,7 +373,7 @@ public class AcountsCenterController implements Initializable {
             float total = (float) orderDetailDAO.getOrderDetailByOrderId(orderId).get(i)[3];
             int id = (int) orderDetailDAO.getOrderDetailByOrderId(orderId).get(i)[4];
             //paid,remaining,orderDiscount;;
-            orderDetailrow.add(new Custom_OrderDetails(id,ProductName, price, quantity, total));
+            orderDetailrow.add(new Custom_OrderDetails(id, ProductName, price, quantity, total));
         }
 
     }
@@ -393,7 +387,7 @@ public class AcountsCenterController implements Initializable {
             float total = (float) orderDetailDAO.getOrderDetailByOrderIdNumber(orderId).get(i)[3];
             int id = (int) orderDetailDAO.getOrderDetailByOrderIdNumber(orderId).get(i)[4];
             //paid,remaining,orderDiscount;;
-            orderDetailrow.add(new Custom_OrderDetails(id,ProductName, price, quantity, total));
+            orderDetailrow.add(new Custom_OrderDetails(id, ProductName, price, quantity, total));
         }
 
     }
@@ -414,14 +408,14 @@ public class AcountsCenterController implements Initializable {
         try {
             java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(dateExpenes.getValue());
             java.sql.Date endDate = java.sql.Date.valueOf(orderEndDate.getValue());
-            
+
             calculasHelper.insertExpensess(gettedDatePickerDate,
                     et_expenseContrext.getText().toString(),
                     Float.parseFloat(et_expenceValue.getText().toString()),
                     et_expenceNotes.getText().toString());
 
             clearExpenses();
-            loadExpensesData(gettedDatePickerDate,endDate);
+            loadExpensesData(gettedDatePickerDate, endDate);
             profitCalulas();
         } catch (Exception e) {
             System.err.println(e.getLocalizedMessage());
@@ -446,20 +440,20 @@ public class AcountsCenterController implements Initializable {
         clearExpenses();
     }
 
-    public void loadExpensesData(Date startDate , Date endDate)throws ParseException {
+    public void loadExpensesData(Date startDate, Date endDate) throws ParseException {
 
         col_expenseDate.setCellValueFactory(new PropertyValueFactory<>("expensesDate"));
         col_expenseContext.setCellValueFactory(new PropertyValueFactory<>("expensesContext"));
         col_expenseValue.setCellValueFactory(new PropertyValueFactory<>("expensesValue"));
         col_expenseNotes.setCellValueFactory(new PropertyValueFactory<>("notes"));
         formateDate();
-        tableExpense.setItems(calculasHelper.getExpencseByDate(startDate,endDate));
+        tableExpense.setItems(calculasHelper.getExpencseByDate(startDate, endDate));
 
     }
 
     @FXML
     private void netProfiteClick(Event event) throws ParseException {
-       
+
         btnShow.setVisible(false);
         clearProfit();
 
@@ -475,8 +469,7 @@ public class AcountsCenterController implements Initializable {
 
     @FXML
     private void TapordersClick(Event event) {
-        
-   
+
         btnShow.setVisible(true);
     }
 
@@ -486,38 +479,40 @@ public class AcountsCenterController implements Initializable {
 
     }
 
-    
     /**
      * main function to show reports
-     * @throws ParseException 
+     *
+     * @throws ParseException
      */
     public void profitCalulas() throws ParseException {
-        try {
+        
             tableExpense.getItems().clear();
             java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
             java.sql.Date lastDate = java.sql.Date.valueOf(orderEndDate.getValue());
             //culculas methods
-            loadExpensesData(gettedDatePickerDate,lastDate);
-            double sale = calculasHelper.getDaySales(gettedDatePickerDate,lastDate);
+            loadExpensesData(gettedDatePickerDate, lastDate);
+            double sale = calculasHelper.getDaySales(gettedDatePickerDate, lastDate);
             txt_sales.setText(df.format(sale));
-            
+            txtAccountsRevenue.setText(df.format(calculasHelper.getAccountsRevenue(gettedDatePickerDate, lastDate).get(0)));
             //test retrivals
-            txtRetrival.setText(String.valueOf(calculasHelper.getAccountsretrive(gettedDatePickerDate, lastDate)));
+            Double retrival = 0.0;
+            retrival = calculasHelper.getAccountsretrive(gettedDatePickerDate, lastDate);
+           // txtRetrival.setText(df.format(retrival));
+            Double expense = 0.0;
+            expense = calculasHelper.getDayExpenses(gettedDatePickerDate, lastDate);
+            txtAllExpencess.setText(df.format(expense));
             
-            txtAllExpencess.setText(df.format(calculasHelper.getDayExpenses(gettedDatePickerDate, lastDate).get(0)));           
             float treasury = Float.parseFloat(txt_sales.getText().toString()) - 
-                    (Float.parseFloat(txtAllExpencess.getText().toString()) + Float.parseFloat(txtRetrival.getText().toString()));
-            txt_treasury.setText(String.valueOf(treasury));           
-            txtAccountsRevenue.setText(df.format(calculasHelper.getAccountsRevenue(gettedDatePickerDate, lastDate).get(0)));      
-           
-        } catch (Exception e) {
-        }
+                    (Float.parseFloat(txtAllExpencess.getText().toString())
+                    + Float.parseFloat(txtRetrival.getText().toString()));
             
-           //Float c = (Float)daySalesV- (Float)dayExpensesV;
+            System.out.println("lll"+treasury);
+            txt_treasury.setText(String.valueOf(treasury));
+           
+            //Float c = (Float)daySalesV- (Float)dayExpensesV;
     }
-    
-    
-        //delete row
+
+    //delete row
     private void addButtonDeleteToTable() {
         TableColumn<Expenses, Void> colBtn = new TableColumn();
 
@@ -533,11 +528,10 @@ public class AcountsCenterController implements Initializable {
                         btn.setOnAction((ActionEvent event) -> {
 
                             if (FxDialogs.showConfirm("مسح المنتج", "هل تريد مسح المصروف?", FxDialogs.YES, FxDialogs.NO).equals(FxDialogs.YES)) {
-                                
-                                
+
                                 Expenses data = getTableView().getItems().get(getIndex());
                                 try {
-                                    
+
                                     java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(orderDate.getValue());
                                     java.sql.Date orderEndDatee = java.sql.Date.valueOf(orderEndDate.getValue());
                                     expensessDAO.removexpenses(data.getExpensesId());
@@ -545,7 +539,7 @@ public class AcountsCenterController implements Initializable {
                                     txt_sales.setText("");
                                     txt_treasury.setText("");
                                     profitCalulas();
-                                    
+
                                 } catch (Exception ex) {
                                     Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -560,7 +554,7 @@ public class AcountsCenterController implements Initializable {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                           // btn.getStyleClass().add("button_Small");
+                            // btn.getStyleClass().add("button_Small");
                             setGraphic(btn);
 
                         }
