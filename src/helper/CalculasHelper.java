@@ -45,7 +45,6 @@ public class CalculasHelper {
             result = (Double) query.getSingleResult();
             //System.out.println(result);
             
-            
         } finally {
             eman.close();
             emf.close();
@@ -89,8 +88,8 @@ public class CalculasHelper {
 
     }
 
-    public List<Float> getDayExpenses(Date startDate, Date endDate) {
-        List<Float> cars = new ArrayList<Float>();
+    public Double getDayExpenses(Date startDate, Date endDate) {
+        Double  result = 0.0;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
         try {
@@ -98,13 +97,13 @@ public class CalculasHelper {
             Query query = eman.createQuery(sql);
             query.setParameter("startDate", startDate);
             query.setParameter("endDate", endDate);
-            cars = query.getResultList();
+            result = (Double) query.getSingleResult();
 
         } finally {
             eman.close();
             emf.close();
         }
-        return cars;
+        return result;
     }
 
     public List<Float> getAccountsRevenue(Date startDate, Date endDate) {
@@ -128,8 +127,8 @@ public class CalculasHelper {
     }
     
 
-     public Double getAccountsretrive(Date startDate, Date endDate) {
-        Double  result = 0.0;
+    public Double getAccountsretrive(Date startDate, Date endDate) {
+        Double result = 0.0;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
         EntityManager eman = emf.createEntityManager();
         try {
@@ -143,7 +142,26 @@ public class CalculasHelper {
             eman.close();
             emf.close();
         }
-           
+
+        return result;
+    }
+
+    public Double getAccountsPayable(Date startDate, Date endDate) {
+        Double result = 0.0;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MOSMARPU");
+        EntityManager eman = emf.createEntityManager();
+        try {
+            String sql = "SELECT SUM(o.remaining) FROM OrderPayment o WHERE o.date BETWEEN :startDate AND :endDate";
+            Query query = eman.createQuery(sql);
+            query.setParameter("startDate", startDate);
+            query.setParameter("endDate", endDate);
+            result = (Double) query.getSingleResult();
+
+        } finally {
+            eman.close();
+            emf.close();
+        }
+
         return result;
     }
 
